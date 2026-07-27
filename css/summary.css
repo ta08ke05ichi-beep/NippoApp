@@ -1,0 +1,65 @@
+.card{
+
+    background:white;
+
+    margin:20px;
+
+    padding:20px;
+
+    border-radius:15px;
+
+}
+
+#result{
+
+    font-size:22px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+#searchBtn{
+
+    width:calc(100% - 40px);
+
+    margin:20px;
+
+}
+
+#visitCount{
+
+font-size:60px;
+
+font-weight:bold;
+
+color:#1f3a5f;
+
+text-align:center;
+
+margin-top:20px;
+
+}
+
+.clickable{
+
+    cursor:pointer;
+
+    color:#1f3a5f;
+
+    font-size:60px;
+
+    font-weight:bold;
+
+    text-align:center;
+
+}
+
+.clickable:hover{
+
+    color:#1565c0;
+
+    text-decoration:underline;
+
+}

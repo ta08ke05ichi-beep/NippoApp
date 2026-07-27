@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>月間集計</title>
+
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/summary.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>📊 月間集計</h1>
+
+</header>
+
+<main>
+
+<div class="card">
+
+<label>年月</label>
+
+<input type="month" id="month">
+
+</div>
+
+<div class="card">
+
+<label>担当者</label>
+
+<select id="name">
+
+<option>竹市</option>
+<option>田中</option>
+<option>山本</option>
+<option>スタッフ4</option>
+<option>スタッフ5</option>
+<option>スタッフ6</option>
+
+</select>
+
+</div>
+
+<button id="searchBtn">
+
+集計する
+
+</button>
+
+<div id="result" class="card">
+
+<h2>訪問件数</h2>
+
+<p id="visitCount" class="clickable">
+
+0件
+
+</p>
+
+</div>
+
+</main>
+
+<script type="module" src="../js/summary.js"></script>
+
+</body>
+
+</html>

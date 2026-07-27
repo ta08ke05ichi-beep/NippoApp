@@ -1,0 +1,27 @@
+.history-card{
+
+    background:white;
+
+    margin:20px;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.history-card h2{
+
+    color:#1f3a5f;
+
+    margin-bottom:15px;
+
+}
+
+.history-card p{
+
+    margin:8px 0;
+
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>業務日報システム</title>
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/home.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>業務日報</h1>
+
+</header>
+
+<main>
+
+<div class="menu-card" id="reportBtn">
+
+    <div class="icon">📝</div>
+
+    <h2>日報を書く</h2>
+
+    <p>今日の日報を入力します</p>
+
+</div>
+
+<div class="menu-card" id="reportsBtn">
+
+    <div class="icon">📋</div>
+
+    <h2>日報一覧</h2>
+
+    <p>保存した日報を確認します</p>
+
+</div>
+
+<div class="menu-card" id="customersBtn">
+
+    <div class="icon">🏢</div>
+
+    <h2>顧客一覧</h2>
+
+    <p>顧客ごとの対応履歴を確認します</p>
+
+</div>
+
+<div class="menu-card" id="summaryBtn">
+
+    <div class="icon">📊</div>
+
+    <h2>月間集計</h2>
+
+    <p>訪問件数を確認します</p>
+
+</div>
+
+</main>
+
+<script src="js/home.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register(
+        "service-worker.js"
+    )
+    .then(() => {
+        console.log("Service Worker 登録成功");
+    })
+    .catch((error)=>{
+        console.log(
+            "Service Worker 登録失敗",
+            error
+        );
+    });
+
+}
+</script>
+
+</body>
+
+</html>

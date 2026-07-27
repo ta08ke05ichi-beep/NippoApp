@@ -1,0 +1,95 @@
+/* ===== 共通設定 ===== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:"Yu Gothic",sans-serif;
+background:#f4f6f9;
+color:#333;
+}
+
+header{
+
+    background:#1f3a5f;
+
+    color:white;
+
+    padding:18px;
+
+    text-align:center;
+
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+
+}
+
+header h1{
+
+    margin:0;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:white;
+
+}
+
+main{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h2{
+margin-bottom:15px;
+font-size:20px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:16px;
+margin-top:8px;
+margin-bottom:15px;
+}
+
+textarea{
+min-height:120px;
+resize:vertical;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#1f3a5f;
+color:white;
+border:none;
+border-radius:8px;
+font-size:17px;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{
+background:#294d7a;
+}
+
+button:active{
+transform:scale(.98);
+}

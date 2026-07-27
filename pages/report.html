@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>日報入力</title>
+
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/report.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>📝 日報入力</h1>
+
+</header>
+
+<main>
+
+<div class="card">
+
+<label>担当者</label>
+
+<select id="name">
+
+<option>竹市</option>
+<option>田中</option>
+<option>山本</option>
+<option>スタッフ4</option>
+<option>スタッフ5</option>
+<option>スタッフ6</option>
+
+</select>
+
+</div>
+
+<div class="card">
+
+<label>日付</label>
+
+<input
+type="date"
+id="date">
+
+</div>
+
+<div id="tasks">
+
+
+<div class="card task">
+
+
+<h3>作業①</h3>
+
+
+<label>顧客</label>
+
+<select class="customer">
+
+<option>選択してください</option>
+
+</select>
+
+
+<label>開始時間</label>
+
+<input
+type="time"
+class="startTime">
+
+
+<label>終了時間</label>
+
+<input
+type="time"
+class="endTime">
+
+
+<label>作業内容</label>
+
+<textarea
+class="work"
+placeholder="作業内容を入力してください"></textarea>
+
+
+</div>
+
+
+</div>
+
+
+<button id="addTaskBtn">
+
+＋ 作業追加
+
+</button>
+
+<button id="saveBtn">
+
+保存する
+
+</button>
+
+</main>
+
+<script type="module" src="../js/report.js"></script>
+
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>日報詳細</title>
+

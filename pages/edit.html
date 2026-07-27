@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>日報編集</title>
+
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/edit.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>✏️ 日報編集</h1>
+
+</header>
+
+
+<main>
+
+
+<div class="card">
+
+<label>担当者</label>
+
+<select id="name">
+
+<option>竹市</option>
+<option>田中</option>
+<option>山本</option>
+
+</select>
+
+</div>
+
+
+<div class="card">
+
+<label>日付</label>
+
+<input type="date" id="date">
+
+</div>
+
+
+<div class="card">
+
+<label>顧客</label>
+
+<select id="customer">
+
+<option>選択してください</option>
+
+</select>
+
+</div>
+
+
+<div class="card">
+
+<label>開始時間</label>
+
+<input type="time" id="startTime">
+
+
+<label>終了時間</label>
+
+<input type="time" id="endTime">
+
+</div>
+
+
+<div class="card">
+
+<label>作業内容</label>
+
+<textarea id="work"></textarea>
+
+</div>
+
+
+<button id="saveBtn">
+
+更新する
+
+</button>
+
+
+</main>
+
+
+<script type="module" src="../js/edit.js"></script>
+
+</body>
+
+</html>
