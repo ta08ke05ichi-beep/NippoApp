@@ -27,3 +27,55 @@ margin-bottom:10px;
 margin:5px 0;
 
 }
+
+/* 日報入力ボタン改善 */
+
+#saveBtn{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:20px;
+
+    background:#1f3a5f;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+
+#addTaskBtn{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:15px;
+
+    background:white;
+
+    color:#1f3a5f;
+
+    border:2px solid #1f3a5f;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+}
+
+
+.task{
+
+    border-left:5px solid #1f3a5f;
+
+}
