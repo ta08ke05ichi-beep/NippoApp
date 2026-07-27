@@ -9,3 +9,106 @@ margin:15px 0;
 margin-top:10px;
 
 }
+
+.customer-card{
+
+    background:white;
+
+    padding:20px;
+
+    margin:15px;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 3px 10px rgba(0,0,0,0.1);
+
+}
+
+
+.customer-card h3{
+
+    margin-top:0;
+
+    color:#1f3a5f;
+
+}
+
+
+.customer-card p{
+
+    margin:8px 0;
+
+    color:#555;
+
+}
+
+
+.customer-card button{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#1f3a5f;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+.customer-form{
+
+background:white;
+
+padding:20px;
+
+margin:15px;
+
+border-radius:15px;
+
+box-shadow:
+0 3px 10px rgba(0,0,0,0.1);
+
+}
+
+
+.customer-form input{
+
+width:100%;
+
+padding:12px;
+
+margin-bottom:10px;
+
+box-sizing:border-box;
+
+border-radius:8px;
+
+border:1px solid #ccc;
+
+}
+
+
+.customer-form button{
+
+width:100%;
+
+padding:14px;
+
+background:#1f3a5f;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+font-size:16px;
+
+}

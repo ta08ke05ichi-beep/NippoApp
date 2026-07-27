@@ -41,7 +41,7 @@ document.getElementById("saveBtn")
         tasks.push({
 
             customer:
-            task.querySelector(".customer").value,
+task.querySelector(".customer").value,
 
 
             startTime:
@@ -109,8 +109,7 @@ task.querySelector(".work").value
 
 
         document.querySelectorAll(".customer")
-        .forEach(e=>e.selectedIndex=0);
-
+.forEach(e=>e.value="");
 
 
     }catch(error){
@@ -126,64 +125,113 @@ task.querySelector(".work").value
 
 });
 
+// 顧客検索
 
+let customers = [];
 
-
-
-// 顧客読み込み
 
 async function loadCustomers(){
 
 
-    const customerSelects =
-    document.querySelectorAll(".customer");
+const snapshot =
+await getDocs(
+collection(db,"customers")
+);
 
 
-
-    const snapshot = await getDocs(
-        collection(db,"customers")
-    );
+customers = [];
 
 
+snapshot.forEach((doc)=>{
 
-    customerSelects.forEach((select)=>{
+customers.push(doc.data());
 
-
-        snapshot.forEach((doc)=>{
-
-
-            const data = doc.data();
-
-
-            const option =
-            document.createElement("option");
-
-
-            option.value = data.name;
-
-
-            option.textContent =
-            data.name;
-
-
-            select.appendChild(option);
-
-
-        });
-
-
-    });
+});
 
 
 }
 
 
-
 loadCustomers();
 
 
+setupCustomerSearch(
+document.querySelector(".task")
+);
 
 
+
+function setupCustomerSearch(task){
+
+
+const search =
+task.querySelector(".customerSearch");
+
+
+const result =
+task.querySelector(".customerResult");
+
+
+const hidden =
+task.querySelector(".customer");
+
+
+
+search.addEventListener(
+"input",
+()=>{
+
+
+const text =
+search.value.toLowerCase();
+
+
+result.innerHTML="";
+
+
+customers
+.filter(c =>
+c.name.toLowerCase().includes(text)
+)
+.slice(0,10)
+.forEach(c=>{
+
+
+const div =
+document.createElement("div");
+
+
+div.textContent =
+"🏢 " + c.name;
+
+
+div.onclick = ()=>{
+
+
+search.value =
+c.name;
+
+
+hidden.value =
+c.name;
+
+
+result.innerHTML="";
+
+
+};
+
+
+result.appendChild(div);
+
+
+});
+
+
+});
+
+
+}
 
 // 作業追加
 
@@ -220,11 +268,15 @@ document.getElementById("addTaskBtn")
 
 <label>顧客</label>
 
-<select class="customer">
+<input 
+class="customerSearch"
+placeholder="顧客名を入力してください">
 
-<option>選択してください</option>
+<div class="customerResult"></div>
 
-</select>
+<input 
+type="hidden"
+class="customer">
 
 
 <label>開始時間</label>
@@ -247,7 +299,7 @@ document.getElementById("addTaskBtn")
 
     tasks.appendChild(div);
 
-
+setupCustomerSearch(div);
 
     // 追加した作業にも顧客を入れる
 

@@ -8,7 +8,6 @@ import {
     orderBy,
     writeBatch,
     doc,
-    deleteDoc
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 console.log("customers.js 起動");
@@ -17,14 +16,16 @@ console.log("customers.js 起動");
 const customerList =
 document.getElementById("customerList");
 
-const addBtn =
-document.getElementById("addCustomerBtn");
+let customers = [];
 
+const searchInput =
+document.getElementById("searchInput");
 
 // 顧客一覧表示
 
 async function loadCustomers(){
 
+    customers = [];
 
     customerList.innerHTML="読み込み中...";
 
@@ -61,6 +62,7 @@ async function loadCustomers(){
 
         const data = doc.data();
 
+        customers.push(data);
 
         const div =
         document.createElement("div");
@@ -69,15 +71,36 @@ async function loadCustomers(){
         div.className="customer-card";
 
 
-     div.innerHTML =
+   div.innerHTML =
 `
-<p>
+<h3>
 🏢 ${data.name}
+</h3>
+
+<p>
+📮 ${data.postal || "住所情報なし"}
 </p>
+
+<p>
+📍 ${data.address1 || ""}${data.address2 || ""}
+</p>
+
+<p>
+☎ ${data.tel || "電話番号なし"}
+</p>
+
+<button class="history-btn">
+履歴を見る
+</button>
+
 `;
 
 
-div.onclick = ()=>{
+const btn =
+div.querySelector(".history-btn");
+
+
+btn.onclick = ()=>{
 
     location.href =
     "customer-history.html?customer=" + data.name;
@@ -85,7 +108,7 @@ div.onclick = ()=>{
 };
 
 
-        customerList.appendChild(div);
+customerList.appendChild(div);
 
 
     });
@@ -100,82 +123,79 @@ div.onclick = ()=>{
 async function addCustomer(){
 
 
-    const name =
-    prompt("顧客名を入力してください");
+const name =
+document.getElementById("customerName").value;
 
 
-    if(!name){
-
-        return;
-
-    }
+const postal =
+document.getElementById("postal").value;
 
 
-
-    const snapshot =
-    await getDocs(
-        collection(db,"customers")
-    );
+const address1 =
+document.getElementById("address1").value;
 
 
-
-    let exists=false;
+const tel =
+document.getElementById("tel").value;
 
 
 
-    snapshot.forEach((doc)=>{
+if(!name){
 
+    alert("顧客名を入力してください");
 
-        if(doc.data().name === name){
-
-            exists=true;
-
-        }
-
-    });
-
-
-
-    if(exists){
-
-        alert("登録済みの顧客です");
-
-        return;
-
-    }
-
-
-
-    await addDoc(
-        collection(db,"customers"),
-        {
-
-            name:name,
-
-            createdAt:new Date()
-
-        }
-    );
-
-
-
-    alert("顧客を追加しました");
-
-
-    loadCustomers();
-
+    return;
 
 }
 
 
 
+await addDoc(
+collection(db,"customers"),
+{
+
+name:name,
+
+postal:postal,
+
+address1:address1,
+
+tel:tel,
+
+createdAt:new Date()
+
+}
+
+);
+
+
+
+alert("顧客を追加しました");
+
+
+
+document.getElementById("customerName").value="";
+document.getElementById("postal").value="";
+document.getElementById("address1").value="";
+document.getElementById("tel").value="";
+
+
+
+loadCustomers();
+
+
+}
+
+
 // ボタン
 
-addBtn.addEventListener(
+document.getElementById(
+"saveCustomerBtn"
+)
+.addEventListener(
 "click",
 addCustomer
 );
-
 
 
 // 起動
@@ -354,6 +374,80 @@ async()=>{
 
     loadCustomers();
 
+
+
+});
+
+searchInput.addEventListener(
+"input",
+()=>{
+
+
+    const text =
+    searchInput.value.toLowerCase();
+
+
+    const result =
+    customers.filter(customer=>{
+
+
+        return (
+
+            customer.name?.toLowerCase().includes(text)
+
+            ||
+
+            customer.postal?.includes(text)
+
+            ||
+
+            customer.address1?.toLowerCase().includes(text)
+||
+customer.address2?.toLowerCase().includes(text)
+
+            ||
+
+            customer.tel?.includes(text)
+
+        );
+
+
+    });
+
+
+    customerList.innerHTML="";
+
+
+    result.forEach(customer=>{
+
+
+        const div =
+        document.createElement("div");
+
+
+        div.className =
+        "customer-card";
+
+
+        div.innerHTML = `
+
+        <h3>🏢 ${customer.name}</h3>
+
+        <p>📮 ${customer.postal || ""}</p>
+
+        <p>
+📍 ${customer.address1 || ""}${customer.address2 || ""}
+</p>
+
+        <p>☎ ${customer.tel || ""}</p>
+
+        `;
+
+
+        customerList.appendChild(div);
+
+
+    });
 
 
 });

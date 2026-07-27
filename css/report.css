@@ -79,3 +79,33 @@ margin:5px 0;
     border-left:5px solid #1f3a5f;
 
 }
+
+.customerResult{
+
+    margin-top:5px;
+
+}
+
+
+.customerResult div{
+
+    background:white;
+
+    border:1px solid #ddd;
+
+    padding:12px;
+
+    margin-bottom:5px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+
+.customerResult div:hover{
+
+    background:#f3f6fa;
+
+}

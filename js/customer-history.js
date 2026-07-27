@@ -68,9 +68,6 @@ async function loadHistory(){
 report.tasks.forEach(task=>{
 
 
-            console.log("探してる顧客:", customer);
-console.log("日報の顧客:", task.customer);
-
 if(task.customer == customer){
 
 
@@ -81,7 +78,7 @@ if(task.customer == customer){
                 document.createElement("div");
 
 
-                div.className="card";
+                div.className="history-card";
 
 
                 div.innerHTML = `

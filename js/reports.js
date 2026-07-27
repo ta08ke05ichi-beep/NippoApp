@@ -30,7 +30,8 @@ async function loadReports(){
 
     const q =
 query(
-    collection(db,"reports")
+    collection(db,"reports"),
+    orderBy("date","desc")
 );
 
 
@@ -187,6 +188,9 @@ searchInput.addEventListener(
         report.employee
         +
         report.date;
+        task.customer
++
+task.workContent
 
 if(!report.tasks){
     return false;

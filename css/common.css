@@ -93,3 +93,18 @@ background:#294d7a;
 button:active{
 transform:scale(.98);
 }
+
+.history-card{
+
+    background:white;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    border-radius:12px;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,0.08);
+
+}

@@ -23,9 +23,26 @@
 
 <main>
 
-<button id="addCustomerBtn">
-＋ 顧客追加
+
+<div id="customerForm" class="customer-form">
+
+<h3>新規顧客登録</h3>
+
+<input id="customerName" placeholder="顧客名">
+
+<input id="postal" placeholder="郵便番号">
+
+<input id="address1" placeholder="住所">
+
+<input id="tel" placeholder="電話番号">
+
+
+<button id="saveCustomerBtn">
+登録
 </button>
+
+
+</div>
 
 <div class="card">
 
@@ -47,9 +64,9 @@ CSVを取り込む
 </div>
 
 <input
-type="text"
 id="searchInput"
-placeholder="🔍 顧客名で検索">
+type="text"
+placeholder="会社名・住所・TELで検索">
 
 <div id="customerList">
 
