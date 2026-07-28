@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-console.log("edit.js 読み込みOK");
+
 import {
 
 doc,

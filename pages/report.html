@@ -26,7 +26,9 @@
 </header>
 
 
+
 <main class="report-container">
+
 
 
 <div class="card">
@@ -34,16 +36,20 @@
 
 <label>日付</label>
 
-<input 
-type="date" 
+<input
+type="date"
 id="date">
+
 
 
 <label>名前</label>
 
 <select id="name">
 
-<option value="">選択してください</option>
+<option value="">
+選択してください
+</option>
+
 <option>竹市</option>
 <option>坂田</option>
 <option>酒井</option>
@@ -54,47 +60,129 @@ id="date">
 </select>
 
 
+</div>
 
-<label>顧客</label>
 
-<select id="customer">
 
-<option value="">顧客を選択してください</option>
+
+
+<div id="tasks">
+
+
+<div class="task-card">
+
+
+<h2>
+訪問①
+</h2>
+
+
+
+<label>
+顧客
+</label>
+
+
+<input
+type="text"
+class="customer-search"
+placeholder="顧客名を検索">
+
+
+<select
+class="customer-select">
+
+
+<option value="">
+顧客を選択してください
+</option>
+
 
 </select>
 
 
 
-<label>作業分類</label>
 
-<select id="work">
+<label>
+開始時間
+</label>
 
-<option value="">選択してください</option>
+
+<input
+type="time"
+class="start-time">
+
+
+
+
+
+<label>
+終了時間
+</label>
+
+
+<input
+type="time"
+class="end-time">
+
+
+
+
+
+
+<label>
+作業分類
+</label>
+
+
+<select
+class="work">
+
+
+<option value="">
+選択してください
+</option>
+
 <option>点検</option>
 <option>修理</option>
 <option>設置</option>
-<option>打ち合わせ</option>
+<option>社内業務</option>
 <option>その他</option>
+
 
 </select>
 
 
 
-<label>作業内容</label>
 
-<textarea 
-id="content"
+
+
+<label>
+作業内容
+</label>
+
+
+<textarea
+class="content"
 placeholder="作業した内容を入力してください">
 </textarea>
 
 
 
-<label>作業時間</label>
+</div>
 
-<input 
-type="text"
-id="time"
-placeholder="例：2時間">
+
+</div>
+
+
+
+
+
+<button id="addTaskBtn">
+
+＋ 訪問追加
+
+</button>
 
 
 
@@ -105,39 +193,50 @@ placeholder="例：2時間">
 </button>
 
 
-</div>
 
 
 </main>
 
 
+
+
+
+
+
 <nav class="bottom-nav">
+
 
 <a href="../index.html">
 ホーム
 </a>
 
+
 <a href="report.html">
 日報入力
 </a>
+
 
 <a href="reports.html">
 日報一覧
 </a>
 
+
 <a href="customers.html">
 顧客一覧
 </a>
 
+
 </nav>
+
+
+
 
 
 
 <script type="module" src="../js/report.js"></script>
 
 
+
 </body>
 
 </html>
-
-
