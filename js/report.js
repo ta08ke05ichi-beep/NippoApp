@@ -148,86 +148,76 @@ customers.length
 
 function setupCustomerSearch(card){
 
+    const search =
+    card.querySelector(".customer-search");
 
 
-const search =
-card.querySelector(".customer-search");
+    const select =
+    card.querySelector(".customer-select");
 
 
-const select =
-card.querySelector(".customer-select");
+    if(!search || !select){
 
-if(!search || !select){
+        return;
 
-    return;
-
-}
+    }
 
 
-search.addEventListener(
-"input",
-()=>{
+    search.addEventListener(
+    "input",
+    ()=>{
 
 
-const text =
-search.value
-.toLowerCase();
+        const text =
+        search.value.toLowerCase();
 
 
-select.innerHTML =
-`
-<option value="">
-顧客を選択してください
-</option>
-`;
+        select.innerHTML =
+        `
+        <option value="">
+        顧客を選択してください
+        </option>
+        `;
 
 
+        if(!text){
 
-if(!text){
+            return;
 
-return;
-
-}
-
+        }
 
 
+        customers
+        .filter(customer=>
 
-customers
-.filter(customer=>
+            customer.name
+            .toLowerCase()
+            .includes(text)
 
-customer.name
-.toLowerCase()
-.includes(text)
-
-)
-.slice(0,50)
-.forEach(customer=>{
-
-
-const option =
-document.createElement("option");
+        )
+        .slice(0,50)
+        .forEach(customer=>{
 
 
-option.value =
-customer.name;
+            const option =
+            document.createElement("option");
 
 
-option.textContent =
-customer.name;
+            option.value =
+            customer.name;
 
 
-
-select.appendChild(option);
-
-
-
-});
+            option.textContent =
+            customer.name;
 
 
+            select.appendChild(option);
 
-});
+
+        });
 
 
+    });
 
 }
 
