@@ -157,7 +157,11 @@ card.querySelector(".customer-search");
 const select =
 card.querySelector(".customer-select");
 
+if(!search || !select){
 
+    return;
+
+}
 
 
 search.addEventListener(
@@ -226,22 +230,6 @@ select.appendChild(option);
 
 
 }
-
-// 既存の訪問カードに検索機能を設定
-
-document
-.querySelectorAll(".task-card")
-.forEach(card=>{
-
-    setupCustomerSearch(card);
-
-});
-
-
-
-
-
-
 
 // 訪問追加
 
