@@ -144,14 +144,6 @@ customers.length
 }
 
 
-
-loadCustomers();
-
-
-
-
-
-
 // 顧客検索設定
 
 function setupCustomerSearch(card){
@@ -177,7 +169,7 @@ const text =
 search.value
 .toLowerCase();
 
-
+console.log("検索入力:", text);
 
 select.innerHTML =
 `
@@ -520,3 +512,21 @@ location.reload();
 
 
 });
+
+async function start(){
+
+    await loadCustomers();
+
+
+    document
+    .querySelectorAll(".task-card")
+    .forEach(card=>{
+
+        setupCustomerSearch(card);
+
+    });
+
+}
+
+
+start();
