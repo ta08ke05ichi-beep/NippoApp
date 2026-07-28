@@ -169,7 +169,6 @@ const text =
 search.value
 .toLowerCase();
 
-console.log("検索入力:", text);
 
 select.innerHTML =
 `
