@@ -34,6 +34,9 @@ async function loadSummary(){
     );
 
     let count = 0;
+    let work = 0;
+
+    const customers = new Set();
 
     const month =
     monthInput.value;
@@ -47,11 +50,10 @@ async function loadSummary(){
         const data = doc.data();
 
         if(
-            data.name !== name
+            data.employee !== name
         ){
             return;
         }
-
 
         if(
             !data.date.startsWith(month)
@@ -59,15 +61,23 @@ async function loadSummary(){
             return;
         }
 
-
         if(Array.isArray(data.tasks)){
 
             count += data.tasks.length;
+            work += data.tasks.length;
+
+            data.tasks.forEach(task=>{
+
+                if(task.customer){
+                    customers.add(task.customer);
+                }
+
+            });
 
         }else{
 
-            // 古い日報対応
             count++;
+            work++;
 
         }
 
@@ -76,6 +86,12 @@ async function loadSummary(){
 
     visitCount.textContent =
     `${count}件`;
+
+    workCount.textContent =
+    `${work}件`;
+
+    customerCount.textContent =
+    `${customers.size}社`;
 
 }
 
@@ -92,3 +108,9 @@ document.getElementById("visitCount")
     `visit-list.html?month=${month}&name=${encodeURIComponent(name)}`;
 
 });
+
+const workCount =
+document.getElementById("workCount");
+
+const customerCount =
+document.getElementById("customerCount");
