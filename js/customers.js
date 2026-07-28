@@ -216,108 +216,190 @@ const importStatus =
 document.getElementById("importStatus");
 
 
-
 importBtn.addEventListener(
 "click",
 async()=>{
 
 
-    const file =
-    csvFile.files[0];
+const file =
+csvFile.files[0];
 
 
-    if(!file){
+if(!file){
 
-        alert("CSVファイルを選択してください");
+alert("CSVファイルを選択してください");
 
-        return;
+return;
 
-    }
-
-
-    importStatus.textContent =
-    "CSV読み込み中...";
+}
 
 
-
-    const text =
-    await file.text();
-
+importStatus.textContent =
+"CSV読み込み中...";
 
 
-    const lines =
-    text.split(/\r?\n/);
+const text =
+await file.text();
 
 
 
-   let batch = writeBatch(db);
+const lines =
+text.split(/\r?\n/);
+
+
+
+let batch =
+writeBatch(db);
+
 
 let count = 0;
+
+let batchCount = 0;
+
 
 
 for(let i = 1; i < lines.length; i++){
 
+
     if(!lines[i].trim()){
+
         continue;
+
     }
+
 
 
     const row =
     lines[i].split(",");
 
 
+
+    const name =
+    row[0]?.trim();
+
+
+
+    if(!name){
+
+        continue;
+
+    }
+
+
+
     const customerRef =
     doc(collection(db,"customers"));
 
 
-    batch.set(customerRef,{
-        name: row[0]?.trim() || "",
-        name2: row[1]?.trim() || "",
-        honorific: row[2]?.trim() || "",
-        postal: row[3]?.trim() || "",
-        address1: row[4]?.trim() || "",
-        address2: row[5]?.trim() || "",
-        tel: row[6]?.trim() || "",
-        fax: row[7]?.trim() || "",
-        contactName: row[8]?.trim() || "",
-        contactHonorific: row[9]?.trim() || "",
-        createdAt:new Date()
-    });
+
+    batch.set(
+    customerRef,
+    {
+
+        name:name,
+
+        name2:
+        row[1]?.trim() || "",
 
 
-    count++;
+        honorific:
+        row[2]?.trim() || "",
 
 
-    if(count % 500 === 0){
+        postal:
+        row[3]?.trim() || "",
 
-        await batch.commit();
 
-        batch = writeBatch(db);
+        address1:
+        row[4]?.trim() || "",
+
+
+        address2:
+        row[5]?.trim() || "",
+
+
+        tel:
+        row[6]?.trim() || "",
+
+
+        fax:
+        row[7]?.trim() || "",
+
+
+        contactName:
+        row[8]?.trim() || "",
+
+
+        contactHonorific:
+        row[9]?.trim() || "",
+
+
+        createdAt:
+        new Date()
 
     }
+
+);
+
+
+
+count++;
+
+batchCount++;
+
+
+
+// 500件ごと保存
+
+if(batchCount === 500){
+
+
+    await batch.commit();
+
+
+    batch =
+    writeBatch(db);
+
+
+    batchCount = 0;
+
+
+    importStatus.textContent =
+    `${count}件登録中...`;
 
 }
 
 
-await batch.commit();
+}
 
 
 
-    importStatus.textContent =
-    `${count}件の顧客を登録しました`;
+// 残り保存
+
+if(batchCount > 0){
+
+    await batch.commit();
+
+}
 
 
 
-    alert(
-        "CSV取込完了しました"
-    );
+importStatus.textContent =
+`${count}件の顧客を登録しました`;
 
 
-    loadCustomers();
 
+alert(
+"CSV取込完了しました"
+);
+
+
+
+loadCustomers();
 
 
 });
+
 
 searchInput.addEventListener(
 "input",

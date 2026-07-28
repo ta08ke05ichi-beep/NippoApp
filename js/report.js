@@ -148,76 +148,112 @@ customers.length
 
 function setupCustomerSearch(card){
 
-    const search =
-    card.querySelector(".customer-search");
+
+const search =
+card.querySelector(".customer-search");
 
 
-    const select =
-    card.querySelector(".customer-select");
+const result =
+card.querySelector(".customer-result");
 
 
-    if(!search || !select){
-
-        return;
-
-    }
+const value =
+card.querySelector(".customer-value");
 
 
-    search.addEventListener(
-    "input",
-    ()=>{
+
+if(!search || !result || !value){
+
+    return;
+
+}
 
 
-        const text =
-        search.value.toLowerCase();
+
+search.addEventListener(
+"input",
+()=>{
 
 
-        select.innerHTML =
-        `
-        <option value="">
-        顧客を選択してください
-        </option>
-        `;
+const text =
+search.value
+.toLowerCase()
+.replace(/\s/g,"");
 
 
-        if(!text){
 
-            return;
-
-        }
+result.innerHTML="";
 
 
-        customers
-        .filter(customer=>
 
-            customer.name
-            .toLowerCase()
-            .includes(text)
+if(!text){
 
-        )
-        .slice(0,50)
-        .forEach(customer=>{
+    return;
 
+}
 
-            const option =
-            document.createElement("option");
+customers
+.filter(customer=>{
 
 
-            option.value =
-            customer.name;
+const name =
+customer.name
+.toLowerCase()
+.replace(/\s/g,"");
 
 
-            option.textContent =
-            customer.name;
+return name.includes(text);
 
 
-            select.appendChild(option);
+})
+
+.slice(0,20)
+.forEach(customer=>{
 
 
-        });
+const div =
+document.createElement("div");
 
 
-    });
+div.className =
+"customer-item";
+
+
+div.textContent =
+customer.name;
+
+
+
+div.addEventListener(
+"click",
+()=>{
+
+
+search.value =
+customer.name;
+
+
+value.value =
+customer.name;
+
+
+result.innerHTML="";
+
+
+});
+
+
+result.appendChild(div);
+
+
+
+});
+
+
+
+});
+
+
 
 }
 
@@ -378,9 +414,8 @@ let tasks = [];
 
 taskCards.forEach(card=>{
 
-
 const customer =
-card.querySelector(".customer-select").value;
+card.querySelector(".customer-value").value;
 
 
 const startTime =
@@ -495,13 +530,26 @@ async function start(){
     await loadCustomers();
 
 
-    document
-    .querySelectorAll(".task-card")
-    .forEach(card=>{
+    setTimeout(()=>{
 
-        setupCustomerSearch(card);
 
-    });
+        document
+        .querySelectorAll(".task-card")
+        .forEach(card=>{
+
+            setupCustomerSearch(card);
+
+        });
+
+
+        console.log(
+        "検索設定完了",
+        document.querySelectorAll(".task-card").length
+        );
+
+
+    },500);
+
 
 }
 

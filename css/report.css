@@ -144,3 +144,44 @@
     margin-bottom:8px;
 
 }
+
+.customer-result{
+
+    background:white;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    margin-top:5px;
+
+    overflow:hidden;
+
+}
+
+
+.customer-item{
+
+    padding:12px;
+
+    border-bottom:1px solid #eee;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+
+.customer-item:last-child{
+
+    border-bottom:none;
+
+}
+
+
+.customer-item:hover{
+
+    background:#f5f5f5;
+
+}
