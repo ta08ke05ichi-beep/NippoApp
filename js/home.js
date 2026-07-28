@@ -1,3 +1,12 @@
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    getDocs,
+    query,
+    where
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
 document.getElementById("reportBtn").addEventListener("click",()=>{
 
     location.href = "pages/report.html";
@@ -21,3 +30,68 @@ document.getElementById("summaryBtn").addEventListener("click",()=>{
     location.href = "pages/summary.html";
 
 });
+
+// 今日の日報表示
+
+async function loadTodayReports(){
+
+console.log("今日の日報読み込み開始");
+
+const today = new Date();
+
+const year =
+today.getFullYear();
+
+const month =
+String(today.getMonth()+1).padStart(2,"0");
+
+const day =
+String(today.getDate()).padStart(2,"0");
+
+
+const todayText =
+`${year}-${month}-${day}`;
+
+
+
+const snapshot =
+await getDocs(
+collection(db,"reports")
+);
+
+
+
+let count = 0;
+
+
+snapshot.forEach((doc)=>{
+
+
+const data =
+doc.data();
+
+
+if(data.date === todayText){
+
+    count++;
+
+}
+
+
+});
+
+console.log("今日の日報件数:", count);
+
+document.getElementById(
+"todayCount"
+).textContent =
+
+`今日の日報 ${count}件`;
+
+
+
+}
+
+
+
+loadTodayReports();
