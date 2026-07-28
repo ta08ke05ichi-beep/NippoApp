@@ -4,69 +4,192 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>顧客一覧</title>
 
+
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/customers.css">
 
+
+<link rel="manifest" href="../manifest.json">
+
+
 </head>
+
 
 <body>
 
+
 <header>
 
-<h1>🏢 顧客一覧</h1>
+<h1>👥 顧客管理</h1>
 
 </header>
 
-<main>
 
 
-<div id="customerForm" class="customer-form">
+<main class="customer-container">
 
-<h3>新規顧客登録</h3>
 
-<input id="customerName" placeholder="顧客名">
 
-<input id="postal" placeholder="郵便番号">
+<!-- 顧客登録 -->
 
-<input id="address1" placeholder="住所">
+<section class="card">
 
-<input id="tel" placeholder="電話番号">
+
+<h2>顧客登録</h2>
+
+
+
+<label>
+顧客名
+</label>
+
+<input
+id="customerName"
+type="text"
+placeholder="例：株式会社〇〇">
+
+
+
+<label>
+郵便番号
+</label>
+
+<input
+id="postal"
+type="text"
+placeholder="例：123-4567">
+
+
+
+<label>
+住所1
+</label>
+
+<input
+id="address1"
+type="text"
+placeholder="例：静岡県〇〇市">
+
+
+
+<label>
+住所2
+</label>
+
+<input
+id="address2"
+type="text"
+placeholder="例：〇〇町1-2-3">
+
+
+
+<label>
+電話番号
+</label>
+
+<input
+id="tel"
+type="text"
+placeholder="例：054-000-0000">
+
+
+
 
 
 <button id="saveCustomerBtn">
-登録
+
+顧客を登録
+
 </button>
 
 
-</div>
 
-<div class="card">
+</section>
 
-<h2>📥 CSV取込</h2>
+
+
+
+
+
+<!-- CSV取込 -->
+
+<section class="card">
+
+
+<h2>CSV一括登録</h2>
+
+
 
 <input
 type="file"
 id="csvFile"
 accept=".csv">
 
+
+
 <button id="importBtn">
 
-CSVを取り込む
+CSV取込
 
 </button>
 
-<p id="importStatus"></p>
 
-</div>
+
+<p id="importStatus">
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- 検索 -->
+
+<section class="card">
+
+
+<h2>顧客検索</h2>
+
+
 
 <input
+
 id="searchInput"
+
 type="text"
-placeholder="会社名・住所・TELで検索">
+
+placeholder="顧客名・住所・電話番号で検索">
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- 顧客一覧 -->
+
+<section class="card">
+
+
+<h2>登録済み顧客</h2>
+
+
 
 <div id="customerList">
 
@@ -74,13 +197,51 @@ placeholder="会社名・住所・TELで検索">
 
 </div>
 
-<button id="moreBtn">
-もっと見る
-</button>
+
+
+</section>
+
+
+
 
 </main>
 
+
+
+
+
+<nav class="bottom-nav">
+
+
+<a href="../index.html">
+ホーム
+</a>
+
+
+<a href="report.html">
+日報入力
+</a>
+
+
+<a href="reports.html">
+日報一覧
+</a>
+
+
+<a href="customers.html">
+顧客一覧
+</a>
+
+
+</nav>
+
+
+
+
+
 <script type="module" src="../js/customers.js"></script>
+
+
 
 </body>
 

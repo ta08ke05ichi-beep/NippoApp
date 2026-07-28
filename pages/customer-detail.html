@@ -16,6 +16,7 @@
 
 <body>
 
+
 <header>
 
 <h1>🏢 顧客詳細</h1>
@@ -23,35 +24,48 @@
 </header>
 
 
-<main>
+
+<main class="detail-container">
+
+
 
 <div class="card">
 
-<label>顧客名</label>
-<input type="text" id="name">
 
-<label>住所</label>
-<input type="text" id="address">
+<h2>顧客情報</h2>
 
-<label>電話番号</label>
-<input type="text" id="tel">
-
-<label>メモ</label>
-<textarea id="memo"></textarea>
-
-<button id="saveBtn">
-💾 保存
-</button>
-
-</div>
-
-<h2>📋 対応履歴</h2>
 
 <div id="customerInfo">
 
 読み込み中...
 
 </div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>📋 対応履歴</h2>
+
+
+<div id="historyList">
+
+読み込み中...
+
+</div>
+
+
+</div>
+
+
+
+
 
 <button id="backBtn">
 
@@ -60,10 +74,14 @@
 </button>
 
 
+
 </main>
 
 
+
+
 <script type="module" src="../js/customer-detail.js"></script>
+
 
 </body>
 

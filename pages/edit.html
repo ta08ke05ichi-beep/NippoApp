@@ -4,16 +4,24 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>日報編集</title>
+
 
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/edit.css">
 
+
 </head>
 
+
+
 <body>
+
+
 
 <header>
 
@@ -22,12 +30,19 @@
 </header>
 
 
+
+
 <main>
+
 
 
 <div class="card">
 
-<label>担当者</label>
+
+<label>
+担当者
+</label>
+
 
 <select id="name">
 
@@ -35,54 +50,132 @@
 <option>田中</option>
 <option>山本</option>
 
+
 </select>
 
-</div>
 
-
-<div class="card">
-
-<label>日付</label>
-
-<input type="date" id="date">
 
 </div>
 
 
+
+
+
 <div class="card">
 
-<label>顧客</label>
+
+<label>
+日付
+</label>
+
+
+<input 
+type="date"
+id="date">
+
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<label>
+顧客
+</label>
+
 
 <select id="customer">
 
-<option>選択してください</option>
+
+<option value="">
+選択してください
+</option>
+
 
 </select>
 
+
+
 </div>
+
+
+
+
 
 
 <div class="card">
 
-<label>開始時間</label>
 
-<input type="time" id="startTime">
+<label>
+作業分類
+</label>
 
 
-<label>終了時間</label>
+<input
+type="text"
+id="work"
+placeholder="例：点検・修理・設置">
 
-<input type="time" id="endTime">
+
 
 </div>
+
+
+
+
+
 
 
 <div class="card">
 
-<label>作業内容</label>
 
-<textarea id="work"></textarea>
+<label>
+作業内容
+</label>
+
+
+<textarea
+id="content"
+placeholder="作業内容を入力してください">
+</textarea>
+
+
 
 </div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<label>
+作業時間
+</label>
+
+
+<input
+type="text"
+id="time"
+placeholder="例：2時間">
+
+
+
+</div>
+
+
+
+
+
 
 
 <button id="saveBtn">
@@ -92,10 +185,17 @@
 </button>
 
 
+
 </main>
 
 
+
+
+
+
+
 <script type="module" src="../js/edit.js"></script>
+
 
 </body>
 

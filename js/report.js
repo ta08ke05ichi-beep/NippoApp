@@ -1,150 +1,115 @@
 import { db } from "./firebase.js";
 
 import {
-    collection,
-    getDocs,
-    addDoc
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+collection,
+addDoc,
+getDocs,
+serverTimestamp
+
+} from 
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-// 今日の日付を自動入力
+
+const dateInput = document.getElementById("date");
+
+const nameInput = document.getElementById("name");
+
+const customerInput = document.getElementById("customer");
+
+const workInput = document.getElementById("work");
+
+const contentInput = document.getElementById("content");
+
+const timeInput = document.getElementById("time");
+
+const saveBtn = document.getElementById("saveBtn");
+
+
+
+
+// 今日の日付セット
 
 const today = new Date();
 
-const year = today.getFullYear();
-const month = String(today.getMonth() + 1).padStart(2,"0");
-const day = String(today.getDate()).padStart(2,"0");
+const yyyy = today.getFullYear();
+
+const mm = String(today.getMonth()+1)
+.padStart(2,"0");
+
+const dd = String(today.getDate())
+.padStart(2,"0");
 
 
-document.getElementById("date").value =
-`${year}-${month}-${day}`;
-
-
-
-
-// 保存
-
-document.getElementById("saveBtn")
-.addEventListener("click", async()=>{
-
-
-    const taskElements =
-    document.querySelectorAll(".task");
-
-
-    const tasks = [];
-
-
-    taskElements.forEach((task)=>{
-
-
-        tasks.push({
-
-            customer:
-task.querySelector(".customer").value,
-
-
-            startTime:
-            task.querySelector(".startTime").value,
-
-
-            endTime:
-            task.querySelector(".endTime").value,
-
-
-            workContent:
-task.querySelector(".work").value
-
-        });
-
-
-    });
+dateInput.value =
+`${yyyy}-${mm}-${dd}`;
 
 
 
-    const report = {
-
-    employee:
-    document.getElementById("name").value,
 
 
-    date:
-    document.getElementById("date").value,
+// 前回の名前を保存
+
+const savedName =
+localStorage.getItem("reportName");
 
 
-    tasks: tasks,
+if(savedName){
 
+nameInput.value = savedName;
 
-    createdAt:
-    new Date()
-
-};
+}
 
 
 
-    try{
+nameInput.addEventListener(
+"change",
+()=>{
 
-
-        await addDoc(
-            collection(db,"reports"),
-            report
-        );
-
-
-        alert("保存しました");
-
-
-        // 作業内容リセット
-
-        document.querySelectorAll(".work")
-        .forEach(e=>e.value="");
-
-
-        document.querySelectorAll(".startTime")
-        .forEach(e=>e.value="");
-
-
-        document.querySelectorAll(".endTime")
-        .forEach(e=>e.value="");
-
-
-        document.querySelectorAll(".customer")
-.forEach(e=>e.value="");
-
-
-    }catch(error){
-
-
-        console.error(error);
-
-        alert("保存失敗");
-
-
-    }
-
+localStorage.setItem(
+"reportName",
+nameInput.value
+);
 
 });
 
-// 顧客検索
 
-let customers = [];
 
+
+
+
+// 顧客一覧読み込み
 
 async function loadCustomers(){
 
 
-const snapshot =
+const snap =
 await getDocs(
 collection(db,"customers")
 );
 
 
-customers = [];
+snap.forEach(doc=>{
 
 
-snapshot.forEach((doc)=>{
+const data = doc.data();
 
-customers.push(doc.data());
+
+const option =
+document.createElement("option");
+
+
+option.value =
+data.name;
+
+
+option.textContent =
+data.name;
+
+
+customerInput.appendChild(option);
+
 
 });
 
@@ -155,156 +120,80 @@ customers.push(doc.data());
 loadCustomers();
 
 
-setupCustomerSearch(
-document.querySelector(".task")
-);
 
 
 
-function setupCustomerSearch(task){
+
+// 保存
+
+saveBtn.addEventListener(
+"click",
+async()=>{
 
 
-const search =
-task.querySelector(".customerSearch");
+if(!nameInput.value){
 
+alert("名前を選択してください");
 
-const result =
-task.querySelector(".customerResult");
+return;
 
-
-const hidden =
-task.querySelector(".customer");
+}
 
 
 
-search.addEventListener(
-"input",
-()=>{
+if(!customerInput.value){
+
+alert("顧客を選択してください");
+
+return;
+
+}
 
 
-const text =
-search.value.toLowerCase();
 
 
-result.innerHTML="";
+await addDoc(
+
+collection(db,"reports"),
+
+{
 
 
-customers
-.filter(c =>
-c.name.toLowerCase().includes(text)
-)
-.slice(0,10)
-.forEach(c=>{
+date:dateInput.value,
+
+name:nameInput.value,
+
+customer:customerInput.value,
+
+work:workInput.value,
+
+content:contentInput.value,
+
+time:timeInput.value,
 
 
-const div =
-document.createElement("div");
-
-
-div.textContent =
-"🏢 " + c.name;
-
-
-div.onclick = ()=>{
-
-
-search.value =
-c.name;
-
-
-hidden.value =
-c.name;
-
-
-result.innerHTML="";
-
-
-};
-
-
-result.appendChild(div);
-
-
-});
-
-
-});
+createdAt:
+serverTimestamp()
 
 
 }
 
-// 作業追加
 
-let taskCount = 1;
-
-
-
-document.getElementById("addTaskBtn")
-.addEventListener("click",()=>{
-
-
-    taskCount++;
-
-
-    const tasks =
-    document.getElementById("tasks");
+);
 
 
 
-    const div =
-    document.createElement("div");
+alert("保存しました");
 
 
 
-    div.className =
-    "card task";
+// 入力クリア
+
+contentInput.value="";
+
+timeInput.value="";
 
 
+}
 
-    div.innerHTML = `
-
-<h3>作業${taskCount}</h3>
-
-
-<label>顧客</label>
-
-<input 
-class="customerSearch"
-placeholder="顧客名を入力してください">
-
-<div class="customerResult"></div>
-
-<input 
-type="hidden"
-class="customer">
-
-
-<label>開始時間</label>
-
-<input type="time" class="startTime">
-
-
-<label>終了時間</label>
-
-<input type="time" class="endTime">
-
-
-<label>作業内容</label>
-
-<textarea class="work"></textarea>
-
-`;
-
-
-
-    tasks.appendChild(div);
-
-setupCustomerSearch(div);
-
-    // 追加した作業にも顧客を入れる
-
-    loadCustomers();
-
-
-
-});
+);

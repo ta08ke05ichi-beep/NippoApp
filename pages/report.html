@@ -11,9 +11,13 @@
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/report.css">
 
+<link rel="manifest" href="../manifest.json">
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -21,106 +25,78 @@
 
 </header>
 
-<main>
+
+<main class="report-container">
+
 
 <div class="card">
 
-<label>担当者</label>
+
+<label>日付</label>
+
+<input 
+type="date" 
+id="date">
+
+
+<label>名前</label>
 
 <select id="name">
 
+<option value="">選択してください</option>
 <option>竹市</option>
-<option>西田</option>
-<option>太田（社長）</option>
 <option>坂田</option>
 <option>酒井</option>
+<option>太田（社長）</option>
+<option>西田</option>
 <option>太田（相談役）</option>
 
 </select>
 
-</div>
-
-<div class="card">
-
-<label>日付</label>
-
-<input
-type="date"
-id="date">
-
-</div>
-
-<div id="tasks">
 
 
-<div class="card task">
+<label>顧客</label>
 
+<select id="customer">
 
-<h3>作業①</h3>
-
-<label>作業区分</label>
-
-<select class="workType">
-
-    <option value="visit">🏢 顧客訪問</option>
-
-    <option value="office">🏢 社内作業</option>
-
-    <option value="other">📌 その他</option>
+<option value="">顧客を選択してください</option>
 
 </select>
 
-<div class="customer-search">
-
-<label>
-顧客
-</label>
-
-<input 
-class="customerSearch"
-placeholder="顧客名を入力してください">
-
-<div class="customerResult"></div>
-
-<input 
-type="hidden"
-class="customer">
-
-</div>
 
 
-<label>開始時間</label>
+<label>作業分類</label>
 
-<input
-type="time"
-class="startTime">
+<select id="work">
 
+<option value="">選択してください</option>
+<option>点検</option>
+<option>修理</option>
+<option>設置</option>
+<option>打ち合わせ</option>
+<option>その他</option>
 
-<label>終了時間</label>
+</select>
 
-<input
-type="time"
-class="endTime">
 
 
 <label>作業内容</label>
 
-<textarea
-class="work"
-placeholder="作業内容を入力してください"></textarea>
+<textarea 
+id="content"
+placeholder="作業した内容を入力してください">
+</textarea>
 
 
-</div>
+
+<label>作業時間</label>
+
+<input 
+type="text"
+id="time"
+placeholder="例：2時間">
 
 
-</div>
-
-
-<button id="addTaskBtn">
-
-＋ 作業追加
-
-</button>
 
 <button id="saveBtn">
 
@@ -128,21 +104,40 @@ placeholder="作業内容を入力してください"></textarea>
 
 </button>
 
+
+</div>
+
+
 </main>
 
+
+<nav class="bottom-nav">
+
+<a href="../index.html">
+ホーム
+</a>
+
+<a href="report.html">
+日報入力
+</a>
+
+<a href="reports.html">
+日報一覧
+</a>
+
+<a href="customers.html">
+顧客一覧
+</a>
+
+</nav>
+
+
+
 <script type="module" src="../js/report.js"></script>
+
 
 </body>
 
 </html>
 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>日報詳細</title>
 

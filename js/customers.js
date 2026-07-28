@@ -250,115 +250,56 @@ async()=>{
 
 
 
-    const batch =
-    writeBatch(db);
+   let batch = writeBatch(db);
+
+let count = 0;
 
 
+for(let i = 1; i < lines.length; i++){
 
-    let count = 0;
-
-
-
-    for(let i = 1; i < lines.length; i++){
-
-
-        if(!lines[i].trim()){
-
-            continue;
-
-        }
-
-
-
-        const row =
-        lines[i].split(",");
-
-
-
-        const customerName =
-        row[0]?.trim();
-
-
-
-        if(!customerName){
-
-            continue;
-
-        }
-
-
-
-        const customerRef =
-        doc(collection(db,"customers"));
-
-
-
-        batch.set(
-    customerRef,
-    {
-
-        name:
-        row[0]?.trim() || "",
-
-        name2:
-        row[1]?.trim() || "",
-
-        honorific:
-        row[2]?.trim() || "",
-
-        postal:
-        row[3]?.trim() || "",
-
-        address1:
-        row[4]?.trim() || "",
-
-        address2:
-        row[5]?.trim() || "",
-
-        tel:
-        row[6]?.trim() || "",
-
-        fax:
-        row[7]?.trim() || "",
-
-        contactName:
-        row[8]?.trim() || "",
-
-        contactHonorific:
-        row[9]?.trim() || "",
-
-        createdAt:
-        new Date()
-
-    }
-);
-
-
-
-        count++;
-
-
-
-        // Firestoreは1回500件までなので分割
-
-        if(count % 500 === 0){
-
-
-            await batch.commit();
-
-
-            importStatus.textContent =
-            `${count}件登録中...`;
-
-        }
-
+    if(!lines[i].trim()){
+        continue;
     }
 
 
+    const row =
+    lines[i].split(",");
 
-    // 残りを保存
 
-    await batch.commit();
+    const customerRef =
+    doc(collection(db,"customers"));
+
+
+    batch.set(customerRef,{
+        name: row[0]?.trim() || "",
+        name2: row[1]?.trim() || "",
+        honorific: row[2]?.trim() || "",
+        postal: row[3]?.trim() || "",
+        address1: row[4]?.trim() || "",
+        address2: row[5]?.trim() || "",
+        tel: row[6]?.trim() || "",
+        fax: row[7]?.trim() || "",
+        contactName: row[8]?.trim() || "",
+        contactHonorific: row[9]?.trim() || "",
+        createdAt:new Date()
+    });
+
+
+    count++;
+
+
+    if(count % 500 === 0){
+
+        await batch.commit();
+
+        batch = writeBatch(db);
+
+    }
+
+}
+
+
+await batch.commit();
 
 
 
