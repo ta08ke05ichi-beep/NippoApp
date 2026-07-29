@@ -349,38 +349,6 @@ if(submitBtn){
 let customers = [];
 
 
-// 顧客データ取得
-async function loadCustomers(){
-
-    const snapshot =
-    await getDocs(
-        collection(db,"customers")
-    );
-
-
-    customers = [];
-
-
-    snapshot.forEach(doc=>{
-
-        customers.push(
-            doc.data()
-        );
-
-    });
-
-
-    console.log(
-        "顧客一覧",
-        customers
-    );
-
-}
-
-
-loadCustomers();
-
-
 
 // 入力したら検索
 
