@@ -185,3 +185,33 @@
     background:#f5f5f5;
 
 }
+
+.customer-detail{
+
+    margin-top:10px;
+
+    padding:10px;
+
+    background:#f8f9fa;
+
+    border-left:4px solid #4CAF50;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+}
+
+.customer-detail p{
+
+    margin:6px 0;
+
+}
+
+.customer-detail strong{
+
+    display:inline-block;
+
+    width:60px;
+
+}

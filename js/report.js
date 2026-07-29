@@ -122,15 +122,33 @@ snapshot.forEach(doc=>{
 const data =
 doc.data();
 
-
 customers.push({
 
-id:doc.id,
+    id: doc.id,
 
-name:data.name
+    name: data.name,
+
+    searchName:
+
+    data.name
+
+    .replaceAll("株式会社","かぶしきがいしゃ")
+
+    .replaceAll("有限会社","ゆうげんがいしゃ")
+
+    .replaceAll("合同会社","ごうどうがいしゃ")
+
+    .replaceAll("（株）","かぶしきがいしゃ")
+
+    .replaceAll("(株)","かぶしきがいしゃ")
+
+    .replaceAll("（有）","ゆうげんがいしゃ")
+
+    .replaceAll("(有)","ゆうげんがいしゃ")
+
+    .toLowerCase()
 
 });
-
 
 });
 
@@ -140,6 +158,10 @@ console.log(
 customers.length
 );
 
+console.log(
+"検索用データ:",
+customers[0]
+);
 
 }
 
@@ -160,7 +182,11 @@ card.querySelector(".customer-result");
 const value =
 card.querySelector(".customer-value");
 
+const address =
+card.querySelector(".customer-address");
 
+const tel =
+card.querySelector(".customer-tel");
 
 if(!search || !result || !value){
 
@@ -180,7 +206,10 @@ search.value
 .toLowerCase()
 .replace(/\s/g,"");
 
-
+console.log(
+    "検索確認:",
+    customers[0]
+);
 
 result.innerHTML="";
 
@@ -197,12 +226,25 @@ customers
 
 
 const name =
-customer.name
-.toLowerCase()
-.replace(/\s/g,"");
+(customer.name || "")
+.toLowerCase();
 
 
-return name.includes(text);
+const searchName =
+(customer.searchName || "")
+.toLowerCase();
+
+
+
+return (
+
+name.includes(text)
+
+||
+
+searchName.includes(text)
+
+);
 
 
 })
@@ -228,17 +270,24 @@ div.addEventListener(
 "click",
 ()=>{
 
+    search.value =
+    customer.name;
 
-search.value =
-customer.name;
+    value.value =
+    customer.name;
 
+    address.textContent =
+    customer.address1 || "";
 
-value.value =
-customer.name;
+    tel.textContent =
+    customer.tel || "";
 
+    console.log(
+    "選択した顧客:",
+    customer
+    );
 
-result.innerHTML="";
-
+    result.innerHTML="";
 
 });
 
@@ -411,32 +460,49 @@ document.querySelectorAll(".task-card");
 let tasks = [];
 
 
-
 taskCards.forEach(card=>{
 
-const customer =
-card.querySelector(".customer-value").value;
 
+const customerInput =
+card.querySelector(".customer-value");
+
+
+const customer =
+customerInput ? customerInput.value : "";
+
+
+
+const startTimeInput =
+card.querySelector(".start-time");
 
 const startTime =
-card.querySelector(".start-time").value;
+startTimeInput ? startTimeInput.value : "";
 
+
+
+const endTimeInput =
+card.querySelector(".end-time");
 
 const endTime =
-card.querySelector(".end-time").value;
+endTimeInput ? endTimeInput.value : "";
 
+
+
+const workInput =
+card.querySelector(".work");
 
 const work =
-card.querySelector(".work").value;
+workInput ? workInput.value : "";
 
+
+
+const contentInput =
+card.querySelector(".content");
 
 const content =
-card.querySelector(".content").value;
+contentInput ? contentInput.value : "";
 
 
-
-
-// 空の行は保存しない
 
 if(
 !customer &&
@@ -447,7 +513,6 @@ if(
 return;
 
 }
-
 
 
 tasks.push({
@@ -462,13 +527,10 @@ work:work,
 
 content:content
 
-
 });
 
 
 });
-
-
 
 
 

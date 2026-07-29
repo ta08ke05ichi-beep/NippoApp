@@ -60,12 +60,40 @@ async function loadCustomers(){
     snapshot.forEach((doc)=>{
 
 
-        const data = doc.data();
+const data = doc.data();
 
-        customers.push(data);
 
-        const div =
-        document.createElement("div");
+customers.push({
+
+    id: doc.id,
+
+    name: data.name,
+
+    searchName:
+
+    data.name
+
+    .replaceAll("株式会社","かぶしきがいしゃ")
+
+    .replaceAll("有限会社","ゆうげんがいしゃ")
+
+    .replaceAll("合同会社","ごうどうがいしゃ")
+
+    .replaceAll("（株）","かぶしきがいしゃ")
+
+    .replaceAll("(株)","かぶしきがいしゃ")
+
+    .replaceAll("（有）","ゆうげんがいしゃ")
+
+    .replaceAll("(有)","ゆうげんがいしゃ")
+
+    .toLowerCase()
+
+});
+
+
+const div =
+document.createElement("div");
 
 
         div.className="customer-card";
@@ -296,46 +324,52 @@ for(let i = 1; i < lines.length; i++){
     customerRef,
     {
 
-        name:name,
-
-        name2:
-        row[1]?.trim() || "",
+      name:
+row[0]?.trim() || "",
 
 
-        honorific:
-        row[2]?.trim() || "",
+kana:
+row[1]?.trim() || "",
 
 
-        postal:
-        row[3]?.trim() || "",
+name2:
+row[2]?.trim() || "",
 
 
-        address1:
-        row[4]?.trim() || "",
+honorific:
+row[3]?.trim() || "",
 
 
-        address2:
-        row[5]?.trim() || "",
+postal:
+row[4]?.trim() || "",
 
 
-        tel:
-        row[6]?.trim() || "",
+address1:
+row[5]?.trim() || "",
 
 
-        fax:
-        row[7]?.trim() || "",
+address2:
+row[6]?.trim() || "",
 
 
-        contactName:
-        row[8]?.trim() || "",
+tel:
+row[7]?.trim() || "",
 
 
-        contactHonorific:
-        row[9]?.trim() || "",
+fax:
+row[8]?.trim() || "",
 
 
-        createdAt:
-        new Date()
+contactName:
+row[9]?.trim() || "",
+
+
+contactHonorific:
+row[10]?.trim() || "",
+
+
+createdAt:
+new Date()
 
     }
 
