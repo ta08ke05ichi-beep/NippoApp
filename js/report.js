@@ -13,18 +13,6 @@ import {
 } from 
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-console.log(
-"検索:",
-search,
-"件数:",
-customers.filter(customer =>
-    customer.searchName
-    &&
-    customer.searchName
-    .toLowerCase()
-    .includes(search)
-).length
-);
 
 // ==============================
 // 要素取得
@@ -349,74 +337,50 @@ customerSearch.addEventListener(
     }
 
 
-
-    customers
-.filter(customer => {
-
-
     const search =
     keyword
     .toLowerCase()
     .replace(/\s/g,"");
 
 
-    return customer.searchName
-&&
-customer.searchName
-.toLowerCase()
-.includes(search);
-
-})
-.forEach(customer=>{
+    console.log(
+        "検索文字:",
+        search
+    );
 
 
-    const div =
-    document.createElement("div");
+    customers
+    .filter(customer=>{
 
 
-    div.textContent =
-    customer.name;
+        return customer.searchName
+        &&
+        customer.searchName
+        .toLowerCase()
+        .includes(search);
 
 
-    div.className =
-    "customer-item";
+    })
+    .forEach(customer=>{
 
 
-    div.onclick = ()=>{
+        const div =
+        document.createElement("div");
 
 
-        customerSearch.value =
+        div.textContent =
         customer.name;
 
 
-        customerValue.value =
-        customer.name;
+        div.className =
+        "customer-item";
 
 
-        document.querySelector(".customer-name").textContent =
-        customer.name;
+        customerResult.appendChild(div);
 
 
-        document.querySelector(".customer-address").textContent =
-        customer.address1;
-
-
-        document.querySelector(".customer-tel").textContent =
-        customer.tel;
-
-
-        customerResult.innerHTML =
-        "";
-
-
-    };
-
-
-    customerResult.appendChild(div);
+    });
 
 
 });
    
-
-
-});
