@@ -340,42 +340,71 @@ customerSearch.addEventListener(
 
 
     customers
-    .filter(customer =>
-        customer.name.includes(keyword)
-    )
-    .forEach(customer=>{
+.filter(customer => {
 
 
-        const div =
-        document.createElement("div");
+    const search =
+    keyword
+    .toLowerCase()
+    .replace(/\s/g,"");
 
 
-        div.textContent =
+    return customer.searchName
+    &&
+    customer.searchName.includes(search);
+
+
+})
+.forEach(customer=>{
+
+
+    const div =
+    document.createElement("div");
+
+
+    div.textContent =
+    customer.name;
+
+
+    div.className =
+    "customer-item";
+
+
+    div.onclick = ()=>{
+
+
+        customerSearch.value =
         customer.name;
 
 
-        div.onclick = ()=>{
+        customerValue.value =
+        customer.name;
 
 
-            customerSearch.value =
-            customer.name;
+        document.querySelector(".customer-name").textContent =
+        customer.name;
 
 
-            customerValue.value =
-            customer.name;
+        document.querySelector(".customer-address").textContent =
+        customer.address1;
 
 
-            customerResult.innerHTML =
-            "";
+        document.querySelector(".customer-tel").textContent =
+        customer.tel;
 
 
-        };
+        customerResult.innerHTML =
+        "";
 
 
-        customerResult.appendChild(div);
+    };
 
 
-    });
+    customerResult.appendChild(div);
+
+
+});
+   
 
 
 });
