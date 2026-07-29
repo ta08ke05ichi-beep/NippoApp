@@ -27,24 +27,36 @@ const nameInput =
 document.getElementById("name");
 
 
-const customerSelect =
-document.getElementById("customer");
+const customerSearch =
+document.querySelector(".customer-search");
+
+
+const customerResult =
+document.querySelector(".customer-result");
+
+
+const customerValue =
+document.querySelector(".customer-value");
 
 
 const workInput =
-document.getElementById("work");
+document.querySelector(".work");
 
 
-const timeInput =
-document.getElementById("time");
+const startTimeInput =
+document.querySelector(".start-time");
 
 
-const memoInput =
-document.getElementById("memo");
+const endTimeInput =
+document.querySelector(".end-time");
 
 
-const submitBtn =
-document.getElementById("submitBtn");
+const contentInput =
+document.querySelector(".content");
+
+
+const saveBtn =
+document.getElementById("saveBtn");
 
 
 
@@ -329,3 +341,104 @@ if(submitBtn){
     );
 
 }
+
+// ==============================
+// 顧客検索
+// ==============================
+
+let customers = [];
+
+
+// 顧客データ取得
+async function loadCustomers(){
+
+    const snapshot =
+    await getDocs(
+        collection(db,"customers")
+    );
+
+
+    customers = [];
+
+
+    snapshot.forEach(doc=>{
+
+        customers.push(
+            doc.data()
+        );
+
+    });
+
+
+    console.log(
+        "顧客一覧",
+        customers
+    );
+
+}
+
+
+loadCustomers();
+
+
+
+// 入力したら検索
+
+customerSearch.addEventListener(
+"input",
+()=>{
+
+
+    const keyword =
+    customerSearch.value;
+
+
+    customerResult.innerHTML="";
+
+
+    if(keyword === ""){
+        return;
+    }
+
+
+
+    customers
+    .filter(customer =>
+        customer.name.includes(keyword)
+    )
+    .forEach(customer=>{
+
+
+        const div =
+        document.createElement("div");
+
+
+        div.textContent =
+        customer.name;
+
+
+        div.onclick = ()=>{
+
+
+            customerSearch.value =
+            customer.name;
+
+
+            customerValue.value =
+            customer.name;
+
+
+            customerResult.innerHTML =
+            "";
+
+
+        };
+
+
+        customerResult.appendChild(div);
+
+
+    });
+
+
+});
