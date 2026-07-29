@@ -209,10 +209,10 @@ loadCustomers();
 // 日報保存
 // ==============================
 
-if(submitBtn){
+if(saveBtn){
 
 
-    submitBtn.addEventListener(
+    saveBtn.addEventListener(
         "click",
         async ()=>{
 
@@ -229,7 +229,7 @@ if(submitBtn){
 
 
                 customer:
-                customerSelect.value,
+customerValue.value,
 
 
                 work:
@@ -295,8 +295,11 @@ if(submitBtn){
                 // ==================
 
 
-                customerSelect.value =
-                "";
+                customerSearch.value =
+"";
+
+customerValue.value =
+"";
 
 
                 workInput.value =
