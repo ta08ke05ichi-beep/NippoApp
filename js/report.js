@@ -13,7 +13,18 @@ import {
 } from 
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-
+console.log(
+"検索:",
+search,
+"件数:",
+customers.filter(customer =>
+    customer.searchName
+    &&
+    customer.searchName
+    .toLowerCase()
+    .includes(search)
+).length
+);
 
 // ==============================
 // 要素取得
@@ -350,9 +361,10 @@ customerSearch.addEventListener(
 
 
     return customer.searchName
-    &&
-    customer.searchName.includes(search);
-
+&&
+customer.searchName
+.toLowerCase()
+.includes(search);
 
 })
 .forEach(customer=>{
