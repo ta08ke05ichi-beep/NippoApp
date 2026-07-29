@@ -128,14 +128,7 @@ if(nameInput){
 
 async function loadCustomers(){
 
-
-    if(!customerSelect){
-        return;
-    }
-
-
     try{
-
 
         const snapshot =
         await getDocs(
@@ -143,60 +136,33 @@ async function loadCustomers(){
         );
 
 
-        customerSelect.innerHTML =
-        `
-        <option value="">
-        顧客を選択してください
-        </option>
-        `;
-
+        customers = [];
 
 
         snapshot.forEach(doc=>{
 
-
-            const data =
-            doc.data();
-
-
-            const option =
-            document.createElement("option");
-
-
-            option.value =
-            data.name;
-
-
-            option.textContent =
-            data.name;
-
-
-            customerSelect.appendChild(
-                option
+            customers.push(
+                doc.data()
             );
-
 
         });
 
 
-
         console.log(
-            "顧客一覧読み込み完了"
+            "顧客一覧読み込み完了",
+            customers
         );
 
 
     }
     catch(error){
 
-
         console.error(
             "顧客取得エラー",
             error
         );
 
-
     }
-
 
 }
 
