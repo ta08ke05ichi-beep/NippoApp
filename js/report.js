@@ -194,40 +194,33 @@ function searchCustomer(input){
 
 
 
-    const list =
-    customers.filter(c=>{
+ const list =
+customers.filter(c=>{
 
 
-        return (
+    const target =
 
-            (c.name || "")
-.toLowerCase()
-.includes(keyword)
+        (c.name || "") +
 
-||
+        (c.kana || "") +
 
-(c.kana || "")
-.toLowerCase()
-.includes(keyword)
+        (c.tel || "") +
 
-||
-
-(c.tel || "")
-.includes(keyword)
-
-||
-
-(c.searchName || "")
-.toLowerCase()
-.includes(keyword)
+        (c.searchName || "");
 
 
-        );
+
+    return target
+    .toLowerCase()
+    .includes(keyword);
 
 
-    });
+});
 
-
+console.log(
+    "検索結果件数",
+    list.length
+);
 
 
 
@@ -246,18 +239,17 @@ function searchCustomer(input){
         "customer-item";
 
 
-
         div.innerHTML = `
 
-        <strong>
-        ${c.companyName || ""}
-        </strong>
+<strong>
+${c.name || "会社名なし"}
+</strong>
 
-        <br>
+<br>
 
-        ${c.tel || ""}
+${c.tel || ""}
 
-        `;
+`;
 
 
 
