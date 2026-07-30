@@ -16,8 +16,6 @@ document.getElementById("historyList");
 
 
 
-// URLから顧客名を取得
-
 const params =
 new URLSearchParams(location.search);
 
@@ -32,8 +30,6 @@ customerName.textContent =
 
 
 
-// 履歴取得
-
 async function loadHistory(){
 
 
@@ -45,7 +41,6 @@ async function loadHistory(){
 
 
     historyList.innerHTML="";
-
 
 
     let count = 0;
@@ -61,14 +56,17 @@ async function loadHistory(){
 
 
         if(!report.tasks){
-    return;
-}
+
+            return;
+
+        }
 
 
-report.tasks.forEach(task=>{
+
+        report.tasks.forEach(task=>{
 
 
-if(task.customer == customer){
+            if(task.customer == customer){
 
 
                 count++;
@@ -78,30 +76,38 @@ if(task.customer == customer){
                 document.createElement("div");
 
 
-                div.className="history-card";
+                div.className =
+                "history-card";
+
 
 
                 div.innerHTML = `
 
+
                 <h3>
-                📅 ${report.date}
+                📅 ${report.date || ""}
                 </h3>
 
 
                 <p>
-                👤 担当：${report.employee}
+                👤 担当：${report.name || ""}
                 </p>
 
 
                 <p>
-                ⏰ ${task.startTime}
+                ⏰ ${task.start || ""}
                 ～ 
-                ${task.endTime}
+                ${task.end || ""}
                 </p>
 
 
                 <p>
-                🔧 ${task.workContent}
+                🔧 ${task.work || ""}
+                </p>
+
+
+                <p>
+                📝 ${task.content || ""}
                 </p>
 
 
@@ -117,15 +123,16 @@ if(task.customer == customer){
         });
 
 
-
     });
 
 
 
     if(count === 0){
 
+
         historyList.innerHTML =
         "この顧客の日報はありません";
+
 
     }
 
