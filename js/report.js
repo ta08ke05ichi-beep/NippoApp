@@ -127,7 +127,10 @@ async function loadCustomers(){
             customers.length
         );
 
-
+console.log(
+    "顧客1件目確認",
+    customers[0]
+);
 
     }
     catch(e){
@@ -197,22 +200,26 @@ function searchCustomer(input){
 
         return (
 
-            (c.companyName || "")
-            .toLowerCase()
-            .includes(keyword)
+            (c.name || "")
+.toLowerCase()
+.includes(keyword)
 
+||
 
-            ||
+(c.kana || "")
+.toLowerCase()
+.includes(keyword)
 
-            (c.furigana || "")
-            .toLowerCase()
-            .includes(keyword)
+||
 
+(c.tel || "")
+.includes(keyword)
 
-            ||
+||
 
-            (c.tel || "")
-            .includes(keyword)
+(c.searchName || "")
+.toLowerCase()
+.includes(keyword)
 
 
         );
@@ -313,14 +320,16 @@ function selectCustomer(input, customer){
 
 
     card.querySelector(".customer-name")
-    .textContent =
-    customer.companyName || "";
+.textContent =
+customer.name || "";
 
 
 
-    card.querySelector(".customer-address")
-    .textContent =
-    customer.address || "";
+card.querySelector(".customer-address")
+.textContent =
+(customer.address1 || "")
++
+(customer.address2 || "");
 
 
 
@@ -341,7 +350,7 @@ function selectCustomer(input, customer){
 
 
     input.value =
-    customer.companyName;
+customer.name;
 
 
 
