@@ -26,17 +26,65 @@ const snap = await getDoc(
 const data = snap.data();
 
 
+let taskHtml = "";
+
+
+if(data.tasks){
+
+    data.tasks.forEach(task=>{
+
+
+        taskHtml += `
+
+        <div class="task-detail">
+
+        <p>
+        🏢 ${task.customer || ""}
+        </p>
+
+        <p>
+        ⏰ ${task.start || ""}
+        〜
+        ${task.end || ""}
+        </p>
+
+        <p>
+        🔧 ${task.work || ""}
+        </p>
+
+        <p>
+        📝 ${task.content || ""}
+        </p>
+
+
+        </div>
+
+        `;
+
+
+    });
+
+}
+
+
+
 detail.innerHTML = `
 
 <div class="detail-card">
 
-<h2>${data.name}さんの日報</h2>
 
-<p>📅 ${data.date}</p>
+<h2>
+${data.name || ""}さんの日報
+</h2>
 
-<p>🏢 ${data.customer}</p>
 
-<p>📝 ${data.work}</p>
+<p>
+📅 ${data.date || ""}
+</p>
+
+
+${taskHtml}
+
 
 </div>
 
