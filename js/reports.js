@@ -57,7 +57,10 @@ query(
 
     });
 
-
+console.log(
+    "日報データ確認",
+    reports[0]
+);
 
     showReports(reports);
 
