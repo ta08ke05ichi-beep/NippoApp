@@ -114,11 +114,11 @@ if(!report.tasks){
 
             🏢 ${task.customer}<br>
 
-            ⏰ ${task.startTime}
-            〜
-            ${task.endTime}<br>
+            ⏰${task.start || ""}
+〜
+${task.end || ""}
 
-            🔧 ${task.workContent}
+            🔧 ${task.content || ""}
 
             </div>
 
@@ -137,7 +137,7 @@ if(!report.tasks){
 
 
         <p>
-        👤 担当：${report.employee}
+        👤 担当：${report.name || ""}
         </p>
 
 
@@ -191,7 +191,7 @@ reports.filter(report=>{
 
     let target =
 
-    (report.employee || "")
+    (report.name|| "")
     +
     (report.date || "");
 
@@ -212,7 +212,7 @@ reports.filter(report=>{
 
         (task.customer || "")
         +
-        (task.workContent || "");
+        (task.content|| "");
 
 
 
