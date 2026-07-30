@@ -73,7 +73,10 @@ return;
 const data =
 snap.data();
 
-
+console.log(
+    "顧客データ確認",
+    data
+);
 
 customerInfo.innerHTML = `
 
