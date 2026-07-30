@@ -15,9 +15,9 @@ body{
 
     padding:15px;
 
+    padding-bottom:90px;
+
 }
-
-
 
 
 
@@ -25,17 +25,15 @@ body{
 
 .app-header{
 
-    background:#2c3e50;
+    background:#1f2937;
 
     color:white;
 
-    padding:15px;
+    padding:18px;
 
     text-align:center;
 
 }
-
-
 
 
 
@@ -49,13 +47,12 @@ body{
 
     margin-bottom:20px;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:
+    0 3px 10px rgba(0,0,0,0.08);
 
 }
-
-
 
 
 
@@ -65,13 +62,13 @@ body{
 
     font-size:20px;
 
-    border-bottom:1px solid #ddd;
+    color:#1f2937;
+
+    border-bottom:2px solid #e5e7eb;
 
     padding-bottom:10px;
 
 }
-
-
 
 
 
@@ -85,11 +82,11 @@ label{
 
     margin-top:15px;
 
-    margin-bottom:5px;
+    margin-bottom:6px;
+
+    color:#374151;
 
 }
-
-
 
 
 
@@ -104,13 +101,27 @@ textarea{
 
     box-sizing:border-box;
 
-    padding:12px;
+    padding:13px;
 
-    border:1px solid #ccc;
+    border:1px solid #d1d5db;
 
-    border-radius:8px;
+    border-radius:10px;
 
     font-size:16px;
+
+    background:white;
+
+}
+
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
 
 }
 
@@ -118,7 +129,7 @@ textarea{
 
 textarea{
 
-    height:120px;
+    height:130px;
 
     resize:vertical;
 
@@ -126,12 +137,9 @@ textarea{
 
 
 
-
-
 /* 顧客検索結果 */
 
 .customer-result{
-
 
     margin-top:10px;
 
@@ -142,13 +150,15 @@ textarea{
 .customer-item{
 
 
-    background:#f1f5f9;
+    background:#f8fafc;
 
-    padding:12px;
+    border:1px solid #e5e7eb;
+
+    padding:14px;
 
     margin-bottom:8px;
 
-    border-radius:8px;
+    border-radius:10px;
 
     cursor:pointer;
 
@@ -158,11 +168,9 @@ textarea{
 
 .customer-item:hover{
 
-    background:#e2e8f0;
+    background:#e0f2fe;
 
 }
-
-
 
 
 
@@ -175,15 +183,15 @@ textarea{
 
     padding:15px;
 
-    background:#eef6ff;
+    background:#eff6ff;
+
+    border-left:5px solid #2563eb;
 
     border-radius:10px;
 
     line-height:1.8;
 
 }
-
-
 
 
 
@@ -194,11 +202,11 @@ button{
 
     width:100%;
 
-    padding:15px;
+    padding:16px;
 
     border:none;
 
-    border-radius:10px;
+    border-radius:12px;
 
     font-size:18px;
 
@@ -210,8 +218,6 @@ button{
 
 
 
-
-
 .add-btn{
 
 
@@ -220,8 +226,6 @@ button{
     color:white;
 
 }
-
-
 
 
 
@@ -237,6 +241,12 @@ button{
 }
 
 
+
+button:active{
+
+    transform:scale(0.98);
+
+}
 
 
 
@@ -261,7 +271,9 @@ button{
 
     border-top:1px solid #ddd;
 
-    padding:10px 0;
+    padding:12px 0;
+
+    z-index:10;
 
 }
 
@@ -271,13 +283,11 @@ button{
 
     text-decoration:none;
 
-    color:#333;
+    color:#374151;
 
     font-size:14px;
 
 }
-
-
 
 
 
@@ -307,6 +317,7 @@ button{
     font-size:16px;
 
 }
+
 
 
 }
