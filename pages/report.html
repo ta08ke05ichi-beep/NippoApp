@@ -19,7 +19,7 @@
 <body>
 
 
-<header>
+<header class="app-header">
 
 <h1>📝 日報入力</h1>
 
@@ -31,10 +31,15 @@
 
 
 
+<!-- 基本情報 -->
+
 <div class="task-card">
 
 
-<label>日付</label>
+<label>
+日付
+</label>
+
 
 <input
 type="date"
@@ -42,13 +47,20 @@ id="date">
 
 
 
-<label>名前</label>
+
+
+<label>
+名前
+</label>
+
 
 <select id="name">
+
 
 <option value="">
 選択してください
 </option>
+
 
 <option>竹市</option>
 <option>坂田</option>
@@ -56,6 +68,7 @@ id="date">
 <option>太田（社長）</option>
 <option>西田</option>
 <option>太田（相談役）</option>
+
 
 </select>
 
@@ -66,44 +79,101 @@ id="date">
 
 
 
+
+<!-- 訪問一覧 -->
+
 <div id="tasks">
 
 
-<div class="task-card">
+
+<!-- ここをJSで複製 -->
+
+<div class="task-card visit-card">
 
 
-<h2>
+
+<h2 class="visit-title">
 訪問①
 </h2>
 
+
+
+
 <label>
-顧客
+顧客検索
 </label>
 
 
 <input
 type="text"
 class="customer-search"
-placeholder="顧客名を検索">
+placeholder="会社名・フリガナ・電話番号で検索">
 
 
-<div class="customer-result"></div>
+
+
+
+<div class="customer-result">
+
+</div>
+
+
+
 
 
 <input
 type="hidden"
 class="customer-value">
 
-<div class="customer-detail">
 
-<p><strong>会社名：</strong><span class="customer-name"></span></p>
 
-<p><strong>住所：</strong><span class="customer-address"></span></p>
 
-<p><strong>TEL：</strong><span class="customer-tel"></span></p>
+
+<div class="customer-detail"
+style="display:none;">
+
+
+
+<p>
+<strong>
+会社名：
+</strong>
+
+<span class="customer-name">
+</span>
+
+</p>
+
+
+
+
+<p>
+<strong>
+住所：
+</strong>
+
+<span class="customer-address">
+</span>
+
+</p>
+
+
+
+
+<p>
+<strong>
+TEL：
+</strong>
+
+<span class="customer-tel">
+</span>
+
+</p>
+
+
 
 </div>
-
+<!-- 時間 -->
 
 <label>
 開始時間
@@ -132,6 +202,9 @@ class="end-time">
 
 
 
+
+<!-- 作業分類 -->
+
 <label>
 作業分類
 </label>
@@ -145,11 +218,30 @@ class="work">
 選択してください
 </option>
 
-<option>点検</option>
-<option>修理</option>
-<option>設置</option>
-<option>社内業務</option>
-<option>その他</option>
+
+<option>
+点検
+</option>
+
+
+<option>
+修理
+</option>
+
+
+<option>
+設置
+</option>
+
+
+<option>
+社内業務
+</option>
+
+
+<option>
+その他
+</option>
 
 
 </select>
@@ -159,14 +251,20 @@ class="work">
 
 
 
+
+<!-- 作業内容 -->
+
 <label>
 作業内容
 </label>
 
 
 <textarea
+
 class="content"
+
 placeholder="作業した内容を入力してください">
+
 </textarea>
 
 
@@ -180,7 +278,14 @@ placeholder="作業した内容を入力してください">
 
 
 
-<button id="addTaskBtn">
+
+
+
+<!-- 訪問追加 -->
+
+<button
+id="addTaskBtn"
+class="add-btn">
 
 ＋ 訪問追加
 
@@ -188,11 +293,20 @@ placeholder="作業した内容を入力してください">
 
 
 
-<button id="saveBtn">
 
-保存する
+
+
+<!-- 保存 -->
+
+<button
+id="saveBtn"
+class="save-btn">
+
+💾 保存する
 
 </button>
+
+
 
 
 
@@ -205,6 +319,8 @@ placeholder="作業した内容を入力してください">
 
 
 
+<!-- 下部メニュー -->
+
 <nav class="bottom-nav">
 
 
@@ -213,14 +329,17 @@ placeholder="作業した内容を入力してください">
 </a>
 
 
+
 <a href="report.html">
 日報入力
 </a>
 
 
+
 <a href="reports.html">
 日報一覧
 </a>
+
 
 
 <a href="customers.html">
@@ -235,8 +354,8 @@ placeholder="作業した内容を入力してください">
 
 
 
-<script type="module" src="../js/report.js"></script>
 
+<script type="module" src="../js/report.js"></script>
 
 
 </body>
