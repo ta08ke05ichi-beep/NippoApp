@@ -9,24 +9,35 @@
 <title>日報一覧</title>
 
 <link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/report.css">
+<link rel="stylesheet" href="../css/reports.css">
 
 </head>
 
+
 <body>
 
-<header>
+
+<header class="app-header">
 
 <h1>📋 日報一覧</h1>
 
 </header>
+
+
+
+<main class="reports-container">
+
+
+<div class="search-box">
 
 <input 
 id="searchInput"
 type="text"
 placeholder="顧客名・担当者・作業内容で検索">
 
-<main>
+</div>
+
+
 
 <div id="reportList">
 
@@ -34,9 +45,40 @@ placeholder="顧客名・担当者・作業内容で検索">
 
 </div>
 
+
 </main>
 
+
+
+<nav class="bottom-nav">
+
+
+<a href="../index.html">
+ホーム
+</a>
+
+
+<a href="report.html">
+日報入力
+</a>
+
+
+<a href="reports.html">
+日報一覧
+</a>
+
+
+<a href="customers.html">
+顧客一覧
+</a>
+
+
+</nav>
+
+
+
 <script type="module" src="../js/reports.js"></script>
+
 
 </body>
 

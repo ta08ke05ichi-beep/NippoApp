@@ -180,40 +180,53 @@ searchInput.addEventListener(
 
 
     const result =
-    reports.filter(report=>{
+reports.filter(report=>{
 
 
-        let target =
+    const text =
+    searchInput.value
+    .toLowerCase();
 
-        report.employee
+
+
+    let target =
+
+    (report.employee || "")
+    +
+    (report.date || "");
+
+
+
+    if(!report.tasks){
+
+        return false;
+
+    }
+
+
+
+    report.tasks.forEach(task=>{
+
+
+        target +=
+
+        (task.customer || "")
         +
-        report.date;
-        task.customer
-+
-task.workContent
+        (task.workContent || "");
 
-if(!report.tasks){
-    return false;
-}
-
-        report.tasks.forEach(task=>{
-
-
-            target +=
-
-            task.customer
-            +
-            task.workContent;
-
-
-        });
-
-
-
-        return target.includes(text);
 
 
     });
+
+
+
+    return target
+    .toLowerCase()
+    .includes(text);
+
+
+
+});
 
 
 

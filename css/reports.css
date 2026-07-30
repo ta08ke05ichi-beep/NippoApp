@@ -1,0 +1,175 @@
+body{
+
+    background:#f4f6f8;
+
+}
+
+
+/* 全体 */
+
+.reports-container{
+
+    max-width:900px;
+
+    margin:20px auto;
+
+    padding:15px;
+
+    padding-bottom:90px;
+
+}
+
+
+
+/* 検索 */
+
+.search-box{
+
+    background:white;
+
+    padding:15px;
+
+    margin-bottom:20px;
+
+    border-radius:12px;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,0.08);
+
+}
+
+
+.search-box input{
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:13px;
+
+    font-size:16px;
+
+    border:1px solid #ccc;
+
+    border-radius:10px;
+
+}
+
+
+
+/* 日報カード */
+
+.report-card{
+
+    background:white;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+    border-radius:14px;
+
+    box-shadow:
+    0 3px 10px rgba(0,0,0,0.08);
+
+}
+
+
+
+.report-card h3{
+
+    margin-top:0;
+
+    border-bottom:2px solid #eee;
+
+    padding-bottom:10px;
+
+    color:#1f2937;
+
+}
+
+
+
+.report-card p{
+
+    margin:10px 0;
+
+    font-weight:bold;
+
+}
+
+
+
+/* 訪問カード */
+
+.visit-card{
+
+    background:#f8fafc;
+
+    border-left:5px solid #2563eb;
+
+    padding:15px;
+
+    margin-top:12px;
+
+    border-radius:10px;
+
+    line-height:1.8;
+
+}
+
+
+
+/* 詳細ボタン */
+
+.report-card button{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+
+.report-card button:hover{
+
+    opacity:0.85;
+
+}
+
+
+
+/* スマホ */
+
+@media(max-width:600px){
+
+
+.reports-container{
+
+    padding:10px;
+
+}
+
+
+.report-card{
+
+    padding:15px;
+
+}
+
+
+}
