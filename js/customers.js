@@ -67,27 +67,21 @@ customers.push({
 
     id: doc.id,
 
-    name: data.name,
+    name: data.name || "",
+
+    postal: data.postal || "",
+
+    address1: data.address1 || "",
+
+    address2: data.address2 || "",
+
+    tel: data.tel || "",
+
+    kana: data.kana || "",
 
     searchName:
-
-    data.name
-
-    .replaceAll("株式会社","かぶしきがいしゃ")
-
-    .replaceAll("有限会社","ゆうげんがいしゃ")
-
-    .replaceAll("合同会社","ごうどうがいしゃ")
-
-    .replaceAll("（株）","かぶしきがいしゃ")
-
-    .replaceAll("(株)","かぶしきがいしゃ")
-
-    .replaceAll("（有）","ゆうげんがいしゃ")
-
-    .replaceAll("(有)","ゆうげんがいしゃ")
-
-    .toLowerCase()
+        (data.searchName || data.name || "")
+        .toLowerCase()
 
 });
 
@@ -467,7 +461,7 @@ searchInput.addEventListener(
 
         return (
 
-            customer.name?.toLowerCase().includes(text)
+            customer.searchName?.includes(text)
 
             ||
 
