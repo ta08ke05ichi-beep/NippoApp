@@ -62,6 +62,10 @@ async function loadCustomers(){
 
 const data = doc.data();
 
+if (!data.name || data.name.trim() === "") {
+    return;
+}
+
 
 customers.push({
 
@@ -459,25 +463,19 @@ searchInput.addEventListener(
     customers.filter(customer=>{
 
 
-        return (
-
-            customer.searchName?.includes(text)
-
-            ||
-
-            customer.postal?.includes(text)
-
-            ||
-
-            customer.address1?.toLowerCase().includes(text)
-||
-customer.address2?.toLowerCase().includes(text)
-
-            ||
-
-            customer.tel?.includes(text)
-
-        );
+     return (
+    customer.name?.toLowerCase().includes(text)
+    ||
+    customer.searchName?.includes(text)
+    ||
+    customer.postal?.includes(text)
+    ||
+    customer.address1?.toLowerCase().includes(text)
+    ||
+    customer.address2?.toLowerCase().includes(text)
+    ||
+    customer.tel?.includes(text)
+);
 
 
     });
