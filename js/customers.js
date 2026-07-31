@@ -99,7 +99,7 @@ document.createElement("div");
         div.className="customer-card";
 
 
-   div.innerHTML =
+div.innerHTML =
 `
 <h3>
 🏢 ${data.name}
@@ -117,21 +117,38 @@ document.createElement("div");
 ☎ ${data.tel || "電話番号なし"}
 </p>
 
+<div class="button-group">
+
+<button class="detail-btn">
+詳細
+</button>
+
 <button class="history-btn">
 履歴を見る
 </button>
 
+</div>
 `;
 
 
-const btn =
-div.querySelector(".history-btn");
+const detailBtn =
+div.querySelector(".detail-btn");
 
-
-btn.onclick = ()=>{
+detailBtn.onclick = ()=>{
 
     location.href =
-    "customer-history.html?customer=" + data.name;
+    "customer-detail.html?id=" + doc.id;
+
+};
+
+
+const historyBtn =
+div.querySelector(".history-btn");
+
+historyBtn.onclick = ()=>{
+
+    location.href =
+    "customer-history.html?customer=" + encodeURIComponent(data.name);
 
 };
 
