@@ -89,31 +89,30 @@ customers.push({
 
 });
 
+    });
 
-const div =
-document.createElement("div");
+    showCustomers(customers);
 
+}
 
-        div.className="customer-card";
+function showCustomers(list){
 
+    customerList.innerHTML = "";
 
-div.innerHTML =
-`
-<h3>
-🏢 ${data.name}
-</h3>
+    list.forEach(customer=>{
 
-<p>
-📮 ${data.postal || "住所情報なし"}
-</p>
+        const div = document.createElement("div");
 
-<p>
-📍 ${data.address1 || ""}${data.address2 || ""}
-</p>
+        div.className = "customer-card";
 
-<p>
-☎ ${data.tel || "電話番号なし"}
-</p>
+        div.innerHTML = `
+<h3>🏢 ${customer.name}</h3>
+
+<p>📮 ${customer.postal || "住所情報なし"}</p>
+
+<p>📍 ${customer.address1 || ""}${customer.address2 || ""}</p>
+
+<p>☎ ${customer.tel || "電話番号なし"}</p>
 
 <div class="button-group">
 
@@ -128,38 +127,26 @@ div.innerHTML =
 </div>
 `;
 
+        div.querySelector(".detail-btn").onclick = ()=>{
 
-const detailBtn =
-div.querySelector(".detail-btn");
+            location.href =
+            "customer-detail.html?id=" + customer.id;
 
-detailBtn.onclick = ()=>{
+        };
 
-    location.href =
-    "customer-detail.html?id=" + doc.id;
+        div.querySelector(".history-btn").onclick = ()=>{
 
-};
+            location.href =
+            "customer-history.html?customer=" +
+            encodeURIComponent(customer.name);
 
+        };
 
-const historyBtn =
-div.querySelector(".history-btn");
-
-historyBtn.onclick = ()=>{
-
-    location.href =
-    "customer-history.html?customer=" + encodeURIComponent(data.name);
-
-};
-
-
-customerList.appendChild(div);
-
+        customerList.appendChild(div);
 
     });
 
-
 }
-
-
 
 // 顧客追加
 
@@ -449,115 +436,54 @@ loadCustomers();
 
 });
 
-
 searchInput.addEventListener(
 "input",
 ()=>{
 
-
     const text =
-    searchInput.value.toLowerCase();
+    searchInput.value
+    .toLowerCase()
+    .trim();
 
+    if(text === ""){
 
-    const result =
-    customers.filter(customer=>{
+        loadCustomers();
+        return;
 
+    }
 
-     return (
-    customer.name?.toLowerCase().includes(text)
-    ||
-    customer.searchName?.includes(text)
-    ||
-    customer.postal?.includes(text)
-    ||
-    customer.address1?.toLowerCase().includes(text)
-    ||
-    customer.address2?.toLowerCase().includes(text)
-    ||
-    customer.tel?.includes(text)
-);
+    const result = customers.filter(customer=>{
 
+        return (
+
+            customer.name.toLowerCase().includes(text)
+
+            ||
+
+            customer.searchName.includes(text)
+
+            ||
+
+            customer.postal.includes(text)
+
+            ||
+
+            customer.address1.toLowerCase().includes(text)
+
+            ||
+
+            customer.address2.toLowerCase().includes(text)
+
+            ||
+
+            customer.tel.includes(text)
+
+        );
 
     });
 
-
-    customerList.innerHTML="";
-
-
-   if(text === ""){
-
-    loadCustomers();
-
-    return;
-
-}
-
-const result = customers.filter(customer=>{
-
-    return (
-        customer.name?.toLowerCase().includes(text)
-        ||
-        customer.searchName?.includes(text)
-        ||
-        customer.postal?.includes(text)
-        ||
-        customer.address1?.toLowerCase().includes(text)
-        ||
-        customer.address2?.toLowerCase().includes(text)
-        ||
-        customer.tel?.includes(text)
-    );
-
-});
-
-customerList.innerHTML = "";
-
-result.forEach(customer=>{
-
-    const div = document.createElement("div");
-
-    div.className = "customer-card";
-
-    div.innerHTML = `
-<h3>🏢 ${customer.name}</h3>
-
-<p>📮 ${customer.postal || "住所情報なし"}</p>
-
-<p>📍 ${customer.address1 || ""}${customer.address2 || ""}</p>
-
-<p>☎ ${customer.tel || "電話番号なし"}</p>
-
-<div class="button-group">
-
-<button class="detail-btn">
-詳細
-</button>
-
-<button class="history-btn">
-履歴を見る
-</button>
-
-</div>
-`;
-
-    div.querySelector(".detail-btn").onclick = ()=>{
-
-        location.href =
-        "customer-detail.html?id=" + customer.id;
-
-    };
-
-    div.querySelector(".history-btn").onclick = ()=>{
-
-        location.href =
-        "customer-history.html?customer=" +
-        encodeURIComponent(customer.name);
-
-    };
-
-    customerList.appendChild(div);
+    showCustomers(result);
 
 });
 
 
-});
