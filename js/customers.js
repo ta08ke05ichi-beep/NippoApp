@@ -484,36 +484,80 @@ searchInput.addEventListener(
     customerList.innerHTML="";
 
 
-    result.forEach(customer=>{
+   if(text === ""){
 
+    loadCustomers();
 
-        const div =
-        document.createElement("div");
+    return;
 
+}
 
-        div.className =
-        "customer-card";
+const result = customers.filter(customer=>{
 
+    return (
+        customer.name?.toLowerCase().includes(text)
+        ||
+        customer.searchName?.includes(text)
+        ||
+        customer.postal?.includes(text)
+        ||
+        customer.address1?.toLowerCase().includes(text)
+        ||
+        customer.address2?.toLowerCase().includes(text)
+        ||
+        customer.tel?.includes(text)
+    );
 
-        div.innerHTML = `
+});
 
-        <h3>🏢 ${customer.name}</h3>
+customerList.innerHTML = "";
 
-        <p>📮 ${customer.postal || ""}</p>
+result.forEach(customer=>{
 
-        <p>
-📍 ${customer.address1 || ""}${customer.address2 || ""}
-</p>
+    const div = document.createElement("div");
 
-        <p>☎ ${customer.tel || ""}</p>
+    div.className = "customer-card";
 
-        `;
+    div.innerHTML = `
+<h3>🏢 ${customer.name}</h3>
 
+<p>📮 ${customer.postal || "住所情報なし"}</p>
 
-        customerList.appendChild(div);
+<p>📍 ${customer.address1 || ""}${customer.address2 || ""}</p>
 
+<p>☎ ${customer.tel || "電話番号なし"}</p>
 
-    });
+<div class="button-group">
+
+<button class="detail-btn">
+詳細
+</button>
+
+<button class="history-btn">
+履歴を見る
+</button>
+
+</div>
+`;
+
+    div.querySelector(".detail-btn").onclick = ()=>{
+
+        location.href =
+        "customer-detail.html?id=" + customer.id;
+
+    };
+
+    div.querySelector(".history-btn").onclick = ()=>{
+
+        location.href =
+        "customer-history.html?customer=" +
+        encodeURIComponent(customer.name);
+
+    };
+
+    customerList.appendChild(div);
+
+});
 
 
 });
