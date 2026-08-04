@@ -14,6 +14,12 @@ document.getElementById("name");
 const visitCount =
 document.getElementById("visitCount");
 
+const workCount =
+document.getElementById("workCount");
+
+const customerCount =
+document.getElementById("customerCount");
+
 
 // 今月を初期表示
 const today = new Date();
@@ -50,16 +56,19 @@ async function loadSummary(){
         const data = doc.data();
 
         if(
-            data.employee !== name
-        ){
-            return;
-        }
+    data.name !== name
+){
+    return;
+}
 
-        if(
-            !data.date.startsWith(month)
-        ){
-            return;
-        }
+        const targetMonth =
+`${month.split("-")[0]}年${Number(month.split("-")[1])}月`;
+
+if(
+    !data.date.startsWith(targetMonth)
+){
+    return;
+}
 
         if(Array.isArray(data.tasks)){
 
@@ -109,8 +118,3 @@ document.getElementById("visitCount")
 
 });
 
-const workCount =
-document.getElementById("workCount");
-
-const customerCount =
-document.getElementById("customerCount");
