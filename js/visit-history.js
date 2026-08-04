@@ -79,14 +79,8 @@ async function loadHistory(){
         }
 
 
-        if(!Array.isArray(data.tasks)){
 
-            continue;
-
-        }
-
-
-        for(const task of data.tasks){
+        const task = data;
 
             const customerName =
             await getCustomerName(task.customer);
@@ -118,7 +112,5 @@ async function loadHistory(){
         }
 
     }
-
-}
 
 loadHistory();
