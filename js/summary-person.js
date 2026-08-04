@@ -13,140 +13,88 @@ const result =
 document.getElementById("result");
 
 
-
 // 今月を初期表示
-
 const today = new Date();
 
 monthInput.value =
 `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
 
 
-
 document.getElementById("searchBtn")
 .addEventListener("click", loadSummary);
 
 
-
-
 async function loadSummary(){
-
 
     const snapshot =
     await getDocs(
         collection(db,"reports")
     );
 
-
     const month =
     monthInput.value;
 
-
-
     const persons = {};
-
-
 
     snapshot.forEach((doc)=>{
 
+        const data = doc.data();
 
-        const data =
-        doc.data();
-
-
-
-        if(
-            !data.date.startsWith(month)
-        ){
-
+        if(!data.date.startsWith(month)){
             return;
-
         }
 
-
-
-        const name =
-        data.name;
-
-
+        const name = data.name || "未設定";
 
         if(!persons[name]){
-
-
             persons[name] = {
-
-                visits:0,
-
-                customers:new Set()
-
+                visits: 0,
+                customers: new Set()
             };
-
-
         }
-
-
-
-        // 訪問件数
 
         persons[name].visits++;
 
-
-
-        // 顧客数
-
         if(data.customer){
-
-            persons[name].customers.add(
-                data.customer
-            );
-
+            persons[name].customers.add(data.customer);
         }
-
 
     });
 
+    result.innerHTML = "";
 
-
-    result.innerHTML="";
-
-
+    if(Object.keys(persons).length === 0){
+        result.innerHTML = `
+            <div class="card">
+                <h3>データがありません</h3>
+            </div>
+        `;
+        return;
+    }
 
     for(const name in persons){
 
-
-        const data =
-        persons[name];
-
-
+        const info = persons[name];
 
         result.innerHTML += `
+        <div class="card">
 
-<div class="card">
+            <h2>👤 ${name}</h2>
 
-<h2>👤 ${name}</h2>
+            <p>訪問件数</p>
 
-<p>訪問件数</p>
+            <h3>${info.visits}件</h3>
 
-<h3>
-${data.visits}件
-</h3>
+            <hr>
 
+            <p>訪問顧客数</p>
 
-<hr>
+            <h3>${info.customers.size}社</h3>
 
-
-<p>訪問顧客数</p>
-
-<h3>
-${data.customers.size}社
-</h3>
-
-
-</div>
-
-`;
-
+        </div>
+        `;
     }
 
-
 }
+
+loadSummary();
