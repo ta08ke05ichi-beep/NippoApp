@@ -102,33 +102,37 @@ function showReports(data){
 
 
 
-        let taskHtml="";
+        
+
+let taskHtml = "";
 
 if(!report.tasks){
-    return;
+
+    taskHtml = `
+    <p>訪問データなし</p>
+    `;
+
+}else{
+
+    report.tasks.forEach(task=>{
+
+        taskHtml += `
+
+        <div class="task">
+
+        🏢 ${task.customer}<br>
+
+        ⏰ ${task.start || ""} ～ ${task.end || ""}<br>
+
+        🔧 ${task.content || ""}
+
+        </div>
+
+        `;
+
+    });
+
 }
-
-        report.tasks.forEach(task=>{
-
-
-            taskHtml += `
-
-            <div class="task">
-
-            🏢 ${task.customer}<br>
-
-            ⏰${task.start || ""}
-〜
-${task.end || ""}
-
-            🔧 ${task.content || ""}
-
-            </div>
-
-            `;
-
-
-        });
 
 
 
@@ -147,16 +151,14 @@ ${task.end || ""}
         ${taskHtml}
 
 
-        <button onclick="
-        location.href='report-detail.html?id=${report.id}'
-        ">
-        詳細
-        </button>
-
-
         `;
 
+div.onclick = () => {
 
+    location.href =
+    "report-detail.html?id=" + report.id;
+
+};
 
         reportList.appendChild(div);
 
@@ -178,18 +180,14 @@ searchInput.addEventListener(
 
 
     const text =
-    searchInput.value;
+searchInput.value
+.toLowerCase()
+.trim();
 
 
 
     const result =
 reports.filter(report=>{
-
-
-    const text =
-    searchInput.value
-    .toLowerCase();
-
 
 
     let target =
