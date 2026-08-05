@@ -7,6 +7,9 @@ import {
     where
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
+const recentReports =
+document.getElementById("recentReports");
+
 document.getElementById("reportBtn").addEventListener("click",()=>{
 
     location.href = "pages/report.html";
@@ -151,3 +154,48 @@ loadTodayReports();
 loadMonthReports();
 
 loadCustomerTotal();
+
+loadRecentReports();
+
+// 最近の日報
+
+async function loadRecentReports(){
+
+    const snapshot =
+    await getDocs(
+        collection(db,"reports")
+    );
+
+    const reports = [];
+
+    snapshot.forEach((doc)=>{
+
+        reports.push(doc.data());
+
+    });
+
+    reports.sort((a,b)=>{
+
+        return b.date.localeCompare(a.date);
+
+    });
+
+    recentReports.innerHTML = "";
+
+    reports.slice(0,5).forEach((report)=>{
+
+        recentReports.innerHTML += `
+
+        <div class="report-card">
+
+            <p>📅 ${report.date}</p>
+
+            <p>👤 ${report.name}</p>
+
+        </div>
+
+        `;
+
+    });
+
+}
