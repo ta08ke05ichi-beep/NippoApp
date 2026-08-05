@@ -24,6 +24,9 @@ document.getElementById("customerCount");
 const timeCount =
 document.getElementById("timeCount");
 
+const personSummary =
+document.getElementById("personSummary");
+
 
 // 今月を初期表示
 
@@ -57,6 +60,7 @@ async function loadSummary(){
     const customers =
     new Set();
 
+    const persons = {};
 
     const month =
     monthInput.value;
@@ -158,6 +162,31 @@ async function loadSummary(){
         }
 
 
+        // 担当者別集計
+
+if(!persons[data.name]){
+
+    persons[data.name] = {
+
+        visits:0,
+
+        customers:new Set()
+
+    };
+
+}
+
+persons[data.name].visits++;
+
+if(data.customer){
+
+    persons[data.name].customers.add(
+        data.customer
+    );
+
+}
+
+
     });
 
 
@@ -186,5 +215,29 @@ async function loadSummary(){
 
     timeCount.textContent =
     `${hour}時間${min}分`;
+
+}
+
+personSummary.innerHTML = "";
+
+if(name === "全員"){
+
+    for(const person in persons){
+
+        personSummary.innerHTML += `
+
+        <div class="person-card">
+
+            <h3>👤 ${person}</h3>
+
+            <p>訪問件数：${persons[person].visits}件</p>
+
+            <p>訪問顧客数：${persons[person].customers.size}社</p>
+
+        </div>
+
+        `;
+
+    }
 
 }
