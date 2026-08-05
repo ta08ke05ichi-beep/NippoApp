@@ -203,3 +203,49 @@ header p{
     color:#1f3a5f;
 
 }
+
+.status-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+
+    gap:15px;
+
+    margin:20px;
+
+}
+
+.status-item{
+
+    background:#fff;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    text-align:center;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+
+}
+
+.status-item p{
+
+    margin:0;
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+.status-item h2{
+
+    margin-top:10px;
+
+    font-size:30px;
+
+    color:#1976d2;
+
+}
