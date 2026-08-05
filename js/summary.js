@@ -214,9 +214,7 @@ if(data.customer){
 
 
     timeCount.textContent =
-    `${hour}時間${min}分`;
-
-}
+`${hour}時間${min}分`;
 
 personSummary.innerHTML = "";
 
@@ -239,5 +237,7 @@ if(name === "全員"){
         `;
 
     }
+
+}
 
 }
