@@ -89,3 +89,19 @@ margin-top:20px;
     margin:5px 0;
 
 }
+
+.visit-link{
+
+    color:#1976d2;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.visit-link:hover{
+
+    text-decoration:underline;
+
+}

@@ -228,7 +228,12 @@ if(name === "全員"){
 
             <h3>👤 ${person}</h3>
 
-            <p>訪問件数：${persons[person].visits}件</p>
+            <p class="visit-link"
+onclick="openVisitList('${person}')">
+
+訪問件数：${persons[person].visits}件
+
+</p>
 
             <p>訪問顧客数：${persons[person].customers.size}社</p>
 
@@ -239,5 +244,15 @@ if(name === "全員"){
     }
 
 }
+
+}
+
+window.openVisitList = function(person){
+
+    const month =
+    monthInput.value;
+
+    location.href =
+    `visit-list.html?month=${month}&name=${encodeURIComponent(person)}`;
 
 }

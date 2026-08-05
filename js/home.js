@@ -92,6 +92,62 @@ document.getElementById(
 
 }
 
+// 今月の訪問件数
 
+async function loadMonthReports(){
+
+    const today = new Date();
+
+    const month =
+    `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
+
+    const snapshot =
+    await getDocs(
+        collection(db,"reports")
+    );
+
+    let count = 0;
+
+    snapshot.forEach((doc)=>{
+
+        const data = doc.data();
+
+        if(
+            data.date &&
+            data.date.startsWith(month)
+        ){
+
+            count++;
+
+        }
+
+    });
+
+    document.getElementById(
+        "monthCount"
+    ).textContent =
+    `${count}件`;
+
+}
+
+// 登録顧客数
+
+async function loadCustomerTotal(){
+
+    const snapshot =
+    await getDocs(
+        collection(db,"customers")
+    );
+
+    document.getElementById(
+        "customerTotal"
+    ).textContent =
+    `${snapshot.size}社`;
+
+}
 
 loadTodayReports();
+
+loadMonthReports();
+
+loadCustomerTotal();
