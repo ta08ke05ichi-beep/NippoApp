@@ -170,7 +170,13 @@ async function loadRecentReports(){
 
     snapshot.forEach((doc)=>{
 
-        reports.push(doc.data());
+        reports.push({
+
+    id: doc.id,
+
+    ...doc.data()
+
+});
 
     });
 
@@ -186,16 +192,24 @@ async function loadRecentReports(){
 
         recentReports.innerHTML += `
 
-        <div class="report-card">
+<div class="report-card"
+onclick="openReport('${report.id}')">
 
-            <p>📅 ${report.date}</p>
+    <p>📅 ${report.date}</p>
 
-            <p>👤 ${report.name}</p>
+    <p>👤 ${report.name}</p>
 
-        </div>
+</div>
 
-        `;
+`;
 
     });
+
+}
+
+window.openReport = function(id){
+
+    location.href =
+    `pages/report-detail.html?id=${id}`;
 
 }
