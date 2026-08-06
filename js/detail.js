@@ -13,35 +13,17 @@ const id = params.get("id");
 const detail =
 document.getElementById("detail");
 
-async function getCustomerName(id){
-
-    if(!id || id === "選択してください"){
-
-        return id || "";
-
-    }
-
-    const snap =
-    await getDoc(doc(db,"customers",id));
-
-    if(snap.exists()){
-
-        return snap.data().name;
-
-    }
-
-    return id;
-
-}
-
 async function loadDetail(){
 
     const snap =
-    await getDoc(doc(db,"reports",id));
+    await getDoc(
+        doc(db,"reports",id)
+    );
 
     if(!snap.exists()){
 
-        detail.innerHTML = "<p>日報が見つかりません。</p>";
+        detail.innerHTML =
+        "<h2>日報が見つかりません</h2>";
 
         return;
 
@@ -49,22 +31,61 @@ async function loadDetail(){
 
     const data = snap.data();
 
-    const customerName =
-    await getCustomerName(data.customer);
+    let taskHtml = "";
+
+    if(Array.isArray(data.tasks)){
+
+        data.tasks.forEach(task=>{
+
+            taskHtml += `
+
+            <div class="task-detail">
+
+                <h3>🏢 ${task.customer || ""}</h3>
+
+                <p>
+                📍 ${task.address || ""}
+                </p>
+
+                <p>
+                ☎ ${task.tel || ""}
+                </p>
+
+                <p>
+                🕒 ${task.start || ""} ～ ${task.end || ""}
+                </p>
+
+                <p>
+                🔧 ${task.work || ""}
+                </p>
+
+                <p>
+                📝 ${task.content || ""}
+                </p>
+
+            </div>
+
+            `;
+
+        });
+
+    }
 
     detail.innerHTML = `
 
     <div class="detail-card">
 
-        <h2>${data.name}さんの日報</h2>
+        <h2>
+        👤 ${data.name}さんの日報
+        </h2>
 
-        <p>📅 ${data.date}</p>
+        <p>
+        📅 ${data.date}
+        </p>
 
-        <p>🏢 ${customerName}</p>
+        <hr>
 
-        <p>🕒 ${data.startTime} ～ ${data.endTime}</p>
-
-        <p>🔧 ${data.work}</p>
+        ${taskHtml}
 
     </div>
 
@@ -74,24 +95,42 @@ async function loadDetail(){
 
 loadDetail();
 
+// 戻るボタン
+
 document.getElementById("backBtn")
 .addEventListener("click",()=>{
 
-    location.href="reports.html";
+    location.href = "reports.html";
 
 });
+
+
+// 編集ボタン
 
 document.getElementById("editBtn")
 .addEventListener("click",()=>{
 
-    location.href=`edit.html?id=${id}`;
+    location.href =
+    `edit.html?id=${id}`;
 
 });
+
+
+// 削除ボタン
 
 document.getElementById("deleteBtn")
 .addEventListener("click",async()=>{
 
-    if(confirm("この日報を削除しますか？")){
+    const ok =
+    confirm("この日報を削除しますか？");
+
+    if(!ok){
+
+        return;
+
+    }
+
+    try{
 
         await deleteDoc(
             doc(db,"reports",id)
@@ -99,7 +138,15 @@ document.getElementById("deleteBtn")
 
         alert("削除しました");
 
-        location.href="reports.html";
+        location.href =
+        "reports.html";
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert("削除に失敗しました");
 
     }
 
