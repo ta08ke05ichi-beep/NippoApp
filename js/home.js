@@ -10,35 +10,23 @@ import {
 // ホーム画面ボタン
 // ==============================
 
-document.getElementById("reportBtn")
-.addEventListener("click", () => {
-
+document.getElementById("reportBtn").addEventListener("click", () => {
     location.href = "pages/report.html";
-
 });
 
 
-document.getElementById("reportsBtn")
-.addEventListener("click", () => {
-
+document.getElementById("reportsBtn").addEventListener("click", () => {
     location.href = "pages/reports.html";
-
 });
 
 
-document.getElementById("customersBtn")
-.addEventListener("click", () => {
-
+document.getElementById("customersBtn").addEventListener("click", () => {
     location.href = "pages/customers.html";
-
 });
 
 
-document.getElementById("summaryBtn")
-.addEventListener("click", () => {
-
+document.getElementById("summaryBtn").addEventListener("click", () => {
     location.href = "pages/summary.html";
-
 });
 
 
@@ -47,9 +35,9 @@ document.getElementById("summaryBtn")
 // ==============================
 
 const monthVisitBtn =
-document.getElementById("monthVisitBtn");
+    document.getElementById("monthVisitBtn");
 
-if(monthVisitBtn){
+if (monthVisitBtn) {
 
     monthVisitBtn.addEventListener("click", () => {
 
@@ -64,57 +52,74 @@ if(monthVisitBtn){
 // 今日の日報
 // ==============================
 
-async function loadTodayReports(){
+async function loadTodayReports() {
 
-    console.log("今日の日報読み込み開始");
+    try {
 
-    const today = new Date();
+        console.log("今日の日報読み込み開始");
 
-    const year =
-    today.getFullYear();
+        const today = new Date();
 
-    const month =
-    String(today.getMonth() + 1)
-    .padStart(2, "0");
+        const year =
+            today.getFullYear();
 
-    const day =
-    String(today.getDate())
-    .padStart(2, "0");
+        const month =
+            String(today.getMonth() + 1)
+            .padStart(2, "0");
 
-    const todayText =
-    `${year}-${month}-${day}`;
+        const day =
+            String(today.getDate())
+            .padStart(2, "0");
 
-
-    const snapshot =
-    await getDocs(
-        collection(db, "reports")
-    );
+        const todayText =
+            `${year}-${month}-${day}`;
 
 
-    let count = 0;
+        const snapshot =
+            await getDocs(
+                collection(db, "reports")
+            );
 
 
-    snapshot.forEach(doc => {
+        let count = 0;
 
-        const data = doc.data();
 
-        if(data.date === todayText){
+        snapshot.forEach((doc) => {
 
-            count++;
+            const data = doc.data();
+
+            if (data.date === todayText) {
+
+                count++;
+
+            }
+
+        });
+
+
+        const element =
+            document.getElementById("todayCount");
+
+
+        if (element) {
+
+            element.textContent =
+                `${count}件`;
 
         }
 
-    });
+        console.log(
+            "今日の日報件数:",
+            count
+        );
 
+    }
+    catch (error) {
 
-    const element =
-    document.getElementById("todayCount");
-
-
-    if(element){
-
-        element.textContent =
-        `${count}件`;
+        console.error(
+            "今日の日報読み込みエラー",
+            error
+        );
 
     }
 
@@ -125,50 +130,67 @@ async function loadTodayReports(){
 // 今月の訪問
 // ==============================
 
-async function loadMonthReports(){
+async function loadMonthReports() {
 
-    const today = new Date();
+    try {
 
-    const month =
-    `${today.getFullYear()}-${String(
-        today.getMonth() + 1
-    ).padStart(2, "0")}`;
+        const today = new Date();
 
-
-    const snapshot =
-    await getDocs(
-        collection(db, "reports")
-    );
+        const month =
+            `${today.getFullYear()}-${String(
+                today.getMonth() + 1
+            ).padStart(2, "0")}`;
 
 
-    let count = 0;
+        const snapshot =
+            await getDocs(
+                collection(db, "reports")
+            );
 
 
-    snapshot.forEach(doc => {
-
-        const data = doc.data();
+        let count = 0;
 
 
-        if(
-            data.date &&
-            data.date.startsWith(month)
-        ){
+        snapshot.forEach((doc) => {
 
-            count++;
+            const data = doc.data();
+
+            if (
+                data.date &&
+                data.date.startsWith(month)
+            ) {
+
+                count++;
+
+            }
+
+        });
+
+
+        const element =
+            document.getElementById("monthCount");
+
+
+        if (element) {
+
+            element.textContent =
+                `${count}件`;
 
         }
 
-    });
 
+        console.log(
+            "今月の訪問件数:",
+            count
+        );
 
-    const element =
-    document.getElementById("monthCount");
+    }
+    catch (error) {
 
-
-    if(element){
-
-        element.textContent =
-        `${count}件`;
+        console.error(
+            "今月の訪問読み込みエラー",
+            error
+        );
 
     }
 
@@ -179,22 +201,40 @@ async function loadMonthReports(){
 // 登録顧客数
 // ==============================
 
-async function loadCustomerTotal(){
+async function loadCustomerTotal() {
 
-    const snapshot =
-    await getDocs(
-        collection(db, "customers")
-    );
+    try {
 
-
-    const element =
-    document.getElementById("customerTotal");
+        const snapshot =
+            await getDocs(
+                collection(db, "customers")
+            );
 
 
-    if(element){
+        const element =
+            document.getElementById("customerTotal");
 
-        element.textContent =
-        `${snapshot.size}社`;
+
+        if (element) {
+
+            element.textContent =
+                `${snapshot.size}社`;
+
+        }
+
+
+        console.log(
+            "登録顧客数:",
+            snapshot.size
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "顧客数読み込みエラー",
+            error
+        );
 
     }
 
@@ -205,102 +245,124 @@ async function loadCustomerTotal(){
 // 最近の日報
 // ==============================
 
-async function loadRecentReports(){
+async function loadRecentReports() {
 
-    const snapshot =
-    await getDocs(
-        collection(db, "reports")
-    );
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(db, "reports")
+            );
 
 
-    const reports = [];
+        const reports = [];
 
 
-    snapshot.forEach(doc => {
+        snapshot.forEach((doc) => {
 
-        reports.push({
+            reports.push({
 
-            id: doc.id,
+                id: doc.id,
 
-            ...doc.data()
+                ...doc.data()
+
+            });
 
         });
 
-    });
+
+        // 日付の新しい順
+
+        reports.sort((a, b) => {
+
+            return (b.date || "")
+                .localeCompare(a.date || "");
+
+        });
 
 
-    // 日付の新しい順
-
-    reports.sort((a, b) => {
-
-        return b.date.localeCompare(a.date);
-
-    });
+        const element =
+            document.getElementById("recentReports");
 
 
-    const element =
-    document.getElementById("recentReports");
+        if (!element) {
+
+            return;
+
+        }
 
 
-    if(!element){
+        element.innerHTML = "";
 
-        return;
+
+        if (reports.length === 0) {
+
+            element.innerHTML =
+                "<p>最近の日報はありません</p>";
+
+            return;
+
+        }
+
+
+        reports
+            .slice(0, 5)
+            .forEach((report) => {
+
+                element.innerHTML += `
+
+                    <div
+                        class="report-card"
+                        onclick="openReport('${report.id}')"
+                    >
+
+                        <p>
+                            📅 ${report.date || ""}
+                        </p>
+
+                        <p>
+                            👤 ${report.name || ""}
+                        </p>
+
+                    </div>
+
+                `;
+
+            });
+
 
     }
+    catch (error) {
 
+        console.error(
+            "最近の日報読み込みエラー",
+            error
+        );
 
-    element.innerHTML = "";
-
-
-    reports
-    .slice(0, 5)
-    .forEach(report => {
-
-
-        element.innerHTML += `
-
-        <div
-            class="report-card"
-            onclick="openReport('${report.id}')"
-        >
-
-            <p>
-                📅 ${report.date || ""}
-            </p>
-
-            <p>
-                👤 ${report.name || ""}
-            </p>
-
-        </div>
-
-        `;
-
-    });
+    }
 
 }
 
 
 // ==============================
-// 日報詳細へ
+// 日報詳細
 // ==============================
 
-window.openReport = function(id){
+window.openReport = function(id) {
 
     location.href =
-    `pages/report-detail.html?id=${id}`;
+        `pages/report-detail.html?id=${id}`;
 
 };
 
 
 // ==============================
-// 読み込み開始
+// ホーム画面読み込み
 // ==============================
 
-loadTodayReports();
-
-loadMonthReports();
-
-loadCustomerTotal();
-
-loadRecentReports();
+Promise.all([
+    loadTodayReports(),
+    loadMonthReports(),
+    loadCustomerTotal(),
+    loadRecentReports()
+]);
