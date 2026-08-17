@@ -3,8 +3,6 @@ import { db } from "./firebase.js";
 import {
     collection,
     getDocs,
-    query,
-    where
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 const recentReports =
