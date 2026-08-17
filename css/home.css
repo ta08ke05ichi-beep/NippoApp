@@ -6,50 +6,39 @@ main{
 
     padding:20px;
 
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-
-    gap:20px;
-
 }
 
 
 .menu-card{
 
-    background:white;
+    background:#fff;
 
-    border-radius:12px;
+    border-radius:18px;
 
-    padding:25px;
-
-    cursor:pointer;
+    padding:20px;
 
     text-align:center;
 
-    transition:0.2s;
+    cursor:pointer;
 
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
 
-    border:1px solid #e5e7eb;
+    transition:.2s;
 
 }
-
 
 .menu-card:hover{
 
     transform:translateY(-3px);
-
-    box-shadow:0 8px 20px rgba(0,0,0,0.12);
 
 }
 
 
 .icon{
 
-    font-size:48px;
+    font-size:42px;
 
-    margin-bottom:15px;
+    margin-bottom:10px;
 
 }
 
@@ -269,5 +258,33 @@ header p{
 .report-card p{
 
     margin:6px 0;
+
+}
+
+.section-title{
+
+    margin:30px 20px 15px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#333;
+
+    border-left:6px solid #ff8a65;
+
+    padding-left:12px;
+
+}
+
+.menu-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    margin:20px;
 
 }

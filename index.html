@@ -4,219 +4,173 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>業務日報システム</title>
 
 <link rel="manifest" href="manifest.json">
 
+<link rel="icon" href="icons/icon-192.png">
+
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/home.css">
 
 </head>
-<link rel="icon" href="icons/icon-192.png">
 
 <body>
 
 <header>
 
-<h1>業務日報</h1>
+    <h1>業務日報</h1>
 
-<p>
-社内業務管理システム
-</p>
+    <p>社内業務管理システム</p>
 
 </header>
 
 <main>
 
-<div class="menu-card" id="reportBtn">
+    <!-- メニュー -->
 
-    <div class="icon">📝</div>
+    <div class="menu-grid">
 
-    <h2>日報を書く</h2>
+    <div class="menu-card" id="reportBtn">
 
-    <p>今日の日報を入力します</p>
+        <div class="icon">📝</div>
 
-</div>
+        <h2>日報を書く</h2>
 
-<div class="menu-card" id="reportsBtn">
-
-    <div class="icon">📋</div>
-
-    <h2>日報一覧</h2>
-
-    <p>保存した日報を確認します</p>
-
-</div>
-
-<div class="menu-card" id="customersBtn">
-
-    <div class="icon">🏢</div>
-
-    <h2>顧客一覧</h2>
-
-    <p>顧客ごとの対応履歴を確認します</p>
-
-</div>
-
-<div class="menu-card" id="summaryBtn">
-
-    <div class="icon">📊</div>
-
-    <h2>月間集計</h2>
-
-    <p>訪問件数を確認します</p>
-
-</div>
-
-<div class="status-grid">
-
-    <div class="status-item">
-
-        <p>📅 今日の日報</p>
-
-        <h2 id="todayCount">0件</h2>
+        <p>今日の日報を入力します</p>
 
     </div>
 
-    <div class="status-item">
+    <div class="menu-card" id="reportsBtn">
 
-        <p>🚗 今月の訪問</p>
+        <div class="icon">📋</div>
 
-        <h2 id="monthCount">0件</h2>
+        <h2>日報一覧</h2>
 
-    </div>
-
-    <div class="status-item">
-
-        <p>🏢 登録顧客数</p>
-
-        <h2 id="customerTotal">0社</h2>
+        <p>保存した日報を確認します</p>
 
     </div>
 
-</div>
+    <div class="menu-card" id="customersBtn">
+
+        <div class="icon">🏢</div>
+
+        <h2>顧客一覧</h2>
+
+        <p>顧客ごとの対応履歴を確認します</p>
+
+    </div>
+
+    <div class="menu-card" id="summaryBtn">
+
+        <div class="icon">📊</div>
+
+        <h2>月間集計</h2>
+
+        <p>訪問件数を確認します</p>
+
+    </div>
+
+    </div>
+
+    <h2 class="section-title">
+
+📊 業務状況
+
+</h2>
+
+    <!-- ステータス -->
+
+    <div class="status-grid">
+
+        <div class="status-item">
+
+            <p>📅 今日の日報</p>
+
+            <h2 id="todayCount">
+
+                読み込み中...
+
+            </h2>
+
+        </div>
+
+        <div class="status-item">
+
+            <p>🚗 今月の訪問</p>
+
+            <h2 id="monthCount">
+
+                読み込み中...
+
+            </h2>
+
+        </div>
+
+        <div class="status-item">
+
+            <p>🏢 登録顧客数</p>
+
+            <h2 id="customerTotal">
+
+                読み込み中...
+
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- 最近の日報 -->
+
+    <h2 class="section-title">
+
+📋 最近の日報
+
+</h2>
 
 <div class="card">
 
-    <h2>📋 最近の日報</h2>
+        <div id="recentReports">
 
-    <div id="recentReports">
+            読み込み中...
 
-        読み込み中...
-
-    </div>
-
-</div><div class="status-grid">
-
-    <div class="status-item">
-
-        <p>📅 今日の日報</p>
-
-        <h2 id="todayCount">0件</h2>
+        </div>
 
     </div>
-
-    <div class="status-item">
-
-        <p>🚗 今月の訪問</p>
-
-        <h2 id="monthCount">0件</h2>
-
-    </div>
-
-    <div class="status-item">
-
-        <p>🏢 登録顧客数</p>
-
-        <h2 id="customerTotal">0社</h2>
-
-    </div>
-
-</div>
-
-<div class="card">
-
-    <h2>📋 最近の日報</h2>
-
-    <div id="recentReports">
-
-        読み込み中...
-
-    </div>
-
-</div>
 
 </main>
-
-<div class="status-card">
-
-
-<div class="status-item">
-
-<p>📅 今日の日報</p>
-
-<h3 id="todayCount">
-読み込み中...
-</h3>
-
-</div>
-
-<div class="status-item">
-
-<p>🚗 今月の訪問</p>
-
-<h3 id="monthCount">
-読み込み中...
-</h3>
-
-</div>
-
-<div class="status-item">
-
-<p>🏢 登録顧客数</p>
-
-<h3 id="customerTotal">
-読み込み中...
-</h3>
-
-</div>
-
-<div class="card">
-
-<h2>📋 最近の日報</h2>
-
-<div id="recentReports">
-
-読み込み中...
-
-</div>
-
-</div>
-
-</div>
 
 <script type="module" src="js/home.js"></script>
 
 <script>
-if ("serviceWorker" in navigator) {
+
+if("serviceWorker" in navigator){
 
     navigator.serviceWorker.register(
         "service-worker.js"
     )
-    .then(() => {
-        console.log("Service Worker 登録成功");
+    .then(()=>{
+
+        console.log(
+            "Service Worker 登録成功"
+        );
+
     })
     .catch((error)=>{
+
         console.log(
             "Service Worker 登録失敗",
             error
         );
+
     });
 
 }
+
 </script>
 
 </body>
