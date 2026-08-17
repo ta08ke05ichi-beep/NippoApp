@@ -300,3 +300,17 @@ header p{
     margin:20px;
 
 }
+
+.visit-status{
+    cursor:pointer;
+    transition:.2s;
+}
+
+.visit-status:hover{
+    transform:translateY(-3px);
+    box-shadow:0 6px 15px rgba(0,0,0,.12);
+}
+
+.visit-status:active{
+    transform:scale(.97);
+}

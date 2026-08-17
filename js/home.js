@@ -32,6 +32,13 @@ document.getElementById("summaryBtn").addEventListener("click",()=>{
 
 });
 
+document.getElementById("monthVisitBtn")
+.addEventListener("click",()=>{
+
+    location.href = "pages/visit-list.html";
+
+});
+
 // 今日の日報表示
 
 async function loadTodayReports(){
