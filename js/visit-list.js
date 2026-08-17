@@ -2,128 +2,299 @@ import { db } from "./firebase.js";
 
 import {
     collection,
-    getDocs,
-    doc,
-    getDoc
+    getDocs
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-const params = new URLSearchParams(location.search);
+console.log("visit-list.js 起動");
 
-const month = params.get("month");
 
-const name = params.get("name");
+// ==============================
+// HTML要素
+// ==============================
 
 const visitList =
-document.getElementById("visitList");
+    document.getElementById("visitList");
+
+const backBtn =
+    document.getElementById("backBtn");
+
+const monthTitle =
+    document.getElementById("monthTitle");
 
 
+// ==============================
+// 今月を取得
+// ==============================
 
-async function getCustomerName(id){
+const today =
+    new Date();
 
-    const snap = await getDoc(
-        doc(db,"customers",id)
-    );
 
-    if(snap.exists()){
+const year =
+    today.getFullYear();
 
-        return snap.data().name;
+
+const monthNumber =
+    String(today.getMonth() + 1)
+    .padStart(2, "0");
+
+
+const month =
+    `${year}-${monthNumber}`;
+
+
+console.log(
+    "対象月:",
+    month
+);
+
+
+// ==============================
+// 月表示
+// ==============================
+
+monthTitle.textContent =
+    `${year}年${Number(monthNumber)}月`;
+
+
+// ==============================
+// 戻るボタン
+// ==============================
+
+backBtn.addEventListener(
+    "click",
+    () => {
+
+        location.href =
+            "../index.html";
 
     }
-
-    return "不明";
-
-}
+);
 
 
+// ==============================
+// 訪問一覧読み込み
+// ==============================
 
-async function loadVisits(){
+async function loadVisits() {
 
-    const snapshot = await getDocs(
-        collection(db,"reports")
-    );
+    try {
 
-    const customerCounts = {};
-
-
-
-    for(const docSnap of snapshot.docs){
-
-        const data = docSnap.data();
+        console.log(
+            "訪問一覧読み込み開始"
+        );
 
 
-        if(name !== "全員" && data.name !== name){
-
-            continue;
-
-        }
-
-
-        if(!data.date.startsWith(month)){
-
-            continue;
-
-        }
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "reports"
+                )
+            );
 
 
-        if(!Array.isArray(data.tasks)){
-
-            continue;
-
-        }
+        const visits = [];
 
 
-        for(const task of data.tasks){
+        // ==========================
+        // 日報を確認
+        // ==========================
 
-            const customerName =
-            await getCustomerName(task.customer);
+        snapshot.forEach(
+            (docSnap) => {
+
+                const data =
+                    docSnap.data();
 
 
-            if(!customerCounts[customerName]){
+                // 今月の日報だけ
 
-                customerCounts[customerName]=0;
+                if (
+                    !data.date ||
+                    !data.date.startsWith(month)
+                ) {
+
+                    return;
+
+                }
+
+
+                // tasksがない日報は除外
+
+                if (
+                    !Array.isArray(data.tasks)
+                ) {
+
+                    return;
+
+                }
+
+
+                // ======================
+                // 訪問データ
+                // ======================
+
+                data.tasks.forEach(
+                    (task) => {
+
+                        visits.push({
+
+                            date:
+                                data.date,
+
+                            name:
+                                data.name || "",
+
+                            customer:
+                                task.customer || "顧客名なし",
+
+                            start:
+                                task.start || "",
+
+                            end:
+                                task.end || "",
+
+                            work:
+                                task.work || "",
+
+                            content:
+                                task.content || ""
+
+                        });
+
+                    }
+                );
 
             }
+        );
 
 
-            customerCounts[customerName]++;
+        // ==========================
+        // 日付の新しい順
+        // ==========================
+
+        visits.sort(
+            (a, b) => {
+
+                return b.date.localeCompare(
+                    a.date
+                );
+
+            }
+        );
+
+
+        // ==========================
+        // 表示
+        // ==========================
+
+        visitList.innerHTML = "";
+
+
+        if (visits.length === 0) {
+
+            visitList.innerHTML = `
+
+                <div class="visit-card">
+
+                    <h2>
+                        今月の訪問はありません
+                    </h2>
+
+                </div>
+
+            `;
+
+            return;
 
         }
 
+
+        visits.forEach(
+            (visit) => {
+
+                visitList.innerHTML += `
+
+                <div class="visit-card">
+
+                    <p>
+                        📅 ${visit.date}
+                    </p>
+
+                    <h2>
+                        🏢 ${visit.customer}
+                    </h2>
+
+                    <p>
+                        👤 ${visit.name}
+                    </p>
+
+                    <p>
+                        🕒
+                        ${visit.start}
+                        〜
+                        ${visit.end}
+                    </p>
+
+                    <p>
+                        🔧 ${visit.work}
+                    </p>
+
+                    ${
+                        visit.content
+                        ?
+                        `<p>📝 ${visit.content}</p>`
+                        :
+                        ""
+                    }
+
+                </div>
+
+                `;
+
+            }
+        );
+
+
+        console.log(
+            "訪問件数:",
+            visits.length
+        );
+
     }
+    catch (error) {
+
+        console.error(
+            "訪問一覧読み込みエラー",
+            error
+        );
 
 
-    visitList.innerHTML="";
+        visitList.innerHTML = `
 
+            <div class="visit-card">
 
-    for(const customer in customerCounts){
+                <h2>
+                    読み込みエラー
+                </h2>
 
-        visitList.innerHTML += `
+                <p>
+                    F12のConsoleを確認してください
+                </p>
 
-<div class="visit-card"
-onclick="openHistory('${customer}')">
+            </div>
 
-<h2>${customer}</h2>
-
-<p>訪問回数：${customerCounts[customer]}回</p>
-
-</div>
-
-`;
+        `;
 
     }
 
 }
 
 
-
-window.openHistory=function(customer){
-
-    location.href=
-`visit-history.html?customer=${encodeURIComponent(customer)}&month=${month}&name=${encodeURIComponent(name)}`;
-
-}
-
-
+// ==============================
+// 実行
+// ==============================
 
 loadVisits();
