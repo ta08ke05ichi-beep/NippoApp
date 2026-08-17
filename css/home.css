@@ -314,3 +314,33 @@ header p{
 .visit-status:active{
     transform:scale(.97);
 }
+
+.status-grid{
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:15px;
+    margin:20px;
+}
+
+.status-item{
+    display:block !important;
+    visibility:visible !important;
+}
+
+.card{
+    display:block !important;
+    visibility:visible !important;
+}
+
+#recentReports{
+    display:block !important;
+    visibility:visible !important;
+}
+
+@media(max-width:600px){
+
+    .status-grid{
+        grid-template-columns:1fr !important;
+    }
+
+}
