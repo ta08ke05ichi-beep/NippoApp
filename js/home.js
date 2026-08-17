@@ -32,12 +32,18 @@ document.getElementById("summaryBtn").addEventListener("click",()=>{
 
 });
 
-document.getElementById("monthVisitBtn")
-.addEventListener("click",()=>{
+const monthVisitBtn =
+document.getElementById("monthVisitBtn");
 
-    location.href = "pages/visit-list.html";
+if(monthVisitBtn){
 
-});
+    monthVisitBtn.addEventListener("click",()=>{
+
+        location.href = "pages/visit-list.html";
+
+    });
+
+}
 
 // 今日の日報表示
 
