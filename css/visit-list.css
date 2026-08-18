@@ -1,29 +1,155 @@
+/* =========================
+   訪問一覧
+========================= */
+
+#visitList{
+    max-width:900px;
+    margin:0 auto;
+}
+
+
+/* =========================
+   訪問カード
+========================= */
+
 .visit-card{
 
-    background:white;
+    background:#fff;
 
     padding:20px;
 
-    margin:20px;
+    margin:15px 0;
+
+    border-radius:16px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+    border-left:5px solid #1976d2;
+
+    transition:.2s;
+
+}
+
+
+/* カードを押せる場合 */
+
+.visit-card:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 6px 15px rgba(0,0,0,.12);
+
+}
+
+
+/* =========================
+   カード内
+========================= */
+
+.visit-card h2{
+
+    margin:0 0 12px;
+
+    font-size:20px;
+
+    color:#1f3a5f;
+
+}
+
+
+.visit-card p{
+
+    margin:7px 0;
+
+    color:#555;
+
+    font-size:15px;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================
+   戻るボタン
+========================= */
+
+#backBtn{
+
+    display:block;
+
+    width:calc(100% - 40px);
+
+    max-width:500px;
+
+    margin:30px auto;
+
+    padding:14px;
+
+    border:none;
 
     border-radius:12px;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    background:#1f3a5f;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
 
     cursor:pointer;
 
 }
 
-.visit-card:hover{
 
-    background:#f7f9fc;
+#backBtn:hover{
+
+    opacity:.9;
 
 }
 
-.visit-card h2{
 
-    color:#1f3a5f;
+#backBtn:active{
 
-    margin-bottom:10px;
+    transform:scale(.98);
+
+}
+
+
+/* =========================
+   スマホ
+========================= */
+
+@media(max-width:600px){
+
+    #visitList{
+
+        padding:0 15px;
+
+    }
+
+
+    .visit-card{
+
+        padding:16px;
+
+        margin:12px 0;
+
+    }
+
+
+    .visit-card h2{
+
+        font-size:18px;
+
+    }
+
+
+    .visit-card p{
+
+        font-size:14px;
+
+    }
 
 }
