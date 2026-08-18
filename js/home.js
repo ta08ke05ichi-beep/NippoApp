@@ -125,7 +125,6 @@ async function loadTodayReports() {
 
 }
 
-
 // ==============================
 // 今月の訪問
 // ==============================
@@ -151,18 +150,35 @@ async function loadMonthReports() {
         let count = 0;
 
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach((docSnap) => {
 
-            const data = doc.data();
+            const data =
+                docSnap.data();
 
+
+            // 今月の日報だけ
             if (
-                data.date &&
-                data.date.startsWith(month)
+                !data.date ||
+                !data.date.startsWith(month)
             ) {
 
-                count++;
+                return;
 
             }
+
+
+            // tasksがない日報は除外
+            if (
+                !Array.isArray(data.tasks)
+            ) {
+
+                return;
+
+            }
+
+
+            // tasksの数 = 訪問件数
+            count += data.tasks.length;
 
         });
 
