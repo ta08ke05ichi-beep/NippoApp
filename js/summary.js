@@ -6,253 +6,519 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
+console.log("summary.js 起動");
+
+
+// ==============================
+// HTML要素
+// ==============================
+
 const monthInput =
-document.getElementById("month");
+    document.getElementById("month");
 
 const nameInput =
-document.getElementById("name");
+    document.getElementById("name");
 
 const visitCount =
-document.getElementById("visitCount");
+    document.getElementById("visitCount");
 
 const workCount =
-document.getElementById("workCount");
+    document.getElementById("workCount");
 
 const customerCount =
-document.getElementById("customerCount");
+    document.getElementById("customerCount");
 
 const timeCount =
-document.getElementById("timeCount");
+    document.getElementById("timeCount");
 
 const personSummary =
-document.getElementById("personSummary");
+    document.getElementById("personSummary");
+
+const searchBtn =
+    document.getElementById("searchBtn");
 
 
+// ==============================
 // 今月を初期表示
+// ==============================
 
 const today = new Date();
 
-monthInput.value =
-`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
+const currentMonth =
+    `${today.getFullYear()}-${String(
+        today.getMonth() + 1
+    ).padStart(2, "0")}`;
 
+monthInput.value = currentMonth;
 
 
-document.getElementById("searchBtn")
-.addEventListener("click",loadSummary);
+// ==============================
+// 集計ボタン
+// ==============================
 
+searchBtn.addEventListener(
+    "click",
+    loadSummary
+);
 
 
-async function loadSummary(){
+// ==============================
+// 月間集計
+// ==============================
 
-    const snapshot =
-    await getDocs(
-        collection(db,"reports")
-    );
+async function loadSummary() {
 
+    console.log("月間集計開始");
 
-    let visits = 0;
 
-    let works = 0;
+    try {
 
-    let minutes = 0;
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "reports"
+                )
+            );
 
 
-    const customers =
-    new Set();
+        // ==========================
+        // 集計用
+        // ==========================
 
-    const persons = {};
+        let visits = 0;
 
-    const month =
-    monthInput.value;
+        let works = 0;
 
+        let minutes = 0;
 
-    const targetMonth =
-    `${month.split("-")[0]}-${month.split("-")[1]}`;
 
+        const customers =
+            new Set();
 
-    const name =
-    nameInput.value;
 
+        const persons = {};
 
 
-    snapshot.forEach((doc)=>{
+        // ==========================
+        // 選択された月・担当者
+        // ==========================
 
+        const targetMonth =
+            monthInput.value;
 
-        const data =
-        doc.data();
 
+        const targetName =
+            nameInput.value;
 
 
-        // 担当者
+        console.log(
+            "対象月:",
+            targetMonth
+        );
 
-        if(
-            name !== "全員" &&
-            data.name !== name
-        ){
-            return;
-        }
+        console.log(
+            "対象担当者:",
+            targetName
+        );
 
 
+        // ==========================
+        // 日報を確認
+        // ==========================
 
-        // 月
+        snapshot.forEach(
+            (docSnap) => {
 
-        if(
-            !data.date.startsWith(targetMonth)
-        ){
-            return;
-        }
+                const data =
+                    docSnap.data();
 
 
+                // ======================
+                // 担当者チェック
+                // ======================
 
-        // 訪問数
+                if (
+                    targetName !== "全員" &&
+                    data.name !== targetName
+                ) {
 
-        visits++;
+                    return;
 
+                }
 
 
-        // 作業数
+                // ======================
+                // 日付チェック
+                // ======================
 
-        if(data.work){
+                if (
+                    !data.date ||
+                    !data.date.startsWith(
+                        targetMonth
+                    )
+                ) {
 
-            works++;
+                    return;
 
-        }
+                }
 
 
+                // ======================
+                // tasksチェック
+                // ======================
 
-        // 顧客数
+                if (
+                    !Array.isArray(
+                        data.tasks
+                    )
+                ) {
 
-        if(data.customer){
+                    return;
 
-            customers.add(data.customer);
+                }
 
-        }
 
+                // ======================
+                // 訪問1件ずつ処理
+                // ======================
 
+                data.tasks.forEach(
+                    (task) => {
 
-        // 作業時間
 
-        if(
-            data.startTime &&
-            data.endTime
-        ){
+                        // ------------------
+                        // 訪問件数
+                        // ------------------
 
-            const start =
-            data.startTime.split(":");
+                        visits++;
 
-            const end =
-            data.endTime.split(":");
 
+                        // ------------------
+                        // 作業件数
+                        // ------------------
 
+                        if (
+                            task.work &&
+                            task.work.trim() !== ""
+                        ) {
 
-            const startMinutes =
-            Number(start[0])*60 +
-            Number(start[1]);
+                            works++;
 
+                        }
 
-            const endMinutes =
-            Number(end[0])*60 +
-            Number(end[1]);
 
+                        // ------------------
+                        // 顧客数
+                        // ------------------
 
+                        if (
+                            task.customer &&
+                            task.customer.trim() !== ""
+                        ) {
 
-            minutes +=
-            endMinutes - startMinutes;
+                            customers.add(
+                                task.customer
+                            );
 
-        }
+                        }
 
 
+                        // ------------------
+                        // 作業時間
+                        // ------------------
+
+                        if (
+                            task.start &&
+                            task.end
+                        ) {
+
+                            const start =
+                                task.start.split(":");
+
+                            const end =
+                                task.end.split(":");
+
+
+                            if (
+                                start.length === 2 &&
+                                end.length === 2
+                            ) {
+
+                                const startMinutes =
+                                    Number(start[0]) * 60 +
+                                    Number(start[1]);
+
+
+                                const endMinutes =
+                                    Number(end[0]) * 60 +
+                                    Number(end[1]);
+
+
+                                let diff =
+                                    endMinutes -
+                                    startMinutes;
+
+
+                                // 日をまたいだ場合
+                                if (diff < 0) {
+
+                                    diff += 24 * 60;
+
+                                }
+
+
+                                minutes += diff;
+
+                            }
+
+                        }
+
+
+                        // ------------------
+                        // 担当者別
+                        // ------------------
+
+                        const person =
+                            data.name || "名前なし";
+
+
+                        if (
+                            !persons[person]
+                        ) {
+
+                            persons[person] = {
+
+                                visits: 0,
+
+                                customers:
+                                    new Set()
+
+                            };
+
+                        }
+
+
+                        persons[person].visits++;
+
+
+                        if (
+                            task.customer &&
+                            task.customer.trim() !== ""
+                        ) {
+
+                            persons[person]
+                                .customers
+                                .add(
+                                    task.customer
+                                );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        // ==========================
+        // 集計結果表示
+        // ==========================
+
+        visitCount.textContent =
+            `${visits}件`;
+
+
+        workCount.textContent =
+            `${works}件`;
+
+
+        customerCount.textContent =
+            `${customers.size}社`;
+
+
+        // ==========================
+        // 時間表示
+        // ==========================
+
+        const hours =
+            Math.floor(
+                minutes / 60
+            );
+
+
+        const mins =
+            minutes % 60;
+
+
+        timeCount.textContent =
+            `${hours}時間${mins}分`;
+
+
+        // ==========================
         // 担当者別集計
+        // ==========================
 
-if(!persons[data.name]){
-
-    persons[data.name] = {
-
-        visits:0,
-
-        customers:new Set()
-
-    };
-
-}
-
-persons[data.name].visits++;
-
-if(data.customer){
-
-    persons[data.name].customers.add(
-        data.customer
-    );
-
-}
+        personSummary.innerHTML = "";
 
 
-    });
+        if (
+            targetName === "全員"
+        ) {
+
+            const personNames =
+                Object.keys(persons)
+                .sort();
 
 
+            if (
+                personNames.length === 0
+            ) {
 
-    visitCount.textContent =
-    `${visits}件`;
+                personSummary.innerHTML = `
+                    <p>
+                        この月のデータはありません。
+                    </p>
+                `;
 
+            }
+            else {
 
-    workCount.textContent =
-    `${works}件`;
+                personNames.forEach(
+                    (person) => {
 
-
-    customerCount.textContent =
-    `${customers.size}社`;
-
-
-
-    const hour =
-    Math.floor(minutes / 60);
-
-
-    const min =
-    minutes % 60;
+                        const data =
+                            persons[person];
 
 
+                        personSummary.innerHTML += `
 
-    timeCount.textContent =
-`${hour}時間${min}分`;
+                            <div class="person-card">
 
-personSummary.innerHTML = "";
+                                <h3>
+                                    👤 ${person}
+                                </h3>
 
-if(name === "全員"){
+                                <p
+                                    class="visit-link"
+                                    onclick="openVisitList('${encodeURIComponent(person)}')"
+                                >
+                                    訪問件数：
+                                    ${data.visits}件
+                                </p>
 
-    for(const person in persons){
+                                <p>
+                                    訪問顧客数：
+                                    ${data.customers.size}社
+                                </p>
 
-        personSummary.innerHTML += `
+                            </div>
 
-        <div class="person-card">
+                        `;
 
-            <h3>👤 ${person}</h3>
+                    }
+                );
 
-            <p class="visit-link"
-onclick="openVisitList('${person}')">
+            }
 
-訪問件数：${persons[person].visits}件
+        }
+        else {
 
-</p>
+            personSummary.innerHTML = `
 
-            <p>訪問顧客数：${persons[person].customers.size}社</p>
+                <div class="person-card">
 
-        </div>
+                    <h3>
+                        👤 ${targetName}
+                    </h3>
 
+                    <p>
+                        訪問件数：
+                        ${visits}件
+                    </p>
+
+                    <p>
+                        訪問顧客数：
+                        ${customers.size}社
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+
+        console.log(
+            "集計完了",
+            {
+                visits,
+                works,
+                customers: customers.size,
+                minutes
+            }
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "月間集計エラー",
+            error
+        );
+
+
+        visitCount.textContent =
+            "エラー";
+
+
+        workCount.textContent =
+            "エラー";
+
+
+        customerCount.textContent =
+            "エラー";
+
+
+        timeCount.textContent =
+            "エラー";
+
+
+        personSummary.innerHTML = `
+            <p>
+                集計中にエラーが発生しました。
+            </p>
         `;
 
     }
 
 }
 
-}
 
-window.openVisitList = function(person){
+// ==============================
+// 訪問一覧へ
+// ==============================
+
+window.openVisitList =
+function(person) {
 
     const month =
-    monthInput.value;
+        monthInput.value;
+
+
+    const name =
+        decodeURIComponent(person);
+
 
     location.href =
-    `visit-list.html?month=${month}&name=${encodeURIComponent(person)}`;
+        `visit-list.html?month=${encodeURIComponent(month)}&name=${encodeURIComponent(name)}`;
 
-}
+};
+
+
+// ==============================
+// 最初の集計
+// ==============================
+
+loadSummary();
