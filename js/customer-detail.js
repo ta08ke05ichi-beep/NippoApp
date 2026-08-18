@@ -35,7 +35,7 @@ const historyList =
 
 
 // ==============================
-// 顧客情報
+// 顧客情報取得
 // ==============================
 
 async function loadCustomer() {
@@ -146,7 +146,7 @@ async function loadCustomer() {
 
 
         // ==========================
-        // 保存
+        // 顧客情報保存
         // ==========================
 
         document
@@ -235,7 +235,7 @@ async function loadCustomer() {
 
 
 // ==============================
-// 対応履歴
+// 対応履歴取得
 // ==============================
 
 async function loadHistory() {
@@ -245,6 +245,48 @@ async function loadHistory() {
 
 
     try {
+
+        // ==========================
+        // 現在の顧客情報を取得
+        // ==========================
+
+        const customerSnap =
+            await getDoc(
+                doc(
+                    db,
+                    "customers",
+                    id
+                )
+            );
+
+
+        if (!customerSnap.exists()) {
+
+            historyList.innerHTML =
+                "<p>顧客情報がありません。</p>";
+
+            return;
+
+        }
+
+
+        const customerData =
+            customerSnap.data();
+
+
+        const customerName =
+            customerData.name || "";
+
+
+        console.log(
+            "履歴検索対象顧客:",
+            customerName
+        );
+
+
+        // ==========================
+        // 日報取得
+        // ==========================
 
         const snapshot =
             await getDocs(
@@ -269,7 +311,7 @@ async function loadHistory() {
                     docSnap.data();
 
 
-                // tasksがない日報は無視
+                // tasksがない日報は除外
 
                 if (
                     !Array.isArray(data.tasks)
@@ -287,16 +329,23 @@ async function loadHistory() {
                 data.tasks.forEach(
                     (task) => {
 
-                        /*
-                         * task.customer は
-                         * 現在「顧客名」で保存されている
-                         *
-                         * customer-detailのURLは
-                         * 顧客IDなので、
-                         * 顧客名を使って照合する
-                         */
+                        // 顧客名が一致するものだけ
+
+                        if (
+                            task.customer !==
+                            customerName
+                        ) {
+
+                            return;
+
+                        }
+
 
                         histories.push({
+
+                            // ★ 日報ID
+                            reportId:
+                                docSnap.id,
 
                             date:
                                 data.date || "",
@@ -329,55 +378,10 @@ async function loadHistory() {
 
 
         // ==========================
-        // 現在の顧客名を取得
-        // ==========================
-
-        const customerSnap =
-            await getDoc(
-                doc(db, "customers", id)
-            );
-
-
-        if (!customerSnap.exists()) {
-
-            historyList.innerHTML =
-                "<p>顧客情報がありません。</p>";
-
-            return;
-
-        }
-
-
-        const customerData =
-            customerSnap.data();
-
-
-        const customerName =
-            customerData.name || "";
-
-
-        // ==========================
-        // 顧客名で絞り込み
-        // ==========================
-
-        const filtered =
-            histories.filter(
-                (history) => {
-
-                    return (
-                        history.customer ===
-                        customerName
-                    );
-
-                }
-            );
-
-
-        // ==========================
         // 日付の新しい順
         // ==========================
 
-        filtered.sort(
+        histories.sort(
             (a, b) => {
 
                 return (
@@ -398,7 +402,7 @@ async function loadHistory() {
         // ==========================
 
         if (
-            filtered.length === 0
+            histories.length === 0
         ) {
 
             historyList.innerHTML = `
@@ -422,12 +426,15 @@ async function loadHistory() {
         // 履歴表示
         // ==========================
 
-        filtered.forEach(
+        histories.forEach(
             (history) => {
 
                 historyList.innerHTML += `
 
-                    <div class="report-card">
+                    <div
+                        class="report-card history-click"
+                        data-report-id="${history.reportId}"
+                    >
 
                         <h3>
                             👤 ${history.name}さん
@@ -452,6 +459,10 @@ async function loadHistory() {
                             ${history.end}
                         </p>
 
+                        <p class="detail-link">
+                            📄 日報詳細を見る →
+                        </p>
+
                     </div>
 
                 `;
@@ -460,9 +471,53 @@ async function loadHistory() {
         );
 
 
+        // ==========================
+        // 履歴クリック
+        // ==========================
+
+        document
+        .querySelectorAll(".history-click")
+        .forEach(
+            (card) => {
+
+                card.addEventListener(
+                    "click",
+                    () => {
+
+                        const reportId =
+                            card.dataset.reportId;
+
+
+                        if (!reportId) {
+
+                            console.error(
+                                "日報IDがありません"
+                            );
+
+                            return;
+
+                        }
+
+
+                        console.log(
+                            "日報詳細へ:",
+                            reportId
+                        );
+
+
+                        location.href =
+                            `report-detail.html?id=${encodeURIComponent(reportId)}`;
+
+                    }
+                );
+
+            }
+        );
+
+
         console.log(
             "対応履歴件数:",
-            filtered.length
+            histories.length
         );
 
     }
