@@ -1,3 +1,4 @@
+console.log("★★★ 新しい visit-list.js 読み込み ★★★");
 import { db } from "./firebase.js";
 
 import {
