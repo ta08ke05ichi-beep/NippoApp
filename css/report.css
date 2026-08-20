@@ -1,11 +1,23 @@
+/* ==============================
+   日報入力
+   ブラックテーマ
+============================== */
+
+
+/* 全体 */
+
 body{
 
-    background:#f4f6f8;
+    background:#111;
+
+    color:white;
 
 }
 
 
-/* 全体 */
+/* ==============================
+   全体
+============================== */
 
 .report-container{
 
@@ -20,12 +32,13 @@ body{
 }
 
 
-
-/* ヘッダー */
+/* ==============================
+   ヘッダー
+============================== */
 
 .app-header{
 
-    background:#1f2937;
+    background:#1f3a5f;
 
     color:white;
 
@@ -36,12 +49,15 @@ body{
 }
 
 
-
-/* カード */
+/* ==============================
+   カード
+============================== */
 
 .task-card{
 
-    background:white;
+    background:#222;
+
+    color:white;
 
     padding:20px;
 
@@ -50,10 +66,10 @@ body{
     border-radius:14px;
 
     box-shadow:
-    0 3px 10px rgba(0,0,0,0.08);
+        0 3px 10px
+        rgba(0,0,0,.4);
 
 }
-
 
 
 .task-card h2{
@@ -62,17 +78,18 @@ body{
 
     font-size:20px;
 
-    color:#1f2937;
+    color:white;
 
-    border-bottom:2px solid #e5e7eb;
+    border-bottom:2px solid #444;
 
     padding-bottom:10px;
 
 }
 
 
-
-/* ラベル */
+/* ==============================
+   ラベル
+============================== */
 
 label{
 
@@ -84,18 +101,18 @@ label{
 
     margin-bottom:6px;
 
-    color:#374151;
+    color:white;
 
 }
 
 
-
-/* 入力 */
+/* ==============================
+   入力
+============================== */
 
 input,
 select,
 textarea{
-
 
     width:100%;
 
@@ -103,16 +120,25 @@ textarea{
 
     padding:13px;
 
-    border:1px solid #d1d5db;
+    border:1px solid #555;
 
     border-radius:10px;
 
     font-size:16px;
 
-    background:white;
+    background:#111;
+
+    color:white;
 
 }
 
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#999;
+
+}
 
 
 input:focus,
@@ -121,10 +147,13 @@ textarea:focus{
 
     outline:none;
 
-    border-color:#2563eb;
+    border-color:#1976d2;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(25,118,210,.2);
 
 }
-
 
 
 textarea{
@@ -136,8 +165,9 @@ textarea{
 }
 
 
-
-/* 顧客検索結果 */
+/* ==============================
+   顧客検索結果
+============================== */
 
 .customer-result{
 
@@ -146,13 +176,13 @@ textarea{
 }
 
 
-
 .customer-item{
 
+    background:#333;
 
-    background:#f8fafc;
+    color:white;
 
-    border:1px solid #e5e7eb;
+    border:1px solid #444;
 
     padding:14px;
 
@@ -165,27 +195,30 @@ textarea{
 }
 
 
-
 .customer-item:hover{
 
-    background:#e0f2fe;
+    background:#1f3a5f;
+
+    border-color:#1976d2;
 
 }
 
 
-
-/* 顧客詳細 */
+/* ==============================
+   顧客詳細
+============================== */
 
 .customer-detail{
-
 
     margin-top:15px;
 
     padding:15px;
 
-    background:#eff6ff;
+    background:#1b2735;
 
-    border-left:5px solid #2563eb;
+    color:white;
+
+    border-left:5px solid #1976d2;
 
     border-radius:10px;
 
@@ -194,11 +227,11 @@ textarea{
 }
 
 
-
-/* ボタン */
+/* ==============================
+   ボタン
+============================== */
 
 button{
-
 
     width:100%;
 
@@ -217,22 +250,25 @@ button{
 }
 
 
-
 .add-btn{
 
-
-    background:#64748b;
+    background:#444;
 
     color:white;
 
 }
 
 
+.add-btn:hover{
+
+    background:#555;
+
+}
+
 
 .save-btn{
 
-
-    background:#2563eb;
+    background:#1976d2;
 
     color:white;
 
@@ -241,19 +277,25 @@ button{
 }
 
 
+.save-btn:hover{
 
-button:active{
-
-    transform:scale(0.98);
+    background:#1565c0;
 
 }
 
 
+button:active{
 
-/* 下部ナビ */
+    transform:scale(.98);
+
+}
+
+
+/* ==============================
+   下部ナビ
+============================== */
 
 .bottom-nav{
-
 
     position:fixed;
 
@@ -263,61 +305,94 @@ button:active{
 
     width:100%;
 
+    height:60px;
+
     display:flex;
 
-    justify-content:space-around;
+    justify-content:center;
 
-    background:white;
+    align-items:center;
 
-    border-top:1px solid #ddd;
+    background:#222;
 
-    padding:12px 0;
+    border-top:1px solid #444;
 
-    z-index:10;
+    box-shadow:
+        0 -2px 8px
+        rgba(0,0,0,.4);
+
+    z-index:1000;
 
 }
-
 
 
 .bottom-nav a{
 
+    flex:1;
+
+    max-width:180px;
+
+    height:60px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
     text-decoration:none;
 
-    color:#374151;
+    color:#ccc;
 
     font-size:14px;
 
+    font-weight:bold;
+
 }
 
 
+.bottom-nav a:hover{
 
-/* スマホ */
+    background:#333;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   スマホ
+============================== */
 
 @media(max-width:600px){
 
+    .report-container{
 
-.report-container{
+        padding:10px;
 
-    padding:10px;
+        padding-bottom:80px;
 
-}
-
-
-
-.task-card{
-
-    padding:15px;
-
-}
+    }
 
 
+    .task-card{
 
-button{
+        padding:15px;
 
-    font-size:16px;
-
-}
+    }
 
 
+    button{
+
+        font-size:16px;
+
+    }
+
+
+    .bottom-nav a{
+
+        font-size:12px;
+
+    }
 
 }
