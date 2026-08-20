@@ -38,6 +38,16 @@ console.log("担当者:", name);
 const visitList =
     document.getElementById("visitList");
 
+const customerTitle =
+    document.getElementById("customerTitle");
+
+if (customerTitle && customer) {
+
+    customerTitle.textContent =
+        `🏢 ${customer}`;
+
+}
+
 const backBtn =
     document.getElementById("backBtn");
 
