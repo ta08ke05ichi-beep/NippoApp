@@ -339,3 +339,47 @@ body{
     }
 
 }
+
+/* ==============================
+   日報一覧ページ ヘッダー
+============================== */
+
+.app-header{
+
+    background:#111 !important;
+
+    color:white !important;
+
+}
+
+
+.app-header h1{
+
+    color:white !important;
+
+}
+
+/* ==============================
+   日報一覧タイトル
+============================== */
+
+.app-header,
+.app-header h1{
+
+    color:#fff !important;
+
+}
+
+
+.app-header{
+
+    background:#111 !important;
+
+}
+
+
+.app-header h1{
+
+    margin:0;
+
+}
