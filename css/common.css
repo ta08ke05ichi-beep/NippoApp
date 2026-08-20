@@ -108,3 +108,93 @@ transform:scale(.98);
     0 2px 8px rgba(0,0,0,0.08);
 
 }
+
+/* ==============================
+   下部ナビゲーション
+============================== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    height:60px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:0;
+
+    border-top:1px solid #ddd;
+
+    box-shadow:0 -2px 8px rgba(0,0,0,.08);
+
+    z-index:1000;
+
+}
+
+
+.bottom-nav a{
+
+    flex:1;
+
+    max-width:180px;
+
+    height:60px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-decoration:none;
+
+    color:#555;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+
+.bottom-nav a:hover{
+
+    background:#f4f6f9;
+
+    color:#1f3a5f;
+
+}
+
+
+/* ナビに隠れないようにする */
+
+body{
+
+    padding-bottom:70px;
+
+}
+
+
+/* スマホ */
+
+@media(max-width:600px){
+
+    .bottom-nav a{
+
+        font-size:12px;
+
+    }
+
+}

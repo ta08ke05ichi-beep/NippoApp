@@ -1,3 +1,24 @@
+/* ==============================
+   ホーム画面
+   ブラックテーマ
+============================== */
+
+
+/* 全体 */
+
+body{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   メイン
+============================== */
+
 main{
 
     max-width:1000px;
@@ -9,114 +30,20 @@ main{
 }
 
 
-.menu-card{
+/* ==============================
+   メニュー
+============================== */
 
-    background:#fff;
+.menu-grid{
 
-    border-radius:18px;
+    display:grid;
 
-    padding:20px;
+    grid-template-columns:
+        repeat(2,1fr);
 
-    text-align:center;
+    gap:15px;
 
-    cursor:pointer;
-
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-
-    transition:.2s;
-
-}
-
-.menu-card:hover{
-
-    transform:translateY(-3px);
-
-}
-
-
-.icon{
-
-    font-size:42px;
-
-    margin-bottom:10px;
-
-}
-
-
-.menu-card h2{
-
-    font-size:22px;
-
-    margin-bottom:10px;
-
-    color:#1f3a5f;
-
-}
-
-
-.menu-card p{
-
-    color:#666;
-
-    font-size:15px;
-
-    line-height:1.5;
-
-}
-
-@media(max-width:600px){
-
-
-main{
-
-    display:block;
-
-    margin:15px auto;
-
-    padding:15px;
-
-}
-
-
-.menu-card{
-
-    padding:22px;
-
-    margin-bottom:15px;
-
-}
-
-
-.icon{
-
-    font-size:42px;
-
-}
-
-
-.menu-card h2{
-
-    font-size:20px;
-
-}
-
-
-.menu-card p{
-
-    font-size:14px;
-
-}
-
-
-}
-
-header p{
-
-    margin:8px 0 0;
-
-    font-size:14px;
-
-    opacity:0.8;
+    margin:20px;
 
 }
 
@@ -127,8 +54,85 @@ header p{
 
     overflow:hidden;
 
+    background:#222;
+
+    color:white;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0,0,0,.4);
+
+    transition:.2s;
+
 }
 
+
+.menu-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0,0,0,.5);
+
+}
+
+
+.menu-card:active{
+
+    transform:scale(.97);
+
+}
+
+
+/* メニューのアイコン */
+
+.icon{
+
+    font-size:42px;
+
+    margin-bottom:10px;
+
+}
+
+
+/* メニュー見出し */
+
+.menu-card h2{
+
+    font-size:22px;
+
+    margin-bottom:10px;
+
+    color:white;
+
+}
+
+
+/* メニュー説明 */
+
+.menu-card p{
+
+    color:#ccc;
+
+    font-size:15px;
+
+    line-height:1.5;
+
+}
+
+
+/* ==============================
+   メニューの飾り
+============================== */
 
 .menu-card::after{
 
@@ -144,134 +148,16 @@ header p{
 
     height:80px;
 
-    background:#f0f4f8;
+    background:#333;
 
     border-radius:50%;
 
 }
 
 
-
-.menu-card:active{
-
-    transform:scale(0.97);
-
-}
-
-.status-card{
-
-    background:white;
-
-    border-radius:16px;
-
-    padding:20px;
-
-    margin-bottom:20px;
-
-    text-align:center;
-
-    box-shadow:
-    0 2px 8px rgba(0,0,0,0.08);
-
-}
-
-
-.status-card p{
-
-    margin:0;
-
-    color:#666;
-
-}
-
-
-.status-card h2{
-
-    margin:10px 0 0;
-
-    color:#1f3a5f;
-
-}
-
-.status-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-
-    gap:15px;
-
-    margin:20px;
-
-}
-
-.status-item{
-
-    background:#fff;
-
-    border-radius:16px;
-
-    padding:18px;
-
-    text-align:center;
-
-    box-shadow:0 4px 10px rgba(0,0,0,.08);
-
-}
-
-.status-item p{
-
-    margin:0;
-
-    color:#666;
-
-    font-size:14px;
-
-}
-
-.status-item h2{
-
-    margin-top:10px;
-
-    font-size:30px;
-
-    color:#1976d2;
-
-}
-
-.report-card{
-
-    background:#fff;
-
-    border-radius:12px;
-
-    padding:15px;
-
-    margin-top:12px;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-
-    border-left:5px solid #1976d2;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-.report-card:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:0 6px 15px rgba(0,0,0,.12);
-
-}
-
-.report-card p{
-
-    margin:6px 0;
-
-}
+/* ==============================
+   セクション見出し
+============================== */
 
 .section-title{
 
@@ -281,19 +167,28 @@ header p{
 
     font-weight:bold;
 
-    color:#333;
+    color:white;
 
-    border-left:6px solid #ff8a65;
+    border-left:6px solid #1976d2;
 
     padding-left:12px;
 
 }
 
-.menu-grid{
+
+/* ==============================
+   業務状況
+============================== */
+
+.status-grid{
 
     display:grid;
 
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(150px,1fr)
+        );
 
     gap:15px;
 
@@ -301,60 +196,209 @@ header p{
 
 }
 
-.visit-status{
-    cursor:pointer;
-    transition:.2s;
-}
-
-.visit-status:hover{
-    transform:translateY(-3px);
-    box-shadow:0 6px 15px rgba(0,0,0,.12);
-}
-
-.visit-status:active{
-    transform:scale(.97);
-}
-
-.status-grid{
-    display:grid !important;
-    grid-template-columns:repeat(3,1fr) !important;
-    gap:15px;
-    margin:20px;
-}
 
 .status-item{
-    display:block !important;
-    visibility:visible !important;
+
+    background:#222;
+
+    color:white;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    text-align:center;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0,0,0,.4);
+
 }
+
+
+.status-item p{
+
+    margin:0;
+
+    color:#ccc;
+
+    font-size:14px;
+
+}
+
+
+.status-item h2{
+
+    margin-top:10px;
+
+    font-size:30px;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   今月の訪問
+============================== */
+
+.visit-status{
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.visit-status:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(0,0,0,.5);
+
+}
+
+
+.visit-status:active{
+
+    transform:scale(.97);
+
+}
+
+
+/* ==============================
+   最近の日報
+============================== */
+
+.report-card{
+
+    background:#222;
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    margin-top:12px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,.4);
+
+    border-left:5px solid #1976d2;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.report-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(0,0,0,.5);
+
+}
+
+
+.report-card p{
+
+    margin:6px 0;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   最近の日報を入れるカード
+============================== */
 
 .card{
-    display:block !important;
-    visibility:visible !important;
+
+    background:#222;
+
+    color:white;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0,0,0,.4);
+
 }
 
-#recentReports{
-    display:block !important;
-    visibility:visible !important;
-}
+
+/* ==============================
+   スマホ
+============================== */
 
 @media(max-width:600px){
 
-    .status-grid{
-        grid-template-columns:1fr !important;
+    main{
+
+        display:block;
+
+        margin:15px auto;
+
+        padding:15px;
+
     }
 
-}
 
-#monthVisitBtn{
-    cursor:pointer;
-    transition:0.2s;
-}
+    .menu-grid{
 
-#monthVisitBtn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 6px 15px rgba(0,0,0,.12);
-}
+        grid-template-columns:1fr;
 
-#monthVisitBtn:active{
-    transform:scale(0.97);
+        margin:15px;
+
+    }
+
+
+    .menu-card{
+
+        padding:22px;
+
+    }
+
+
+    .icon{
+
+        font-size:42px;
+
+    }
+
+
+    .menu-card h2{
+
+        font-size:20px;
+
+    }
+
+
+    .menu-card p{
+
+        font-size:14px;
+
+    }
+
+
+    .status-grid{
+
+        grid-template-columns:1fr;
+
+        margin:15px;
+
+    }
+
 }
