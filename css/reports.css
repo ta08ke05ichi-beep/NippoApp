@@ -4,7 +4,9 @@
 ============================== */
 
 
-/* 全体 */
+/* ==============================
+   全体
+============================== */
 
 body{
 
@@ -16,7 +18,7 @@ body{
 
 
 /* ==============================
-   全体
+   日報一覧全体
 ============================== */
 
 .reports-container{
@@ -33,7 +35,7 @@ body{
 
 
 /* ==============================
-   検索
+   検索ボックス
 ============================== */
 
 .search-box{
@@ -47,8 +49,7 @@ body{
     border-radius:12px;
 
     box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.4);
+        0 2px 8px rgba(0,0,0,.4);
 
 }
 
@@ -96,9 +97,9 @@ body{
 
 .report-card{
 
-    background:#222;
+    background:#222 !important;
 
-    color:white;
+    color:white !important;
 
     padding:20px;
 
@@ -107,8 +108,7 @@ body{
     border-radius:14px;
 
     box-shadow:
-        0 3px 10px
-        rgba(0,0,0,.4);
+        0 3px 10px rgba(0,0,0,.4);
 
     transition:.2s;
 
@@ -120,11 +120,35 @@ body{
     transform:translateY(-2px);
 
     box-shadow:
-        0 6px 15px
-        rgba(0,0,0,.5);
+        0 6px 15px rgba(0,0,0,.5);
 
 }
 
+
+/* ==============================
+   日報カード内の文字
+============================== */
+
+.report-card h3,
+.report-card p,
+.report-card span,
+.report-card div{
+
+    color:white !important;
+
+}
+
+
+.report-card *{
+
+    color:white !important;
+
+}
+
+
+/* ==============================
+   日報カードの見出し
+============================== */
 
 .report-card h3{
 
@@ -134,10 +158,14 @@ body{
 
     padding-bottom:10px;
 
-    color:white;
+    color:white !important;
 
 }
 
+
+/* ==============================
+   日報カードの文章
+============================== */
 
 .report-card p{
 
@@ -145,7 +173,7 @@ body{
 
     font-weight:bold;
 
-    color:#fff;
+    color:white !important;
 
 }
 
@@ -156,9 +184,9 @@ body{
 
 .visit-card{
 
-    background:#1b2735;
+    background:#1b2735 !important;
 
-    color:white;
+    color:white !important;
 
     border-left:5px solid #1976d2;
 
@@ -173,9 +201,9 @@ body{
 }
 
 
-.visit-card p{
+.visit-card *{
 
-    color:#fff;
+    color:white !important;
 
 }
 
@@ -198,13 +226,11 @@ body{
 
     background:#1976d2;
 
-    color:white;
+    color:white !important;
 
     font-size:16px;
 
     cursor:pointer;
-
-    transition:.2s;
 
 }
 
@@ -243,8 +269,7 @@ body{
     border-top:1px solid #444;
 
     box-shadow:
-        0 -2px 8px
-        rgba(0,0,0,.4);
+        0 -2px 8px rgba(0,0,0,.4);
 
     z-index:1000;
 
@@ -267,7 +292,7 @@ body{
 
     text-decoration:none;
 
-    color:#ccc;
+    color:#ccc !important;
 
     font-size:14px;
 
@@ -280,7 +305,7 @@ body{
 
     background:#333;
 
-    color:white;
+    color:white !important;
 
 }
 
@@ -312,23 +337,5 @@ body{
         font-size:12px;
 
     }
-
-}
-
-.report-card *{
-
-    color:white;
-
-}
-
-.reports-container,
-.reports-container h1,
-.reports-container h2,
-.reports-container h3,
-.reports-container p,
-.reports-container label,
-.reports-container span{
-
-    color:white;
 
 }
