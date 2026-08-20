@@ -314,3 +314,21 @@ body{
     }
 
 }
+
+.report-card *{
+
+    color:white;
+
+}
+
+.reports-container,
+.reports-container h1,
+.reports-container h2,
+.reports-container h3,
+.reports-container p,
+.reports-container label,
+.reports-container span{
+
+    color:white;
+
+}
