@@ -383,3 +383,37 @@ body{
     margin:0;
 
 }
+
+/* =================================
+   日報一覧タイトル 強制表示
+================================= */
+
+body .app-header {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    background: #111 !important;
+    color: #fff !important;
+
+    width: 100% !important;
+    min-height: 60px !important;
+
+    padding: 15px !important;
+    box-sizing: border-box !important;
+}
+
+
+body .app-header h1 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    color: #fff !important;
+
+    font-size: 24px !important;
+    line-height: 1.5 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
