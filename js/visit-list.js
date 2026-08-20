@@ -1,4 +1,3 @@
-console.log("★★★ 新しい visit-list.js 読み込み ★★★");
 import { db } from "./firebase.js";
 
 import {
@@ -11,7 +10,25 @@ console.log("visit-list.js 起動");
 
 
 // ==============================
-// HTML要素
+// URLから条件取得
+// ==============================
+
+const params =
+    new URLSearchParams(location.search);
+
+const month =
+    params.get("month");
+
+const name =
+    params.get("name") || "全員";
+
+
+console.log("対象月:", month);
+console.log("対象担当者:", name);
+
+
+// ==============================
+// HTML
 // ==============================
 
 const visitList =
@@ -20,59 +37,6 @@ const visitList =
 const backBtn =
     document.getElementById("backBtn");
 
-const monthTitle =
-    document.getElementById("monthTitle");
-
-
-// ==============================
-// 今月を取得
-// ==============================
-
-const today =
-    new Date();
-
-
-const year =
-    today.getFullYear();
-
-
-const monthNumber =
-    String(today.getMonth() + 1)
-    .padStart(2, "0");
-
-
-const month =
-    `${year}-${monthNumber}`;
-
-
-console.log(
-    "対象月:",
-    month
-);
-
-
-// ==============================
-// 月表示
-// ==============================
-
-monthTitle.textContent =
-    `${year}年${Number(monthNumber)}月`;
-
-
-// ==============================
-// 戻るボタン
-// ==============================
-
-backBtn.addEventListener(
-    "click",
-    () => {
-
-        location.href =
-            "../index.html";
-
-    }
-);
-
 
 // ==============================
 // 訪問一覧読み込み
@@ -80,12 +44,23 @@ backBtn.addEventListener(
 
 async function loadVisits() {
 
+    console.log("訪問一覧読み込み開始");
+
+
+    if (!month) {
+
+        visitList.innerHTML = `
+            <div class="visit-card">
+                <p>対象月が指定されていません。</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
     try {
-
-        console.log(
-            "訪問一覧読み込み開始"
-        );
-
 
         const snapshot =
             await getDocs(
@@ -96,12 +71,12 @@ async function loadVisits() {
             );
 
 
-        const visits = [];
-
-
         // ==========================
-        // 日報を確認
+        // 顧客ごとの訪問データ
         // ==========================
+
+        const customers = {};
+
 
         snapshot.forEach(
             (docSnap) => {
@@ -110,7 +85,23 @@ async function loadVisits() {
                     docSnap.data();
 
 
-                // 今月の日報だけ
+                // ----------------------
+                // 担当者
+                // ----------------------
+
+                if (
+                    name !== "全員" &&
+                    data.name !== name
+                ) {
+
+                    return;
+
+                }
+
+
+                // ----------------------
+                // 月
+                // ----------------------
 
                 if (
                     !data.date ||
@@ -122,7 +113,9 @@ async function loadVisits() {
                 }
 
 
-                // tasksがない日報は除外
+                // ----------------------
+                // tasks
+                // ----------------------
 
                 if (
                     !Array.isArray(data.tasks)
@@ -133,54 +126,63 @@ async function loadVisits() {
                 }
 
 
-                // ======================
-                // 訪問データ
-                // ======================
+                // ----------------------
+                // 訪問1件ずつ
+                // ----------------------
 
                 data.tasks.forEach(
                     (task) => {
 
-                        visits.push({
+                        const customer =
+                            task.customer;
 
-                            date:
-                                data.date,
 
-                            name:
-                                data.name || "",
+                        if (
+                            !customer ||
+                            customer.trim() === ""
+                        ) {
 
-                            customer:
-                                task.customer || "顧客名なし",
+                            return;
 
-                            start:
-                                task.start || "",
+                        }
 
-                            end:
-                                task.end || "",
 
-                            work:
-                                task.work || "",
+                        if (
+                            !customers[customer]
+                        ) {
 
-                            content:
-                                task.content || ""
+                            customers[customer] = [];
 
-                        });
+                        }
+
+
+                        customers[customer]
+                            .push({
+
+                                reportId:
+                                    docSnap.id,
+
+                                date:
+                                    data.date,
+
+                                name:
+                                    data.name || "",
+
+                                work:
+                                    task.work || "",
+
+                                content:
+                                    task.content || "",
+
+                                start:
+                                    task.start || "",
+
+                                end:
+                                    task.end || ""
+
+                            });
 
                     }
-                );
-
-            }
-        );
-
-
-        // ==========================
-        // 日付の新しい順
-        // ==========================
-
-        visits.sort(
-            (a, b) => {
-
-                return b.date.localeCompare(
-                    a.date
                 );
 
             }
@@ -194,15 +196,22 @@ async function loadVisits() {
         visitList.innerHTML = "";
 
 
-        if (visits.length === 0) {
+        const customerNames =
+            Object.keys(customers)
+            .sort();
+
+
+        if (
+            customerNames.length === 0
+        ) {
 
             visitList.innerHTML = `
 
                 <div class="visit-card">
 
-                    <h2>
-                        今月の訪問はありません
-                    </h2>
+                    <p>
+                        この月の訪問履歴はありません。
+                    </p>
 
                 </div>
 
@@ -213,45 +222,39 @@ async function loadVisits() {
         }
 
 
-        visits.forEach(
-            (visit) => {
+        customerNames.forEach(
+            (customer) => {
+
+                const visits =
+                    customers[customer];
+
 
                 visitList.innerHTML += `
 
-                <div class="visit-card">
+                    <div
+                        class="visit-card"
+                        data-customer="${encodeURIComponent(customer)}"
+                    >
 
-                    <p>
-                        📅 ${visit.date}
-                    </p>
+                        <h2>
+                            🏢 ${customer}
+                        </h2>
 
-                    <h2>
-                        🏢 ${visit.customer}
-                    </h2>
+                        <p>
+                            訪問回数：
+                            ${visits.length}回
+                        </p>
 
-                    <p>
-                        👤 ${visit.name}
-                    </p>
+                        <p>
+                            最新：
+                            ${visits[0].date}
+                        </p>
 
-                    <p>
-                        🕒
-                        ${visit.start}
-                        〜
-                        ${visit.end}
-                    </p>
+                        <p class="visit-link">
+                            📋 訪問履歴を見る →
+                        </p>
 
-                    <p>
-                        🔧 ${visit.work}
-                    </p>
-
-                    ${
-                        visit.content
-                        ?
-                        `<p>📝 ${visit.content}</p>`
-                        :
-                        ""
-                    }
-
-                </div>
+                    </div>
 
                 `;
 
@@ -259,9 +262,48 @@ async function loadVisits() {
         );
 
 
+        // ==========================
+        // 顧客クリック
+        // ==========================
+
+        document
+            .querySelectorAll(".visit-card[data-customer]")
+            .forEach(
+                (card) => {
+
+                    card.addEventListener(
+                        "click",
+                        () => {
+
+                            const customer =
+                                decodeURIComponent(
+                                    card.dataset.customer
+                                );
+
+
+                            location.href =
+                                `visit-history.html?customer=${encodeURIComponent(customer)}&month=${encodeURIComponent(month)}&name=${encodeURIComponent(name)}`;
+
+                        }
+                    );
+
+                }
+            );
+
+
+        console.log(
+            "訪問先数:",
+            customerNames.length
+        );
+
         console.log(
             "訪問件数:",
-            visits.length
+            Object.values(customers)
+                .reduce(
+                    (total, visits) =>
+                        total + visits.length,
+                    0
+                )
         );
 
     }
@@ -277,12 +319,8 @@ async function loadVisits() {
 
             <div class="visit-card">
 
-                <h2>
-                    読み込みエラー
-                </h2>
-
                 <p>
-                    F12のConsoleを確認してください
+                    訪問一覧の読み込みに失敗しました。
                 </p>
 
             </div>
@@ -295,7 +333,27 @@ async function loadVisits() {
 
 
 // ==============================
-// 実行
+// 戻るボタン
+// ==============================
+
+if (backBtn) {
+
+    backBtn.addEventListener(
+        "click",
+        () => {
+
+            // 担当者・月を維持して月間集計へ
+            location.href =
+                `summary.html?month=${encodeURIComponent(month)}&name=${encodeURIComponent(name)}`;
+
+        }
+    );
+
+}
+
+
+// ==============================
+// 開始
 // ==============================
 
 loadVisits();
