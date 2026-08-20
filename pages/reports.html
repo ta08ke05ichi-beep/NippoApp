@@ -19,65 +19,62 @@
 
 <header class="app-header">
 
-<h1>📋 日報一覧</h1>
+    <h1>📋 日報一覧</h1>
 
 </header>
 
 
-
 <main class="reports-container">
 
+    <div class="search-box">
 
-<div class="search-box">
+        <input 
+            id="searchInput"
+            type="text"
+            placeholder="顧客名・担当者・作業内容で検索"
+        >
 
-<input 
-id="searchInput"
-type="text"
-placeholder="顧客名・担当者・作業内容で検索">
-
-</div>
-
+    </div>
 
 
-<div id="reportList">
+    <div id="reportList">
 
-読み込み中...
+        読み込み中...
 
-</div>
-
+    </div>
 
 </main>
 
 
+<!-- ==========================
+     下部ナビ
+========================== -->
 
 <nav class="bottom-nav">
 
+    <a href="../index.html">
+        🏠 ホーム
+    </a>
 
-<a href="../index.html">
-ホーム
-</a>
+    <a href="report.html">
+        📝 日報入力
+    </a>
 
+    <a href="reports.html">
+        📋 日報一覧
+    </a>
 
-<a href="report.html">
-日報入力
-</a>
-
-
-<a href="reports.html">
-日報一覧
-</a>
-
-
-<a href="customers.html">
-顧客一覧
-</a>
-
+    <a href="customers.html">
+        🏢 顧客一覧
+    </a>
 
 </nav>
 
 
-
-<script type="module" src="../js/reports.js"></script>
+<script
+    type="module"
+    src="../js/reports.js"
+></script>
 
 
 </body>
