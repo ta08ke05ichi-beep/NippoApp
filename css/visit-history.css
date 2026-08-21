@@ -1,6 +1,31 @@
+/* ==============================
+   訪問履歴
+   ブラックテーマ
+============================== */
+
+
+/* ==============================
+   全体
+============================== */
+
+body{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   履歴カード
+============================== */
+
 .history-card{
 
-    background:white;
+    background:#222 !important;
+
+    color:white !important;
 
     margin:20px;
 
@@ -8,20 +33,104 @@
 
     border-radius:12px;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.4);
+
+    border-left:5px solid #1976d2;
 
 }
 
+
+/* ==============================
+   見出し
+============================== */
+
 .history-card h2{
 
-    color:#1f3a5f;
+    color:white !important;
 
     margin-bottom:15px;
 
 }
 
+
+/* ==============================
+   内容
+============================== */
+
 .history-card p{
 
     margin:8px 0;
+
+    color:white !important;
+
+}
+
+
+/* カード内の文字を確実に白 */
+
+.history-card *{
+
+    color:white !important;
+
+}
+
+
+/* ==============================
+   青い情報
+============================== */
+
+.history-card .visit-link{
+
+    color:#42a5f5 !important;
+
+    font-weight:bold;
+
+}
+
+
+/* ==============================
+   戻るボタン
+============================== */
+
+button{
+
+    background:#1976d2;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    background:#1565c0;
+
+}
+
+
+/* ==============================
+   スマホ
+============================== */
+
+@media(max-width:600px){
+
+    .history-card{
+
+        margin:10px;
+
+        padding:15px;
+
+    }
 
 }
