@@ -1,10 +1,32 @@
 /* =========================
    訪問一覧
+   ブラックテーマ
+========================= */
+
+
+/* =========================
+   全体
+========================= */
+
+body{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+/* =========================
+   訪問一覧
 ========================= */
 
 #visitList{
+
     max-width:900px;
+
     margin:0 auto;
+
 }
 
 
@@ -14,7 +36,9 @@
 
 .visit-card{
 
-    background:#fff;
+    background:#222 !important;
+
+    color:white !important;
 
     padding:20px;
 
@@ -22,22 +46,30 @@
 
     border-radius:16px;
 
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.4);
 
     border-left:5px solid #1976d2;
 
     transition:.2s;
 
+    cursor:pointer;
+
 }
 
 
-/* カードを押せる場合 */
+/* =========================
+   カードを押したとき
+========================= */
 
 .visit-card:hover{
 
     transform:translateY(-2px);
 
-    box-shadow:0 6px 15px rgba(0,0,0,.12);
+    background:#292929 !important;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.5);
 
 }
 
@@ -52,7 +84,7 @@
 
     font-size:20px;
 
-    color:#1f3a5f;
+    color:white !important;
 
 }
 
@@ -61,11 +93,20 @@
 
     margin:7px 0;
 
-    color:#555;
+    color:#ddd !important;
 
     font-size:15px;
 
     line-height:1.5;
+
+}
+
+
+/* カード内の文字を確実に白 */
+
+.visit-card *{
+
+    color:white !important;
 
 }
 
@@ -90,7 +131,7 @@
 
     border-radius:12px;
 
-    background:#1f3a5f;
+    background:#1976d2;
 
     color:white;
 
@@ -105,7 +146,7 @@
 
 #backBtn:hover{
 
-    opacity:.9;
+    background:#1565c0;
 
 }
 
