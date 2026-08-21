@@ -1,83 +1,218 @@
+/* ==============================
+   日報詳細
+   ブラックテーマ
+============================== */
+
+
+/* ==============================
+   全体
+============================== */
+
+body{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   ヘッダー
+============================== */
+
+header{
+
+    background:#111;
+
+    color:white;
+
+    padding:18px;
+
+    text-align:center;
+
+}
+
+
+header h1{
+
+    margin:0;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   詳細カード
+============================== */
+
 .detail-card{
 
-background:white;
+    background:#222 !important;
 
-padding:20px;
+    color:white !important;
 
-margin:20px;
+    padding:20px;
 
-border-radius:15px;
+    margin:20px;
 
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
+    border-radius:15px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.4);
 
 }
 
 
 .detail-card p{
 
-margin:10px 0;
+    margin:10px 0;
+
+    color:white !important;
 
 }
 
 
+/* カード内の文字を確実に白 */
+
+.detail-card *{
+
+    color:white !important;
+
+}
+
+
+/* ==============================
+   ボタンエリア
+============================== */
 
 .detail-buttons{
 
-display:flex;
+    display:flex;
 
-gap:10px;
+    gap:10px;
 
-margin:20px;
+    margin:20px;
 
-flex-wrap:wrap;
+    flex-wrap:wrap;
 
 }
+
 
 .detail-buttons button{
 
-padding:12px 20px;
+    padding:12px 20px;
 
-border:none;
+    border:none;
 
-border-radius:12px;
+    border-radius:12px;
 
-font-size:16px;
+    font-size:16px;
 
-font-weight:bold;
+    font-weight:bold;
 
-cursor:pointer;
+    cursor:pointer;
 
-flex:1;
+    flex:1;
 
-min-width:120px;
+    min-width:120px;
 
-margin:0;
+    margin:0;
+
+    color:white;
 
 }
 
+
+/* ==============================
+   編集
+============================== */
 
 #editBtn{
 
-background:#2196f3;
+    background:#1976d2;
 
-color:white;
+    color:white;
 
 }
 
+
+#editBtn:hover{
+
+    background:#1565c0;
+
+}
+
+
+/* ==============================
+   削除
+============================== */
 
 #deleteBtn{
 
-background:#e53935;
+    background:#e53935;
 
-color:white;
+    color:white;
 
 }
 
 
+#deleteBtn:hover{
+
+    background:#c62828;
+
+}
+
+
+/* ==============================
+   戻る
+============================== */
+
 #backBtn{
 
-background:#4caf50;
+    background:#444;
 
-color:white;
+    color:white;
+
+}
+
+
+#backBtn:hover{
+
+    background:#555;
+
+}
+
+
+/* ==============================
+   スマホ
+============================== */
+
+@media(max-width:600px){
+
+    .detail-card{
+
+        margin:10px;
+
+        padding:15px;
+
+    }
+
+
+    .detail-buttons{
+
+        margin:10px;
+
+        flex-direction:column;
+
+    }
+
+
+    .detail-buttons button{
+
+        width:100%;
+
+    }
 
 }
