@@ -1,33 +1,64 @@
+/* ==============================
+   顧客一覧
+   ブラックテーマ
+============================== */
+
+
+/* ==============================
+   全体
+============================== */
+
 body{
 
-    background:#f5f5f5;
-
-    font-family:
-    "メイリオ",
-    sans-serif;
-
-}
-
-
-
-
-header{
-
-    background:#333;
+    background:#111;
 
     color:white;
 
-    padding:15px;
-
-    text-align:center;
+    font-family:
+        "メイリオ",
+        sans-serif;
 
 }
 
 
+/* ==============================
+   ヘッダー
+============================== */
+
+header{
+
+    background:#1f3a5f;
+
+    color:white;
+
+    padding:18px;
+
+    text-align:center;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,.4);
+
+}
 
 
+header h1{
+
+    margin:0;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   全体
+============================== */
 
 .customer-container{
+
+    max-width:900px;
+
+    margin:20px auto;
 
     padding:20px;
 
@@ -36,12 +67,15 @@ header{
 }
 
 
-
-
+/* ==============================
+   カード
+============================== */
 
 .card{
 
-    background:white;
+    background:#222 !important;
+
+    color:white !important;
 
     border-radius:15px;
 
@@ -50,25 +84,25 @@ header{
     margin-bottom:20px;
 
     box-shadow:
-    0 3px 10px rgba(0,0,0,0.1);
+        0 3px 10px rgba(0,0,0,.4);
 
 }
 
 
-
-
-
-h2{
+.card h2{
 
     margin-top:0;
 
     font-size:20px;
 
+    color:white;
+
 }
 
 
-
-
+/* ==============================
+   ラベル
+============================== */
 
 label{
 
@@ -80,11 +114,14 @@ label{
 
     margin-bottom:5px;
 
+    color:white;
+
 }
 
 
-
-
+/* ==============================
+   入力
+============================== */
 
 input{
 
@@ -94,22 +131,40 @@ input{
 
     box-sizing:border-box;
 
-    border:
-
-    1px solid #ccc;
+    border:1px solid #555;
 
     border-radius:8px;
 
     font-size:16px;
 
+    background:#111;
+
+    color:white;
+
 }
 
 
+input::placeholder{
+
+    color:#999;
+
+}
 
 
+input:focus{
+
+    outline:none;
+
+    border-color:#1976d2;
+
+}
+
+
+/* ==============================
+   ボタン
+============================== */
 
 button{
-
 
     width:100%;
 
@@ -117,40 +172,40 @@ button{
 
     padding:13px;
 
-
-    background:#333;
-
+    background:#1976d2;
 
     color:white;
 
-
     border:none;
-
 
     border-radius:10px;
 
-
     font-size:16px;
 
+    cursor:pointer;
 
 }
 
 
+button:hover{
 
+    background:#1565c0;
+
+}
 
 
 button:active{
 
-    transform:scale(0.98);
+    transform:scale(.98);
 
 }
 
 
-
-
+/* ==============================
+   顧客一覧
+============================== */
 
 #customerList{
-
 
     display:flex;
 
@@ -158,144 +213,216 @@ button:active{
 
     gap:15px;
 
-
 }
 
 
-
-
+/* ==============================
+   顧客カード
+============================== */
 
 .customer-card{
 
+    background:#222 !important;
 
-    background:white;
-
+    color:white !important;
 
     border-radius:15px;
 
-
     padding:15px;
 
+    border-left:5px solid #1976d2;
 
-    border-left:
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.4);
 
-    5px solid #333;
-
+    transition:.2s;
 
 }
 
 
+.customer-card:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.5);
+
+}
 
 
 .customer-card h3{
 
-
     margin-top:0;
-
 
     margin-bottom:10px;
 
+    color:white !important;
 
 }
-
-
-
 
 
 .customer-card p{
 
-
     margin:8px 0;
-
 
     font-size:14px;
 
+    color:#ddd !important;
 
 }
 
 
+/* 顧客カード内の文字を確実に白 */
+
+.customer-card *{
+
+    color:white !important;
+
+}
 
 
+/* ==============================
+   履歴ボタン
+============================== */
 
 .history-btn{
 
-
     margin-top:10px;
 
+    background:#444;
+
+    color:white;
+
+}
+
+
+.history-btn:hover{
 
     background:#555;
 
-
 }
 
 
-
-
+/* ==============================
+   CSV読み込み状態
+============================== */
 
 #importStatus{
 
-
     margin-top:10px;
-
 
     font-size:14px;
 
-
-    color:#555;
-
+    color:#ccc;
 
 }
 
 
-
-
+/* ==============================
+   下部ナビ
+============================== */
 
 .bottom-nav{
 
-
     position:fixed;
-
 
     bottom:0;
 
-
     left:0;
-
 
     width:100%;
 
+    height:60px;
 
     display:flex;
 
+    justify-content:center;
 
-    justify-content:space-around;
+    align-items:center;
 
+    background:#222;
 
-    background:white;
+    padding:0;
 
+    border-top:1px solid #444;
 
-    padding:12px 0;
+    box-shadow:
+        0 -2px 8px rgba(0,0,0,.4);
 
-
-    border-top:1px solid #ddd;
-
+    z-index:1000;
 
 }
-
-
-
 
 
 .bottom-nav a{
 
+    flex:1;
+
+    max-width:180px;
+
+    height:60px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 
     text-decoration:none;
 
+    color:#ccc !important;
 
-    color:#333;
-
+    background:transparent;
 
     font-size:14px;
 
+    font-weight:bold;
+
+}
+
+
+.bottom-nav a:hover{
+
+    background:#333;
+
+    color:white !important;
+
+}
+
+
+/* ==============================
+   スマホ
+============================== */
+
+@media(max-width:600px){
+
+    .customer-container{
+
+        padding:10px;
+
+        padding-bottom:80px;
+
+    }
+
+
+    .card{
+
+        padding:15px;
+
+    }
+
+
+    .customer-card{
+
+        padding:15px;
+
+    }
+
+
+    .bottom-nav a{
+
+        font-size:12px;
+
+    }
 
 }
