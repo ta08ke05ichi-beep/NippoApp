@@ -526,23 +526,6 @@ async ()=>{
 
 
 
-            start:
-
-            card.querySelector(
-                ".start-time"
-            )
-            .value,
-
-
-
-            end:
-
-            card.querySelector(
-                ".end-time"
-            )
-            .value,
-
-
 
             work:
 
