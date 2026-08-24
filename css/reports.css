@@ -546,3 +546,46 @@ body > header.app-header h1{
     line-height:1.2;
     font-weight:bold;
 }
+
+/* =================================
+   日報一覧：下部ナビ最終調整
+================================= */
+
+.bottom-nav{
+    display:flex !important;
+    align-items:stretch !important;
+    justify-content:space-around !important;
+    height:70px !important;
+    background:#111 !important;
+    z-index:99999 !important;
+}
+
+.bottom-nav .nav-item{
+    flex:1 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    align-items:center !important;
+    color:#fff !important;
+    text-decoration:none !important;
+    font-size:14px !important;
+    line-height:1.2 !important;
+}
+
+.bottom-nav .nav-icon{
+    display:block !important;
+    color:#fff !important;
+    font-size:22px !important;
+    line-height:1 !important;
+    margin-bottom:4px !important;
+}
+
+.bottom-nav .nav-text{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    color:#fff !important;
+    font-size:13px !important;
+    font-weight:bold !important;
+    line-height:1.2 !important;
+}
