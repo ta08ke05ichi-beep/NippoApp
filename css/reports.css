@@ -380,3 +380,39 @@ body > header.app-header h1{
     }
 
 }
+
+/* ==============================
+   共通下部ナビ
+   白で統一
+============================== */
+
+.bottom-nav {
+    background: #fff !important;
+    border-top: 1px solid #e5e7eb !important;
+    border-radius: 0 !important;
+    box-shadow: 0 -3px 12px rgba(0,0,0,.08) !important;
+}
+
+.bottom-nav a,
+.bottom-nav a:link,
+.bottom-nav a:visited,
+.bottom-nav a:hover,
+.bottom-nav a:active {
+    background: transparent !important;
+    color: #555 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.bottom-nav .nav-icon {
+    background: transparent !important;
+    color: #555 !important;
+    border: none !important;
+}
+
+.bottom-nav .nav-text {
+    background: transparent !important;
+    color: #555 !important;
+    border: none !important;
+}
