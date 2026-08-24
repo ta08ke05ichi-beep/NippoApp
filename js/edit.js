@@ -1,266 +1,294 @@
 import { db } from "./firebase.js";
 
 import {
-
-doc,
-getDoc,
-updateDoc,
-collection,
-getDocs
-
-} from 
+    doc,
+    getDoc,
+    updateDoc,
+    collection,
+    getDocs
+} from
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
 
 
 console.log("edit.js 起動");
 
 
-
 const params =
-new URLSearchParams(location.search);
-
+    new URLSearchParams(location.search);
 
 const id =
-params.get("id");
-
+    params.get("id");
 
 
 const nameInput =
-document.getElementById("name");
-
+    document.getElementById("name");
 
 const dateInput =
-document.getElementById("date");
-
+    document.getElementById("date");
 
 const customerInput =
-document.getElementById("customer");
-
+    document.getElementById("customer");
 
 const workInput =
-document.getElementById("work");
-
+    document.getElementById("work");
 
 const contentInput =
-document.getElementById("content");
+    document.getElementById("content");
 
 
-const timeInput =
-document.getElementById("time");
-
-
-
-
-
-
+// ==============================
 // 顧客一覧読み込み
+// ==============================
 
 async function loadCustomers(selectedCustomer){
 
+    customerInput.innerHTML = "";
 
-customerInput.innerHTML = "";
+    const first =
+        document.createElement("option");
 
+    first.value = "";
 
+    first.textContent =
+        "顧客を選択してください";
 
-const first =
-document.createElement("option");
-
-first.value = "";
-
-first.textContent =
-"顧客を選択してください";
-
-
-customerInput.appendChild(first);
+    customerInput.appendChild(first);
 
 
-
-const snapshot =
-await getDocs(
-collection(db,"customers")
-);
-
+    const snapshot =
+        await getDocs(
+            collection(db, "customers")
+        );
 
 
-snapshot.forEach(docSnap=>{
+    snapshot.forEach(docSnap => {
+
+        const data =
+            docSnap.data();
 
 
-const data =
-docSnap.data();
+        const option =
+            document.createElement("option");
+
+        option.value =
+            data.name || "";
+
+        option.textContent =
+            data.name || "";
 
 
+        if(
+            data.name === selectedCustomer
+        ){
 
-const option =
-document.createElement("option");
+            option.selected = true;
 
-
-option.value =
-data.name;
-
-
-option.textContent =
-data.name;
+        }
 
 
+        customerInput.appendChild(option);
 
-if(data.name === selectedCustomer){
-
-option.selected = true;
+    });
 
 }
 
 
-
-customerInput.appendChild(option);
-
-
-});
-
-
-}
-
-
+// ==============================
 // 日報データ読み込み
+// ==============================
 
 async function loadData(){
 
+    if(!id){
+
+        alert("日報IDがありません");
+
+        return;
+
+    }
 
 
-if(!id){
+    const snap =
+        await getDoc(
+            doc(db, "reports", id)
+        );
 
-alert("日報IDがありません");
 
-return;
+    if(!snap.exists()){
+
+        alert("日報がありません");
+
+        return;
+
+    }
+
+
+    const data =
+        snap.data();
+
+    console.log(
+        "編集データ",
+        data
+    );
+
+
+    nameInput.value =
+        data.name || "";
+
+    dateInput.value =
+        data.date || "";
+
+
+    // 現在の日報形式
+    // tasks の先頭を編集対象にする
+
+    const task =
+        data.tasks &&
+        data.tasks.length > 0
+            ? data.tasks[0]
+            : null;
+
+
+    if(task){
+
+        customerInput.dataset.selected =
+            task.customer || "";
+
+        workInput.value =
+            task.work || "";
+
+        contentInput.value =
+            task.content || "";
+
+        await loadCustomers(
+            task.customer
+        );
+
+    }
+    else{
+
+        await loadCustomers("");
+
+    }
 
 }
-
-
-
-const snap =
-await getDoc(
-doc(db,"reports",id)
-);
-
-
-
-if(!snap.exists()){
-
-alert("日報がありません");
-
-return;
-
-}
-
-
-
-const data =
-snap.data();
-
-console.log(data);
-
-nameInput.value =
-data.name || "";
-
-
-
-dateInput.value =
-data.date || "";
-
-
-
-workInput.value =
-data.work || "";
-
-
-
-contentInput.value =
-data.content || "";
-
-
-
-timeInput.value =
-data.time || "";
-
-
-
-
-await loadCustomers(
-data.customer
-);
-
-
-
-}
-
-
-
 
 
 loadData();
 
 
-
-
-
-
-
-
+// ==============================
 // 更新
+// ==============================
 
 document
-.getElementById("saveBtn")
-.addEventListener(
-"click",
-async()=>{
+    .getElementById("saveBtn")
+    .addEventListener(
+        "click",
+        async () => {
 
 
-
-await updateDoc(
-
-doc(db,"reports",id),
-
-{
+            try{
 
 
-name:
-nameInput.value,
+                const snap =
+                    await getDoc(
+                        doc(db, "reports", id)
+                    );
 
 
-date:
-dateInput.value,
+                if(!snap.exists()){
+
+                    alert(
+                        "日報がありません"
+                    );
+
+                    return;
+
+                }
 
 
-customer:
-customerInput.value,
+                const data =
+                    snap.data();
 
 
-work:
-workInput.value,
+                const tasks =
+                    data.tasks || [];
 
 
-content:
-contentInput.value,
+                if(tasks.length === 0){
+
+                    alert(
+                        "編集する訪問データがありません"
+                    );
+
+                    return;
+
+                }
 
 
-time:
-timeInput.value
+                tasks[0] = {
+
+                    ...tasks[0],
+
+                    customer:
+                        customerInput.value,
+
+                    work:
+                        workInput.value,
+
+                    content:
+                        contentInput.value
+
+                };
 
 
+                await updateDoc(
 
-}
+                    doc(
+                        db,
+                        "reports",
+                        id
+                    ),
 
-);
+                    {
+
+                        name:
+                            nameInput.value,
+
+                        date:
+                            dateInput.value,
+
+                        tasks:
+                            tasks
+
+                    }
+
+                );
 
 
-
-alert("更新しました😊");
-
-
-
-location.href =
-`report-detail.html?id=${id}`;
+                alert(
+                    "更新しました😊"
+                );
 
 
+                location.href =
+                    `report-detail.html?id=${id}`;
 
-});
+
+            }
+            catch(e){
+
+                console.error(
+                    "更新エラー",
+                    e
+                );
+
+                alert(
+                    "更新に失敗しました"
+                );
+
+            }
+
+        }
+    );

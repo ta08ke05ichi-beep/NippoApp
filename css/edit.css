@@ -1,50 +1,298 @@
-.card{
+/* ==============================
+   日報編集
+   ブラックテーマ
+============================== */
 
-background:white;
 
-margin:15px;
+/* ==============================
+   全体
+============================== */
 
-padding:15px;
+body{
 
-border-radius:15px;
+    margin:0;
+
+    padding:0;
+
+    padding-bottom:90px;
+
+    background:#111;
+
+    color:white;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
 }
 
+
+/* ==============================
+   ヘッダー
+============================== */
+
+header{
+
+    background:#1f3a5f;
+
+    color:white;
+
+    padding:18px;
+
+    text-align:center;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,.4);
+
+}
+
+
+header h1{
+
+    margin:0;
+
+    font-size:22px;
+
+}
+
+
+/* ==============================
+   メイン
+============================== */
+
+main{
+
+    max-width:900px;
+
+    margin:20px auto;
+
+    padding:15px;
+
+}
+
+
+/* ==============================
+   カード
+============================== */
+
+.card{
+
+    background:#222;
+
+    color:white;
+
+    padding:20px;
+
+    margin-bottom:18px;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 3px 10px
+        rgba(0,0,0,.4);
+
+}
+
+
+/* ==============================
+   ラベル
+============================== */
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:bold;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   入力
+============================== */
 
 input,
 select,
 textarea{
 
-width:100%;
+    width:100%;
 
-padding:10px;
+    box-sizing:border-box;
 
-box-sizing:border-box;
+    padding:13px;
+
+    border:1px solid #555;
+
+    border-radius:10px;
+
+    background:#111;
+
+    color:white;
+
+    font-size:16px;
 
 }
 
+
+/* ==============================
+   プレースホルダー
+============================== */
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#999;
+
+}
+
+
+/* ==============================
+   フォーカス
+============================== */
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#1976d2;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(25,118,210,.2);
+
+}
+
+
+/* ==============================
+   セレクト
+============================== */
+
+select{
+
+    cursor:pointer;
+
+}
+
+
+/* ==============================
+   作業内容
+============================== */
 
 textarea{
 
-height:120px;
+    min-height:130px;
+
+    resize:vertical;
+
+    line-height:1.6;
 
 }
 
 
+/* ==============================
+   更新ボタン
+============================== */
+
 #saveBtn{
 
-margin:20px;
+    display:block;
 
-padding:12px 25px;
+    width:calc(100% - 30px);
 
-border:none;
+    max-width:900px;
 
-border-radius:12px;
+    margin:10px auto 20px;
 
-background:#4caf50;
+    padding:16px;
 
-color:white;
+    border:none;
 
-font-weight:bold;
+    border-radius:12px;
+
+    background:#1976d2;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 3px 8px
+        rgba(0,0,0,.4);
+
+}
+
+
+#saveBtn:hover{
+
+    background:#1565c0;
+
+}
+
+
+#saveBtn:active{
+
+    transform:scale(.98);
+
+}
+
+
+/* ==============================
+   スマホ
+============================== */
+
+@media(max-width:600px){
+
+    main{
+
+        padding:10px;
+
+        margin:10px auto;
+
+    }
+
+
+    .card{
+
+        padding:15px;
+
+        margin-bottom:15px;
+
+    }
+
+
+    header{
+
+        padding:15px;
+
+    }
+
+
+    header h1{
+
+        font-size:20px;
+
+    }
+
+
+    #saveBtn{
+
+        width:calc(100% - 20px);
+
+        font-size:16px;
+
+    }
 
 }
