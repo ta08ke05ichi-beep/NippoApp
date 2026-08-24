@@ -29,30 +29,6 @@ main {
 
 
 /* ==============================
-   共通カード
-============================== */
-
-.card {
-
-    background: #222 !important;
-
-    color: #fff !important;
-
-    margin: 20px !important;
-
-    padding: 20px !important;
-
-    border-radius: 12px !important;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,.4) !important;
-
-    border-left: 5px solid #1976d2 !important;
-
-}
-
-
-/* ==============================
    カード見出し
 ============================== */
 
@@ -265,5 +241,28 @@ main {
         margin-bottom: 100px;
 
     }
+
+}
+
+.history-section {
+
+    margin: 20px;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    box-shadow: none;
+
+}
+
+
+.history-section h2 {
+
+    margin: 0 0 15px;
+
+    color: #fff !important;
 
 }
