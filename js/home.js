@@ -41,7 +41,15 @@ if (monthVisitBtn) {
 
     monthVisitBtn.addEventListener("click", () => {
 
-        location.href = "pages/visit-list.html";
+        const today = new Date();
+
+        const month =
+            `${today.getFullYear()}-${String(
+                today.getMonth() + 1
+            ).padStart(2, "0")}`;
+
+        location.href =
+            `pages/visit-list.html?month=${month}&name=全員`;
 
     });
 
