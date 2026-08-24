@@ -28,9 +28,6 @@ const workCount =
 const customerCount =
     document.getElementById("customerCount");
 
-const timeCount =
-    document.getElementById("timeCount");
-
 const personSummary =
     document.getElementById("personSummary");
 
@@ -70,7 +67,6 @@ async function loadSummary() {
 
     console.log("月間集計開始");
 
-
     try {
 
         const snapshot =
@@ -90,12 +86,8 @@ async function loadSummary() {
 
         let works = 0;
 
-        let minutes = 0;
-
-
         const customers =
             new Set();
-
 
         const persons = {};
 
@@ -106,7 +98,6 @@ async function loadSummary() {
 
         const targetMonth =
             monthInput.value;
-
 
         const targetName =
             nameInput.value;
@@ -134,9 +125,7 @@ async function loadSummary() {
                     docSnap.data();
 
 
-                // ======================
                 // 担当者チェック
-                // ======================
 
                 if (
                     targetName !== "全員" &&
@@ -148,9 +137,7 @@ async function loadSummary() {
                 }
 
 
-                // ======================
                 // 日付チェック
-                // ======================
 
                 if (
                     !data.date ||
@@ -164,9 +151,7 @@ async function loadSummary() {
                 }
 
 
-                // ======================
                 // tasksチェック
-                // ======================
 
                 if (
                     !Array.isArray(
@@ -187,16 +172,12 @@ async function loadSummary() {
                     (task) => {
 
 
-                        // ------------------
                         // 訪問件数
-                        // ------------------
 
                         visits++;
 
 
-                        // ------------------
                         // 作業件数
-                        // ------------------
 
                         if (
                             task.work &&
@@ -208,9 +189,7 @@ async function loadSummary() {
                         }
 
 
-                        // ------------------
                         // 顧客数
-                        // ------------------
 
                         if (
                             task.customer &&
@@ -224,60 +203,9 @@ async function loadSummary() {
                         }
 
 
-                        // ------------------
-                        // 作業時間
-                        // ------------------
-
-                        if (
-                            task.start &&
-                            task.end
-                        ) {
-
-                            const start =
-                                task.start.split(":");
-
-                            const end =
-                                task.end.split(":");
-
-
-                            if (
-                                start.length === 2 &&
-                                end.length === 2
-                            ) {
-
-                                const startMinutes =
-                                    Number(start[0]) * 60 +
-                                    Number(start[1]);
-
-
-                                const endMinutes =
-                                    Number(end[0]) * 60 +
-                                    Number(end[1]);
-
-
-                                let diff =
-                                    endMinutes -
-                                    startMinutes;
-
-
-                                // 日をまたいだ場合
-                                if (diff < 0) {
-
-                                    diff += 24 * 60;
-
-                                }
-
-
-                                minutes += diff;
-
-                            }
-
-                        }
-
-
-                        // ------------------
+                        // ==================
                         // 担当者別
-                        // ------------------
+                        // ==================
 
                         const person =
                             data.name || "名前なし";
@@ -329,31 +257,11 @@ async function loadSummary() {
         visitCount.textContent =
             `${visits}件`;
 
-
         workCount.textContent =
             `${works}件`;
 
-
         customerCount.textContent =
             `${customers.size}社`;
-
-
-        // ==========================
-        // 時間表示
-        // ==========================
-
-        const hours =
-            Math.floor(
-                minutes / 60
-            );
-
-
-        const mins =
-            minutes % 60;
-
-
-        timeCount.textContent =
-            `${hours}時間${mins}分`;
 
 
         // ==========================
@@ -363,13 +271,17 @@ async function loadSummary() {
         personSummary.innerHTML = "";
 
 
+        // --------------------------
+        // 全員
+        // --------------------------
+
         if (
             targetName === "全員"
         ) {
 
             const personNames =
                 Object.keys(persons)
-                .sort();
+                    .sort();
 
 
             if (
@@ -423,6 +335,12 @@ async function loadSummary() {
             }
 
         }
+
+
+        // --------------------------
+        // 担当者を選択した場合
+        // --------------------------
+
         else {
 
             personSummary.innerHTML = `
@@ -433,7 +351,10 @@ async function loadSummary() {
                         👤 ${targetName}
                     </h3>
 
-                    <p>
+                    <p
+                        class="visit-link"
+                        onclick="openVisitList('${encodeURIComponent(targetName)}')"
+                    >
                         訪問件数：
                         ${visits}件
                     </p>
@@ -455,8 +376,7 @@ async function loadSummary() {
             {
                 visits,
                 works,
-                customers: customers.size,
-                minutes
+                customers: customers.size
             }
         );
 
@@ -472,16 +392,10 @@ async function loadSummary() {
         visitCount.textContent =
             "エラー";
 
-
         workCount.textContent =
             "エラー";
 
-
         customerCount.textContent =
-            "エラー";
-
-
-        timeCount.textContent =
             "エラー";
 
 
