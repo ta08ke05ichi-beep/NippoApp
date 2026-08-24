@@ -156,31 +156,25 @@ async function loadVisits() {
                         }
 
 
-                        customers[customer]
-                            .push({
+                       customers[customer]
+    .push({
 
-                                reportId:
-                                    docSnap.id,
+        reportId:
+            docSnap.id,
 
-                                date:
-                                    data.date,
+        date:
+            data.date,
 
-                                name:
-                                    data.name || "",
+        name:
+            data.name || "",
 
-                                work:
-                                    task.work || "",
+        work:
+            task.work || "",
 
-                                content:
-                                    task.content || "",
+        content:
+            task.content || ""
 
-                                start:
-                                    task.start || "",
-
-                                end:
-                                    task.end || ""
-
-                            });
+    });
 
                     }
                 );
