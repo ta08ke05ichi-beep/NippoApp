@@ -266,3 +266,91 @@ main {
     color: #fff !important;
 
 }
+
+/* ==============================
+   訪問履歴カード内の白枠を消す
+============================== */
+
+.history-card,
+.history-card > div,
+.history-card > section,
+.history-card > p,
+.history-card > h2,
+.history-card > h3 {
+
+    background: #222 !important;
+
+    color: #fff !important;
+
+    border-color: transparent !important;
+
+}
+
+
+/* カード内にある .card も黒にする */
+
+.history-card .card {
+
+    background: #222 !important;
+
+    color: #fff !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+}
+
+
+/* ミドリヤなどの会社名 */
+
+.history-card .visit-link {
+
+    display: inline-block;
+
+    background: transparent !important;
+
+    color: #42a5f5 !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+}
+
+
+/* 履歴カード内のリンク全般 */
+
+.history-card a {
+
+    background: transparent !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    color: #42a5f5 !important;
+
+}
+
+
+/* 何かの要素に白背景が指定されても黒にする */
+
+.history-card * {
+
+    background-color: transparent !important;
+
+}
+
+
+/* 履歴カード本体だけ黒 */
+
+.history-card {
+
+    background: #222 !important;
+
+}
