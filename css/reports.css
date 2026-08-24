@@ -522,3 +522,27 @@ body > header.app-header h1{
     }
 
 }
+
+/* ==============================
+   下部ナビ文字
+============================== */
+
+.bottom-nav .nav-item{
+    color:white !important;
+    text-decoration:none;
+}
+
+.bottom-nav .nav-icon{
+    display:block;
+    color:white !important;
+    font-size:22px;
+    line-height:1.2;
+}
+
+.bottom-nav .nav-text{
+    display:block;
+    color:white !important;
+    font-size:13px;
+    line-height:1.2;
+    font-weight:bold;
+}
