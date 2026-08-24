@@ -39,9 +39,7 @@
 
 <section class="card">
 
-
 <h2>顧客登録</h2>
-
 
 
 <label>
@@ -54,7 +52,6 @@ type="text"
 placeholder="例：株式会社〇〇">
 
 
-
 <label>
 郵便番号
 </label>
@@ -63,7 +60,6 @@ placeholder="例：株式会社〇〇">
 id="postal"
 type="text"
 placeholder="例：123-4567">
-
 
 
 <label>
@@ -76,7 +72,6 @@ type="text"
 placeholder="例：静岡県〇〇市">
 
 
-
 <label>
 住所2
 </label>
@@ -85,7 +80,6 @@ placeholder="例：静岡県〇〇市">
 id="address2"
 type="text"
 placeholder="例：〇〇町1-2-3">
-
 
 
 <label>
@@ -98,15 +92,11 @@ type="text"
 placeholder="例：054-000-0000">
 
 
-
-
-
 <button id="saveCustomerBtn">
 
 顧客を登録
 
 </button>
-
 
 
 </section>
@@ -120,16 +110,13 @@ placeholder="例：054-000-0000">
 
 <section class="card">
 
-
 <h2>CSV一括登録</h2>
-
 
 
 <input
 type="file"
 id="csvFile"
 accept=".csv">
-
 
 
 <button id="importBtn">
@@ -139,16 +126,12 @@ CSV取込
 </button>
 
 
-
 <p id="importStatus">
 
 </p>
 
 
-
 </section>
-
-
 
 
 
@@ -159,17 +142,12 @@ CSV取込
 
 <section class="card">
 
-
 <h2>顧客検索</h2>
 
 
-
 <input
-
 id="searchInput"
-
 type="text"
-
 placeholder="顧客名・住所・電話番号で検索">
 
 
@@ -180,15 +158,11 @@ placeholder="顧客名・住所・電話番号で検索">
 
 
 
-
-
 <!-- 顧客一覧 -->
 
 <section class="card">
 
-
 <h2>登録済み顧客</h2>
-
 
 
 <div id="customerList">
@@ -196,7 +170,6 @@ placeholder="顧客名・住所・電話番号で検索">
 読み込み中...
 
 </div>
-
 
 
 </section>
@@ -210,28 +183,52 @@ placeholder="顧客名・住所・電話番号で検索">
 
 
 
+<!-- ===== 共通下部ナビ ===== -->
+
 <nav class="bottom-nav">
 
+    <a href="../index.html" class="nav-item">
 
-<a href="../index.html">
-ホーム
-</a>
+        <span class="nav-icon">🏠</span>
 
+        <span class="nav-text">
+            ホーム
+        </span>
 
-<a href="report.html">
-日報入力
-</a>
-
-
-<a href="reports.html">
-日報一覧
-</a>
+    </a>
 
 
-<a href="customers.html">
-顧客一覧
-</a>
+    <a href="../report.html" class="nav-item">
 
+        <span class="nav-icon">📝</span>
+
+        <span class="nav-text">
+            日報入力
+        </span>
+
+    </a>
+
+
+    <a href="../reports.html" class="nav-item">
+
+        <span class="nav-icon">📋</span>
+
+        <span class="nav-text">
+            日報一覧
+        </span>
+
+    </a>
+
+
+    <a href="../customers.html" class="nav-item">
+
+        <span class="nav-icon">🏢</span>
+
+        <span class="nav-text">
+            顧客一覧
+        </span>
+
+    </a>
 
 </nav>
 
@@ -239,7 +236,10 @@ placeholder="顧客名・住所・電話番号で検索">
 
 
 
-<script type="module" src="../js/customers.js"></script>
+<script
+type="module"
+src="../js/customers.js">
+</script>
 
 
 

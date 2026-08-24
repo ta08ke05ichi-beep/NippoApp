@@ -13,7 +13,9 @@
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -21,23 +23,33 @@
 
 </header>
 
+
 <main>
+
 
 <div class="card">
 
-<label>年月</label>
+<label>
+年月
+</label>
 
-<input type="month" id="month">
+<input
+type="month"
+id="month">
 
 </div>
 
+
 <div class="card">
 
-<label>担当者</label>
+<label>
+担当者
+</label>
 
 <select id="name">
 
 <option>全員</option>
+
 <option>竹市</option>
 <option>坂田</option>
 <option>西田</option>
@@ -49,33 +61,45 @@
 
 </div>
 
+
 <button id="searchBtn">
 
 集計する
 
 </button>
 
+
 <div id="result" class="card">
 
 <h2>📊 集計結果</h2>
 
-<p>訪問件数</p>
+<p>
+訪問件数
+</p>
 
 <h3 id="visitCount">
 0件
 </h3>
 
+
 <hr>
 
-<p>作業件数</p>
+
+<p>
+作業件数
+</p>
 
 <h3 id="workCount">
 0件
 </h3>
 
+
 <hr>
 
-<p>訪問した顧客数</p>
+
+<p>
+訪問した顧客数
+</p>
 
 <h3 id="customerCount">
 0社
@@ -84,17 +108,78 @@
 
 </div>
 
+
 <div class="card">
 
-<h2>👥 担当者別集計</h2>
+<h2>
+👥 担当者別集計
+</h2>
 
 <div id="personSummary"></div>
 
 </div>
 
+
 </main>
 
-<script type="module" src="../js/summary.js"></script>
+
+
+<!-- ===== 共通下部ナビ ===== -->
+
+<nav class="bottom-nav">
+
+    <a href="../index.html" class="nav-item">
+
+        <span class="nav-icon">🏠</span>
+
+        <span class="nav-text">
+            ホーム
+        </span>
+
+    </a>
+
+
+    <a href="../report.html" class="nav-item">
+
+        <span class="nav-icon">📝</span>
+
+        <span class="nav-text">
+            日報入力
+        </span>
+
+    </a>
+
+
+    <a href="../reports.html" class="nav-item">
+
+        <span class="nav-icon">📋</span>
+
+        <span class="nav-text">
+            日報一覧
+        </span>
+
+    </a>
+
+
+    <a href="../customers.html" class="nav-item">
+
+        <span class="nav-icon">🏢</span>
+
+        <span class="nav-text">
+            顧客一覧
+        </span>
+
+    </a>
+
+</nav>
+
+
+
+<script
+type="module"
+src="../js/summary.js">
+</script>
+
 
 </body>
 

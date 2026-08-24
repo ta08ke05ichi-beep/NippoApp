@@ -7,20 +7,16 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>日報編集</title>
 
 
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/edit.css">
 
-
 </head>
 
 
-
 <body>
-
 
 
 <header>
@@ -35,9 +31,7 @@
 <main>
 
 
-
 <div class="card">
-
 
 <label>
 担当者
@@ -55,8 +49,6 @@
 
 </select>
 
-
-
 </div>
 
 
@@ -64,18 +56,15 @@
 
 
 <div class="card">
-
 
 <label>
 日付
 </label>
 
 
-<input 
+<input
 type="date"
 id="date">
-
-
 
 </div>
 
@@ -85,7 +74,6 @@ id="date">
 
 
 <div class="card">
-
 
 <label>
 顧客
@@ -94,15 +82,11 @@ id="date">
 
 <select id="customer">
 
-
 <option value="">
 選択してください
 </option>
 
-
 </select>
-
-
 
 </div>
 
@@ -112,7 +96,6 @@ id="date">
 
 
 <div class="card">
-
 
 <label>
 作業分類
@@ -124,8 +107,6 @@ type="text"
 id="work"
 placeholder="例：点検・修理・設置">
 
-
-
 </div>
 
 
@@ -136,7 +117,6 @@ placeholder="例：点検・修理・設置">
 
 <div class="card">
 
-
 <label>
 作業内容
 </label>
@@ -146,8 +126,6 @@ placeholder="例：点検・修理・設置">
 id="content"
 placeholder="作業内容を入力してください">
 </textarea>
-
-
 
 </div>
 
@@ -166,9 +144,63 @@ placeholder="作業内容を入力してください">
 
 
 
+<!-- ===== 共通下部ナビ ===== -->
+
+<nav class="bottom-nav">
+
+    <a href="../index.html" class="nav-item">
+
+        <span class="nav-icon">🏠</span>
+
+        <span class="nav-text">
+            ホーム
+        </span>
+
+    </a>
 
 
-<script type="module" src="../js/edit.js"></script>
+    <a href="../report.html" class="nav-item">
+
+        <span class="nav-icon">📝</span>
+
+        <span class="nav-text">
+            日報入力
+        </span>
+
+    </a>
+
+
+    <a href="../reports.html" class="nav-item">
+
+        <span class="nav-icon">📋</span>
+
+        <span class="nav-text">
+            日報一覧
+        </span>
+
+    </a>
+
+
+    <a href="../customers.html" class="nav-item">
+
+        <span class="nav-icon">🏢</span>
+
+        <span class="nav-text">
+            顧客一覧
+        </span>
+
+    </a>
+
+</nav>
+
+
+
+
+
+<script
+type="module"
+src="../js/edit.js">
+</script>
 
 
 </body>

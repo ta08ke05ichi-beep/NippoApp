@@ -176,6 +176,8 @@ TEL：
 
 
 
+
+
 <!-- 作業分類 -->
 
 <label>
@@ -233,9 +235,7 @@ class="work">
 
 
 <textarea
-
 class="content"
-
 placeholder="作業した内容を入力してください">
 
 </textarea>
@@ -246,6 +246,7 @@ placeholder="作業した内容を入力してください">
 
 
 </div>
+
 
 
 
@@ -292,33 +293,52 @@ class="save-btn">
 
 
 
-<!-- 下部メニュー -->
+<!-- ===== 共通下部ナビ ===== -->
 
 <nav class="bottom-nav">
 
+    <a href="../index.html" class="nav-item">
 
-<a href="../index.html">
-ホーム
-</a>
+        <span class="nav-icon">🏠</span>
 
+        <span class="nav-text">
+            ホーム
+        </span>
 
-
-<a href="report.html">
-日報入力
-</a>
-
+    </a>
 
 
-<a href="reports.html">
-日報一覧
-</a>
+    <a href="../report.html" class="nav-item">
+
+        <span class="nav-icon">📝</span>
+
+        <span class="nav-text">
+            日報入力
+        </span>
+
+    </a>
 
 
+    <a href="../reports.html" class="nav-item">
 
-<a href="customers.html">
-顧客一覧
-</a>
+        <span class="nav-icon">📋</span>
 
+        <span class="nav-text">
+            日報一覧
+        </span>
+
+    </a>
+
+
+    <a href="../customers.html" class="nav-item">
+
+        <span class="nav-icon">🏢</span>
+
+        <span class="nav-text">
+            顧客一覧
+        </span>
+
+    </a>
 
 </nav>
 
@@ -328,7 +348,10 @@ class="save-btn">
 
 
 
-<script type="module" src="../js/report.js"></script>
+<script
+type="module"
+src="../js/report.js">
+</script>
 
 
 </body>
