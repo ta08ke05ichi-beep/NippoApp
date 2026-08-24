@@ -10,6 +10,10 @@
 
 body {
 
+    margin: 0;
+
+    padding: 0 0 90px;
+
     background: #111 !important;
 
     color: #fff !important;
@@ -18,45 +22,25 @@ body {
 
 
 /* ==============================
-   メイン
+   ヘッダー
 ============================== */
 
-main {
+header {
 
-    padding-bottom: 90px !important;
-
-}
-
-
-/* ==============================
-   カード見出し
-============================== */
-
-.card h2 {
+    background: #111 !important;
 
     color: #fff !important;
 
-    margin-top: 0 !important;
+    padding: 18px;
 
-    margin-bottom: 15px !important;
-
-}
-
-
-/* ==============================
-   カード内文字
-============================== */
-
-.card p {
-
-    margin: 8px 0 !important;
-
-    color: #fff !important;
+    text-align: center;
 
 }
 
 
-.card * {
+header h1 {
+
+    margin: 0;
 
     color: #fff !important;
 
@@ -64,56 +48,125 @@ main {
 
 
 /* ==============================
-   訪問履歴カード
+   顧客名
+============================== */
+
+#customerTitle {
+
+    margin: 0;
+
+    color: #fff !important;
+
+}
+
+
+/* ==============================
+   対応履歴エリア
+============================== */
+
+.history-section {
+
+    margin: 20px;
+
+    padding: 0;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+}
+
+
+.history-section > h2 {
+
+    margin: 0 0 15px;
+
+    color: #fff !important;
+
+}
+
+
+/* ==============================
+   履歴カード
 ============================== */
 
 .history-card {
 
+    display: block;
+
+    width: auto;
+
+    margin: 15px 0;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
     background: #222 !important;
+
+    background-color: #222 !important;
 
     color: #fff !important;
 
-    margin: 15px 0 !important;
+    border: none !important;
 
-    padding: 18px !important;
+    border-left: 5px solid #1976d2 !important;
 
     border-radius: 12px !important;
 
     box-shadow:
-        0 2px 8px rgba(0,0,0,.4) !important;
+        0 2px 8px rgba(0, 0, 0, .4) !important;
 
-    border-left: 5px solid #1976d2 !important;
+    cursor: pointer;
 
 }
 
 
+/* ==============================
+   履歴カード内
+============================== */
+
 .history-card h2 {
+
+    margin: 0 0 15px;
 
     color: #fff !important;
 
-    margin-bottom: 15px !important;
+    background: transparent !important;
 
 }
 
 
 .history-card p {
 
-    margin: 8px 0 !important;
+    margin: 8px 0;
 
     color: #fff !important;
+
+    background: transparent !important;
 
 }
 
 
+/* ★ カード内の全要素を透明背景にする */
+
 .history-card * {
 
+    background: transparent !important;
+
     color: #fff !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
 
 }
 
 
 /* ==============================
-   訪問先リンク
+   日報詳細リンク
 ============================== */
 
 .history-card .visit-link {
@@ -122,14 +175,20 @@ main {
 
     font-weight: bold;
 
-    text-decoration: none;
-
 }
 
 
-.history-card .visit-link:hover {
+/* ==============================
+   ホバー
+============================== */
 
-    text-decoration: underline;
+.history-card:hover {
+
+    background: #292929 !important;
+
+    background-color: #292929 !important;
+
+    transform: translateY(-2px);
 
 }
 
@@ -144,9 +203,13 @@ main {
 
     width: calc(100% - 40px);
 
-    margin: 20px auto 100px;
+    max-width: 500px;
+
+    margin: 30px auto 100px;
 
     padding: 14px;
+
+    box-sizing: border-box;
 
     background: #1976d2 !important;
 
@@ -172,13 +235,45 @@ main {
 
 /* ==============================
    下部ナビ
+   ★ 白で統一
 ============================== */
 
 .bottom-nav {
 
+    position: fixed !important;
+
+    left: 0 !important;
+
+    right: 0 !important;
+
+    bottom: 0 !important;
+
+    width: 100% !important;
+
+    height: 70px !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    justify-content: space-around !important;
+
+    align-items: stretch !important;
+
     background: #fff !important;
 
-    color: #555 !important;
+    border-top: 1px solid #e5e7eb !important;
+
+    border-radius: 0 !important;
+
+    box-shadow:
+        0 -3px 12px rgba(0,0,0,.08) !important;
+
+    z-index: 99999 !important;
 
 }
 
@@ -189,23 +284,79 @@ main {
 .bottom-nav a:hover,
 .bottom-nav a:active {
 
+    flex: 1 !important;
+
+    width: auto !important;
+
+    height: 70px !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+
+    align-items: center !important;
+
     background: transparent !important;
 
     color: #555 !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    text-decoration: none !important;
 
 }
 
 
 .bottom-nav .nav-icon {
 
-    color: inherit !important;
+    display: block !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    color: #555 !important;
+
+    border: none !important;
+
+    font-size: 22px !important;
+
+    line-height: 1 !important;
 
 }
 
 
 .bottom-nav .nav-text {
 
+    display: block !important;
+
+    margin-top: 4px !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
     color: #555 !important;
+
+    border: none !important;
+
+    font-size: 11px !important;
+
+    font-weight: 600 !important;
+
+    line-height: 1 !important;
 
 }
 
@@ -214,22 +365,20 @@ main {
    スマホ
 ============================== */
 
-@media(max-width:600px) {
+@media (max-width: 600px) {
 
-    .card {
+    .history-section {
 
-        margin: 10px !important;
-
-        padding: 15px !important;
+        margin: 10px;
 
     }
 
 
     .history-card {
 
-        margin: 10px 0 !important;
+        margin: 12px 0;
 
-        padding: 15px !important;
+        padding: 15px;
 
     }
 
@@ -238,119 +387,6 @@ main {
 
         width: calc(100% - 20px);
 
-        margin-bottom: 100px;
-
     }
-
-}
-
-.history-section {
-
-    margin: 20px;
-
-    padding: 0;
-
-    background: transparent;
-
-    border: none;
-
-    box-shadow: none;
-
-}
-
-
-.history-section h2 {
-
-    margin: 0 0 15px;
-
-    color: #fff !important;
-
-}
-
-/* ==============================
-   訪問履歴カード内の白枠を消す
-============================== */
-
-.history-card,
-.history-card > div,
-.history-card > section,
-.history-card > p,
-.history-card > h2,
-.history-card > h3 {
-
-    background: #222 !important;
-
-    color: #fff !important;
-
-    border-color: transparent !important;
-
-}
-
-
-/* カード内にある .card も黒にする */
-
-.history-card .card {
-
-    background: #222 !important;
-
-    color: #fff !important;
-
-    border: none !important;
-
-    box-shadow: none !important;
-
-    margin: 0 !important;
-
-    padding: 0 !important;
-
-}
-
-
-/* ミドリヤなどの会社名 */
-
-.history-card .visit-link {
-
-    display: inline-block;
-
-    background: transparent !important;
-
-    color: #42a5f5 !important;
-
-    border: none !important;
-
-    box-shadow: none !important;
-
-}
-
-
-/* 履歴カード内のリンク全般 */
-
-.history-card a {
-
-    background: transparent !important;
-
-    border: none !important;
-
-    box-shadow: none !important;
-
-    color: #42a5f5 !important;
-
-}
-
-
-/* 何かの要素に白背景が指定されても黒にする */
-
-.history-card * {
-
-    background-color: transparent !important;
-
-}
-
-
-/* 履歴カード本体だけ黒 */
-
-.history-card {
-
-    background: #222 !important;
 
 }
