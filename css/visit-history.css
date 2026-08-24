@@ -8,83 +8,152 @@
    全体
 ============================== */
 
-body{
+body {
 
-    background:#111;
+    background: #111 !important;
 
-    color:white;
+    color: #fff !important;
 
 }
 
 
 /* ==============================
-   履歴カード
+   メイン
 ============================== */
 
-.history-card{
+main {
 
-    background:#222 !important;
+    padding-bottom: 90px !important;
 
-    color:white !important;
+}
 
-    margin:20px;
 
-    padding:20px;
+/* ==============================
+   共通カード
+============================== */
 
-    border-radius:12px;
+.card {
+
+    background: #222 !important;
+
+    color: #fff !important;
+
+    margin: 20px !important;
+
+    padding: 20px !important;
+
+    border-radius: 12px !important;
 
     box-shadow:
-        0 2px 8px rgba(0,0,0,.4);
+        0 2px 8px rgba(0,0,0,.4) !important;
 
-    border-left:5px solid #1976d2;
-
-}
-
-
-/* ==============================
-   見出し
-============================== */
-
-.history-card h2{
-
-    color:white !important;
-
-    margin-bottom:15px;
+    border-left: 5px solid #1976d2 !important;
 
 }
 
 
 /* ==============================
-   内容
+   カード見出し
 ============================== */
 
-.history-card p{
+.card h2 {
 
-    margin:8px 0;
+    color: #fff !important;
 
-    color:white !important;
+    margin-top: 0 !important;
 
-}
-
-
-/* カード内の文字を確実に白 */
-
-.history-card *{
-
-    color:white !important;
+    margin-bottom: 15px !important;
 
 }
 
 
 /* ==============================
-   青い情報
+   カード内文字
 ============================== */
 
-.history-card .visit-link{
+.card p {
 
-    color:#42a5f5 !important;
+    margin: 8px 0 !important;
 
-    font-weight:bold;
+    color: #fff !important;
+
+}
+
+
+.card * {
+
+    color: #fff !important;
+
+}
+
+
+/* ==============================
+   訪問履歴カード
+============================== */
+
+.history-card {
+
+    background: #222 !important;
+
+    color: #fff !important;
+
+    margin: 15px 0 !important;
+
+    padding: 18px !important;
+
+    border-radius: 12px !important;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.4) !important;
+
+    border-left: 5px solid #1976d2 !important;
+
+}
+
+
+.history-card h2 {
+
+    color: #fff !important;
+
+    margin-bottom: 15px !important;
+
+}
+
+
+.history-card p {
+
+    margin: 8px 0 !important;
+
+    color: #fff !important;
+
+}
+
+
+.history-card * {
+
+    color: #fff !important;
+
+}
+
+
+/* ==============================
+   訪問先リンク
+============================== */
+
+.history-card .visit-link {
+
+    color: #42a5f5 !important;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+}
+
+
+.history-card .visit-link:hover {
+
+    text-decoration: underline;
 
 }
 
@@ -93,28 +162,74 @@ body{
    戻るボタン
 ============================== */
 
-button{
+#backBtn {
 
-    background:#1976d2;
+    display: block;
 
-    color:white;
+    width: calc(100% - 40px);
 
-    border:none;
+    margin: 20px auto 100px;
 
-    border-radius:10px;
+    padding: 14px;
 
-    padding:14px;
+    background: #1976d2 !important;
 
-    font-size:16px;
+    color: #fff !important;
 
-    cursor:pointer;
+    border: none !important;
+
+    border-radius: 10px !important;
+
+    font-size: 16px;
+
+    cursor: pointer;
 
 }
 
 
-button:hover{
+#backBtn:hover {
 
-    background:#1565c0;
+    background: #1565c0 !important;
+
+}
+
+
+/* ==============================
+   下部ナビ
+============================== */
+
+.bottom-nav {
+
+    background: #fff !important;
+
+    color: #555 !important;
+
+}
+
+
+.bottom-nav a,
+.bottom-nav a:link,
+.bottom-nav a:visited,
+.bottom-nav a:hover,
+.bottom-nav a:active {
+
+    background: transparent !important;
+
+    color: #555 !important;
+
+}
+
+
+.bottom-nav .nav-icon {
+
+    color: inherit !important;
+
+}
+
+
+.bottom-nav .nav-text {
+
+    color: #555 !important;
 
 }
 
@@ -123,13 +238,31 @@ button:hover{
    スマホ
 ============================== */
 
-@media(max-width:600px){
+@media(max-width:600px) {
 
-    .history-card{
+    .card {
 
-        margin:10px;
+        margin: 10px !important;
 
-        padding:15px;
+        padding: 15px !important;
+
+    }
+
+
+    .history-card {
+
+        margin: 10px 0 !important;
+
+        padding: 15px !important;
+
+    }
+
+
+    #backBtn {
+
+        width: calc(100% - 20px);
+
+        margin-bottom: 100px;
 
     }
 

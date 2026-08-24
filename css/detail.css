@@ -216,3 +216,71 @@ header h1{
     }
 
 }
+
+/* ==============================
+   共通下部ナビ
+   ページ固有CSSの影響を防止
+============================== */
+
+.bottom-nav {
+
+    background: #fff !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: 0 -3px 12px rgba(0,0,0,.08) !important;
+
+}
+
+
+.bottom-nav a,
+.bottom-nav a:link,
+.bottom-nav a:visited,
+.bottom-nav a:hover,
+.bottom-nav a:active {
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+
+    align-items: center !important;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    color: #555 !important;
+
+    text-decoration: none !important;
+
+}
+
+
+.bottom-nav .nav-icon {
+
+    background: transparent !important;
+
+    border: none !important;
+
+    color: inherit !important;
+
+}
+
+
+.bottom-nav .nav-text {
+
+    background: transparent !important;
+
+    border: none !important;
+
+    color: #555 !important;
+
+}

@@ -313,3 +313,156 @@ button:hover{
     }
 
 }
+
+/* ==============================
+   共通下部ナビ
+   ページ固有CSSの影響を防止
+============================== */
+
+.bottom-nav {
+
+    position: fixed !important;
+
+    left: 0 !important;
+
+    right: 0 !important;
+
+    bottom: 0 !important;
+
+    width: 100% !important;
+
+    height: 70px !important;
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    justify-content: space-around !important;
+
+    align-items: stretch !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: #fff !important;
+
+    border-top: 1px solid #e5e7eb !important;
+
+    border-radius: 0 !important;
+
+    box-shadow:
+        0 -3px 12px
+        rgba(0,0,0,.08) !important;
+
+    z-index: 99999 !important;
+
+}
+
+
+/* ==============================
+   ナビリンク
+============================== */
+
+.bottom-nav a,
+.bottom-nav a:link,
+.bottom-nav a:visited,
+.bottom-nav a:hover,
+.bottom-nav a:active {
+
+    flex: 1 !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+
+    align-items: center !important;
+
+    width: auto !important;
+
+    height: 70px !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    color: #555 !important;
+
+    text-decoration: none !important;
+
+}
+
+
+/* ==============================
+   アイコン
+============================== */
+
+.bottom-nav .nav-icon {
+
+    display: block !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    color: inherit !important;
+
+    font-size: 22px !important;
+
+    line-height: 1 !important;
+
+}
+
+
+/* ==============================
+   文字
+============================== */
+
+.bottom-nav .nav-text {
+
+    display: block !important;
+
+    margin-top: 4px !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    color: #555 !important;
+
+    font-size: 11px !important;
+
+    font-weight: 600 !important;
+
+    line-height: 1 !important;
+
+    white-space: nowrap !important;
+
+}
+
+
+/* ==============================
+   タップ時
+============================== */
+
+.bottom-nav a:active {
+
+    background: #f3f4f6 !important;
+
+}
