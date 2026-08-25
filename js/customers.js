@@ -300,13 +300,31 @@ function sortCustomers(){
 // お気に入り切り替え
 // ==================================================
 
-async function toggleFavorite(customer){
+async function toggleFavorite(customer, button){
+
+    const oldFavorite =
+        customer.favorite === true;
 
     const newFavorite =
-        !customer.favorite;
+        !oldFavorite;
 
 
-    try {
+    // ==========================================
+    // ① まず画面を即変更
+    // ==========================================
+
+    customer.favorite =
+        newFavorite;
+
+    button.textContent =
+        newFavorite ? "⭐" : "☆";
+
+
+    // ==========================================
+    // ② Firebaseへ保存
+    // ==========================================
+
+    try{
 
         await updateDoc(
 
@@ -324,94 +342,37 @@ async function toggleFavorite(customer){
         );
 
 
-        // ローカルデータ更新
-        customer.favorite =
-            newFavorite;
-
-
         console.log(
-            "お気に入り変更",
+            "お気に入り保存完了",
             customer.name,
             newFavorite
         );
 
 
-        // 並び替え
-        sortCustomers();
-
-
-        // 現在の検索状態を取得
-        const text =
-            searchInput
-                ? searchInput.value
-                    .toLowerCase()
-                    .trim()
-                : "";
-
-
-        if(text === ""){
-
-            showCustomers(customers);
-
-        }
-        else{
-
-            const result =
-                customers.filter(customer => {
-
-                    return (
-
-                        customer.name
-                            .toLowerCase()
-                            .includes(text)
-
-                        ||
-
-                        customer.searchName
-                            .includes(text)
-
-                        ||
-
-                        customer.postal
-                            .includes(text)
-
-                        ||
-
-                        customer.address1
-                            .toLowerCase()
-                            .includes(text)
-
-                        ||
-
-                        customer.address2
-                            .toLowerCase()
-                            .includes(text)
-
-                        ||
-
-                        customer.tel
-                            .includes(text)
-
-                    );
-
-                });
-
-
-            showCustomers(result);
-
-        }
-
     }
     catch(error){
 
         console.error(
-            "お気に入り変更エラー",
+            "お気に入り保存エラー",
             error
         );
 
 
+        // ======================================
+        // 保存失敗したら元に戻す
+        // ======================================
+
+        customer.favorite =
+            oldFavorite;
+
+        button.textContent =
+            oldFavorite
+                ? "⭐"
+                : "☆";
+
+
         alert(
-            "お気に入りの変更に失敗しました"
+            "お気に入りの保存に失敗しました"
         );
 
     }
@@ -551,16 +512,22 @@ function showCustomers(list){
         // ------------------------------------------
 
         div
-            .querySelector(".favorite-btn")
-            .onclick = async (event) => {
+    .querySelector(".favorite-btn")
+    .onclick = async (event) => {
 
-                event.stopPropagation();
+        event.stopPropagation();
 
-                await toggleFavorite(
-                    customer
-                );
 
-            };
+        const button =
+            event.currentTarget;
+
+
+        await toggleFavorite(
+            customer,
+            button
+        );
+
+    };
 
 
         // ------------------------------------------
