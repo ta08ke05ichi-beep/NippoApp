@@ -184,15 +184,28 @@ ${report.status === "draft"
         // ==============================
 
         div.addEventListener(
-            "click",
-            ()=>{
+    "click",
+    ()=>{
 
-                location.href =
-                    "report-detail.html?id=" +
-                    encodeURIComponent(report.id);
+        // 📝 下書きの場合
+        if(report.status === "draft"){
 
-            }
-        );
+            location.href =
+                "report.html?draftId=" +
+                encodeURIComponent(report.id);
+
+            return;
+
+        }
+
+
+        // ✅ 提出済みの場合
+        location.href =
+            "report-detail.html?id=" +
+            encodeURIComponent(report.id);
+
+    }
+);
 
 
         reportList.appendChild(div);
