@@ -471,6 +471,112 @@ async () => {
 
     const tasks = [];
 
+    // ======================
+// 📝 下書き保存
+// ======================
+
+const draftBtn =
+document.getElementById("draftBtn");
+
+
+draftBtn.onclick =
+async () => {
+
+    const tasks = [];
+
+
+    document.querySelectorAll(
+        ".visit-card"
+    )
+    .forEach(card => {
+
+        const task = {
+
+            customer:
+                card.querySelector(
+                    ".customer-name"
+                ).textContent,
+
+            address:
+                card.querySelector(
+                    ".customer-address"
+                ).textContent,
+
+            tel:
+                card.querySelector(
+                    ".customer-tel"
+                ).textContent,
+
+            work:
+                card.querySelector(
+                    ".work"
+                ).value,
+
+            content:
+                card.querySelector(
+                    ".content"
+                ).value
+
+        };
+
+
+        tasks.push(task);
+
+    });
+
+
+    try {
+
+        await addDoc(
+
+            collection(
+                db,
+                "reports"
+            ),
+
+            {
+
+                date:
+                    dateInput.value,
+
+                name:
+                    nameInput.value,
+
+                tasks:
+                    tasks,
+
+                status:
+                    "draft",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+
+        );
+
+
+        alert(
+            "📝 下書きを保存しました"
+        );
+
+
+    }
+    catch(error){
+
+        console.error(
+            "下書き保存エラー",
+            error
+        );
+
+
+        alert(
+            "下書きの保存に失敗しました"
+        );
+
+    }
+
+};
 
     document.querySelectorAll(
         ".visit-card"
