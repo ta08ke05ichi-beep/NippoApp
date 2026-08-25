@@ -279,78 +279,59 @@ ${c.tel || ""}
 // 顧客選択
 // ======================
 
-
 function selectCustomer(input, customer){
 
-
-
     const card =
-    input.closest(".visit-card");
-
-
+        input.closest(".visit-card");
 
     const detail =
-    card.querySelector(".customer-detail");
-
-
+        card.querySelector(".customer-detail");
 
     const hidden =
-    card.querySelector(".customer-value");
-
-
+        card.querySelector(".customer-value");
 
     const result =
-    card.querySelector(".customer-result");
-
-
-
+        card.querySelector(".customer-result");
 
 
     hidden.value =
-    customer.id;
-
+        customer.id;
 
 
     card.querySelector(".customer-name")
-.textContent =
-customer.name || "";
+        .textContent =
+        customer.name || "";
 
 
-
-card.querySelector(".customer-address")
-.textContent =
-(customer.address1 || "")
-+
-(customer.address2 || "");
-
+    card.querySelector(".customer-address")
+        .textContent =
+        (customer.address1 || "") +
+        (customer.address2 || "");
 
 
     card.querySelector(".customer-tel")
-    .textContent =
-    customer.tel || "";
-
-
+        .textContent =
+        customer.tel || "";
 
 
     detail.style.display =
-    "block";
+        "block";
 
 
-
-    result.innerHTML="";
-
+    result.innerHTML = "";
 
 
     input.value =
-customer.name;
+        customer.name;
 
 
+    // ==========================
+    // 最近使った顧客に保存
+    // ==========================
 
+    saveRecentCustomer(customer);
 
 }
-
-
-
 
 
 
@@ -631,3 +612,215 @@ async ()=>{
 
 
 };
+
+// =====================================
+// 最近使った顧客
+// =====================================
+
+const RECENT_CUSTOMERS_KEY =
+    "nippo_recent_customers";
+
+
+// ==========================
+// 保存
+// ==========================
+
+function saveRecentCustomer(customer){
+
+    let recent = [];
+
+    try{
+
+        recent =
+            JSON.parse(
+                localStorage.getItem(
+                    RECENT_CUSTOMERS_KEY
+                )
+            ) || [];
+
+    }
+    catch(e){
+
+        recent = [];
+
+    }
+
+
+    // 同じ顧客を削除
+    recent =
+        recent.filter(
+            item =>
+                item.id !== customer.id
+        );
+
+
+    // 一番上に追加
+    recent.unshift({
+
+        id:
+            customer.id,
+
+        name:
+            customer.name || "",
+
+        postal:
+            customer.postal || "",
+
+        address1:
+            customer.address1 || "",
+
+        address2:
+            customer.address2 || "",
+
+        tel:
+            customer.tel || "",
+
+        kana:
+            customer.kana || "",
+
+        searchName:
+            customer.searchName || ""
+
+    });
+
+
+    // 最大5件
+    recent =
+        recent.slice(0,5);
+
+
+    localStorage.setItem(
+        RECENT_CUSTOMERS_KEY,
+        JSON.stringify(recent)
+    );
+
+
+    // 表示更新
+    showRecentCustomers();
+
+}
+
+
+// ==========================
+// 最近使った顧客を取得
+// ==========================
+
+function getRecentCustomers(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                RECENT_CUSTOMERS_KEY
+            )
+        ) || [];
+
+    }
+    catch(e){
+
+        return [];
+
+    }
+
+}
+
+
+// ==========================
+// 最近使った顧客を表示
+// ==========================
+
+function showRecentCustomers(){
+
+    const lists =
+        document.querySelectorAll(
+            ".recent-customer-list"
+        );
+
+
+    const recent =
+        getRecentCustomers();
+
+
+    lists.forEach(list => {
+
+        list.innerHTML = "";
+
+
+        if(recent.length === 0){
+
+            list.innerHTML = `
+                <p class="no-recent">
+                    まだありません
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        recent.forEach(customer => {
+
+            const item =
+                document.createElement("button");
+
+
+            item.type = "button";
+
+
+            item.className =
+                "recent-customer-item";
+
+
+            item.innerHTML = `
+                🏢
+                <span>
+                    ${customer.name}
+                </span>
+            `;
+
+
+            item.onclick = () => {
+
+                // このボタンがある訪問カード
+                const card =
+                    item.closest(
+                        ".visit-card"
+                    );
+
+
+                if(!card){
+
+                    return;
+
+                }
+
+
+                const input =
+                    card.querySelector(
+                        ".customer-search"
+                    );
+
+
+                selectCustomer(
+                    input,
+                    customer
+                );
+
+            };
+
+
+            list.appendChild(item);
+
+        });
+
+    });
+
+}
+
+
+// ==========================
+// 初期表示
+// ==========================
+
+showRecentCustomers();
