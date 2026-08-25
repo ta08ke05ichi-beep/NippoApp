@@ -426,3 +426,28 @@ button:active{
     }
 
 }
+
+.customer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.customer-header h3{
+    margin:0;
+    flex:1;
+}
+
+.favorite-btn{
+    border:none;
+    background:transparent;
+    font-size:28px;
+    cursor:pointer;
+    padding:5px 8px;
+    line-height:1;
+}
+
+.favorite-btn:hover{
+    transform:scale(1.15);
+}

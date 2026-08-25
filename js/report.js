@@ -1,125 +1,125 @@
 import { db } from "./firebase.js";
 
 import {
-
     collection,
     getDocs,
     addDoc,
     serverTimestamp
-
-} from 
-"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
 console.log("report.js 起動");
-
-
-
 
 
 // ======================
 // 要素取得
 // ======================
 
-
-const tasksArea = document.getElementById("tasks");
+const tasksArea =
+    document.getElementById("tasks");
 
 const addTaskBtn =
-document.getElementById("addTaskBtn");
+    document.getElementById("addTaskBtn");
 
 const saveBtn =
-document.getElementById("saveBtn");
+    document.getElementById("saveBtn");
 
 const dateInput =
-document.getElementById("date");
+    document.getElementById("date");
 
 const nameInput =
-document.getElementById("name");
-
-
-
+    document.getElementById("name");
 
 
 // ======================
 // 日付自動入力
 // ======================
 
-
-const today = new Date();
-
+const today =
+    new Date();
 
 const yyyy =
-today.getFullYear();
-
+    today.getFullYear();
 
 const mm =
-String(today.getMonth()+1)
-.padStart(2,"0");
-
+    String(today.getMonth() + 1)
+        .padStart(2, "0");
 
 const dd =
-String(today.getDate())
-.padStart(2,"0");
-
-
+    String(today.getDate())
+        .padStart(2, "0");
 
 dateInput.value =
-`${yyyy}-${mm}-${dd}`;
-
-
-
-
-
+    `${yyyy}-${mm}-${dd}`;
 
 
 // ======================
 // 顧客データ
 // ======================
 
-
 let customers = [];
-
-
-
 
 
 // ======================
 // 顧客読み込み
 // ======================
 
-
 async function loadCustomers(){
-
 
     try{
 
-
         const snap =
-        await getDocs(
-            collection(db,"customers")
-        );
-
-
+            await getDocs(
+                collection(
+                    db,
+                    "customers"
+                )
+            );
 
         customers = [];
 
-
-
-        snap.forEach(doc=>{
-
+        snap.forEach(doc => {
 
             customers.push({
 
-                id:doc.id,
+                id:
+                    doc.id,
 
                 ...doc.data()
 
             });
 
-
         });
 
+
+        // ⭐ お気に入りを上にする
+        customers.sort((a, b) => {
+
+            if(
+                a.favorite === true &&
+                b.favorite !== true
+            ){
+
+                return -1;
+
+            }
+
+            if(
+                a.favorite !== true &&
+                b.favorite === true
+            ){
+
+                return 1;
+
+            }
+
+            return (a.name || "")
+                .localeCompare(
+                    b.name || "",
+                    "ja"
+                );
+
+        });
 
 
         console.log(
@@ -127,61 +127,45 @@ async function loadCustomers(){
             customers.length
         );
 
-console.log(
-    "顧客1件目確認",
-    customers[0]
-);
+
+        console.log(
+            "顧客1件目確認",
+            customers[0]
+        );
 
     }
     catch(e){
-
 
         console.error(
             "顧客取得エラー",
             e
         );
 
-
     }
-
 
 }
 
 
-
 loadCustomers();
-
-
-
-
-
-
-
 
 
 // ======================
 // 顧客検索
 // ======================
 
-
 function searchCustomer(input){
 
-
     const keyword =
-    input.value
-    .trim()
-    .toLowerCase();
-
+        input.value
+            .trim()
+            .toLowerCase();
 
 
     const result =
-    input
-    .nextElementSibling;
+        input.nextElementSibling;
 
 
-
-    result.innerHTML="";
-
+    result.innerHTML = "";
 
 
     if(!keyword){
@@ -191,126 +175,177 @@ function searchCustomer(input){
     }
 
 
+    // ==========================
+    // 検索
+    // ==========================
+
+    let list =
+        customers.filter(c => {
+
+            const target =
+
+                (c.name || "") +
+
+                (c.kana || "") +
+
+                (c.tel || "") +
+
+                (c.searchName || "");
 
 
+            return target
+                .toLowerCase()
+                .includes(keyword);
 
- const list =
-customers.filter(c=>{
-
-
-    const target =
-
-        (c.name || "") +
-
-        (c.kana || "") +
-
-        (c.tel || "") +
-
-        (c.searchName || "");
+        });
 
 
+    // ==========================
+    // ⭐ お気に入りを上にする
+    // ==========================
 
-    return target
-    .toLowerCase()
-    .includes(keyword);
+    list.sort((a, b) => {
 
+        if(
+            a.favorite === true &&
+            b.favorite !== true
+        ){
 
-});
+            return -1;
 
-console.log(
-    "検索結果件数",
-    list.length
-);
+        }
 
+        if(
+            a.favorite !== true &&
+            b.favorite === true
+        ){
 
+            return 1;
 
+        }
 
-
-    list.slice(0,20)
-    .forEach(c=>{
-
-
-        const div =
-        document.createElement("div");
-
-
-
-        div.className =
-        "customer-item";
-
-
-        div.innerHTML = `
-
-<strong>
-${c.name || "会社名なし"}
-</strong>
-
-<br>
-
-${c.tel || ""}
-
-`;
-
-
-
-        div.onclick = ()=>{
-
-
-            selectCustomer(
-                input,
-                c
+        return (a.name || "")
+            .localeCompare(
+                b.name || "",
+                "ja"
             );
-
-
-        };
-
-
-
-        result.appendChild(div);
-
-
 
     });
 
 
+    console.log(
+        "検索結果件数",
+        list.length
+    );
+
+
+    // 最大20件
+    list
+        .slice(0, 20)
+        .forEach(c => {
+
+            const div =
+                document.createElement("div");
+
+
+            div.className =
+                "customer-item";
+
+
+            // ⭐ お気に入り表示
+            const favoriteIcon =
+                c.favorite === true
+                    ? "⭐"
+                    : "☆";
+
+
+            div.innerHTML = `
+
+                <strong>
+                    ${favoriteIcon}
+                    ${c.name || "会社名なし"}
+                </strong>
+
+                <br>
+
+                ${c.tel || ""}
+
+            `;
+
+
+            div.onclick = () => {
+
+                selectCustomer(
+                    input,
+                    c
+                );
+
+            };
+
+
+            result.appendChild(div);
+
+        });
 
 }
+
+
 // ======================
 // 顧客選択
 // ======================
 
-function selectCustomer(input, customer){
+function selectCustomer(
+    input,
+    customer
+){
 
     const card =
-        input.closest(".visit-card");
+        input.closest(
+            ".visit-card"
+        );
+
 
     const detail =
-        card.querySelector(".customer-detail");
+        card.querySelector(
+            ".customer-detail"
+        );
+
 
     const hidden =
-        card.querySelector(".customer-value");
+        card.querySelector(
+            ".customer-value"
+        );
+
 
     const result =
-        card.querySelector(".customer-result");
+        card.querySelector(
+            ".customer-result"
+        );
 
 
     hidden.value =
         customer.id;
 
 
-    card.querySelector(".customer-name")
-        .textContent =
+    card.querySelector(
+        ".customer-name"
+    )
+    .textContent =
         customer.name || "";
 
 
-    card.querySelector(".customer-address")
-        .textContent =
+    card.querySelector(
+        ".customer-address"
+    )
+    .textContent =
         (customer.address1 || "") +
         (customer.address2 || "");
 
 
-    card.querySelector(".customer-tel")
-        .textContent =
+    card.querySelector(
+        ".customer-tel"
+    )
+    .textContent =
         customer.tel || "";
 
 
@@ -318,7 +353,8 @@ function selectCustomer(input, customer){
         "block";
 
 
-    result.innerHTML = "";
+    result.innerHTML =
+        "";
 
 
     input.value =
@@ -329,223 +365,168 @@ function selectCustomer(input, customer){
     // 最近使った顧客に保存
     // ==========================
 
-    saveRecentCustomer(customer);
+    saveRecentCustomer(
+        customer
+    );
 
 }
-
 
 
 // ======================
 // 検索イベント
 // ======================
 
-
 document.addEventListener(
-"input",
-e=>{
+    "input",
+    e => {
 
+        if(
+            e.target.classList.contains(
+                "customer-search"
+            )
+        ){
 
-    if(
-        e.target.classList.contains(
-            "customer-search"
-        )
-    ){
+            searchCustomer(
+                e.target
+            );
 
-
-        searchCustomer(
-            e.target
-        );
-
+        }
 
     }
-
-
-});
-
-
-
-
-
-
-
+);
 
 
 // ======================
 // 訪問追加
 // ======================
 
-
-addTaskBtn.onclick = ()=>{
-
+addTaskBtn.onclick = () => {
 
     const count =
-    document.querySelectorAll(
-        ".visit-card"
-    ).length + 1;
-
+        document.querySelectorAll(
+            ".visit-card"
+        ).length + 1;
 
 
     const first =
-    document.querySelector(
-        ".visit-card"
-    );
-
+        document.querySelector(
+            ".visit-card"
+        );
 
 
     const clone =
-    first.cloneNode(true);
-
+        first.cloneNode(true);
 
 
     clone.querySelector(
         ".visit-title"
     )
     .textContent =
-    `訪問${count}`;
-
+        `訪問${count}`;
 
 
     clone.querySelectorAll(
         "input,textarea,select"
     )
-    .forEach(el=>{
-
+    .forEach(el => {
 
         if(
             el.type !== "hidden"
         ){
 
-            el.value="";
+            el.value = "";
 
         }
 
-
     });
-
-
 
 
     clone.querySelector(
         ".customer-detail"
     )
     .style.display =
-    "none";
-
+        "none";
 
 
     clone.querySelector(
         ".customer-result"
     )
-    .innerHTML="";
-
+    .innerHTML =
+        "";
 
 
     tasksArea.appendChild(
         clone
     );
 
-
 };
-
-
-
-
-
-
-
 
 
 // ======================
 // 保存
 // ======================
 
-
 saveBtn.onclick =
-async ()=>{
+async () => {
 
-
-
-    const tasks=[];
-
+    const tasks = [];
 
 
     document.querySelectorAll(
         ".visit-card"
     )
-    .forEach(card=>{
+    .forEach(card => {
 
-
-
-        const task={
-
-
+        const task = {
 
             customer:
 
-            card.querySelector(
-                ".customer-name"
-            )
-            .textContent,
-
+                card.querySelector(
+                    ".customer-name"
+                )
+                .textContent,
 
 
             address:
 
-            card.querySelector(
-                ".customer-address"
-            )
-            .textContent,
-
+                card.querySelector(
+                    ".customer-address"
+                )
+                .textContent,
 
 
             tel:
 
-            card.querySelector(
-                ".customer-tel"
-            )
-            .textContent,
-
-
+                card.querySelector(
+                    ".customer-tel"
+                )
+                .textContent,
 
 
             work:
 
-            card.querySelector(
-                ".work"
-            )
-            .value,
-
+                card.querySelector(
+                    ".work"
+                )
+                .value,
 
 
             content:
 
-            card.querySelector(
-                ".content"
-            )
-            .value
-
-
+                card.querySelector(
+                    ".content"
+                )
+                .value
 
         };
 
 
-
         tasks.push(task);
-
-
 
     });
 
 
-
-
-
-
-
-
-
     try{
-
 
         await addDoc(
 
@@ -556,31 +537,21 @@ async ()=>{
 
             {
 
-
                 date:
-                dateInput.value,
-
-
+                    dateInput.value,
 
                 name:
-                nameInput.value,
+                    nameInput.value,
 
-
-
-                tasks:tasks,
-
-
+                tasks:
+                    tasks,
 
                 createdAt:
-                serverTimestamp()
-
-
+                    serverTimestamp()
 
             }
 
-
         );
-
 
 
         alert(
@@ -588,30 +559,21 @@ async ()=>{
         );
 
 
-
         location.reload();
-
-
 
     }
     catch(e){
 
-
-        console.error(
-            e
-        );
-
+        console.error(e);
 
         alert(
             "保存エラー"
         );
 
-
     }
 
-
-
 };
+
 
 // =====================================
 // 最近使った顧客
@@ -625,9 +587,12 @@ const RECENT_CUSTOMERS_KEY =
 // 保存
 // ==========================
 
-function saveRecentCustomer(customer){
+function saveRecentCustomer(
+    customer
+){
 
     let recent = [];
+
 
     try{
 
@@ -679,14 +644,18 @@ function saveRecentCustomer(customer){
             customer.kana || "",
 
         searchName:
-            customer.searchName || ""
+            customer.searchName || "",
+
+        // ⭐ お気に入り状態も保存
+        favorite:
+            customer.favorite === true
 
     });
 
 
     // 最大5件
     recent =
-        recent.slice(0,5);
+        recent.slice(0, 5);
 
 
     localStorage.setItem(
@@ -695,7 +664,6 @@ function saveRecentCustomer(customer){
     );
 
 
-    // 表示更新
     showRecentCustomers();
 
 }
@@ -749,9 +717,11 @@ function showRecentCustomers(){
         if(recent.length === 0){
 
             list.innerHTML = `
+
                 <p class="no-recent">
                     まだありません
                 </p>
+
             `;
 
             return;
@@ -762,27 +732,38 @@ function showRecentCustomers(){
         recent.forEach(customer => {
 
             const item =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
 
-            item.type = "button";
+            item.type =
+                "button";
 
 
             item.className =
                 "recent-customer-item";
 
 
+            const favoriteIcon =
+                customer.favorite === true
+                    ? "⭐"
+                    : "🏢";
+
+
             item.innerHTML = `
-                🏢
+
+                ${favoriteIcon}
+
                 <span>
                     ${customer.name}
                 </span>
+
             `;
 
 
             item.onclick = () => {
 
-                // このボタンがある訪問カード
                 const card =
                     item.closest(
                         ".visit-card"
@@ -810,7 +791,9 @@ function showRecentCustomers(){
             };
 
 
-            list.appendChild(item);
+            list.appendChild(
+                item
+            );
 
         });
 

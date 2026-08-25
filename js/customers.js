@@ -8,10 +8,15 @@ import {
     orderBy,
     writeBatch,
     doc,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 console.log("customers.js 起動");
 
+
+// ==================================================
+// 要素取得
+// ==================================================
 
 const customerList =
     document.getElementById("customerList");
@@ -213,17 +218,25 @@ async function loadCustomers(){
                         ""
                     ).toLowerCase(),
 
-                // ★追加
+                // 訪問回数
                 visitCount:
                     info.count,
 
-                // ★追加
+                // 最終訪問日
                 lastVisit:
-                    info.lastVisit
+                    info.lastVisit,
+
+                // ⭐ お気に入り
+                favorite:
+                    data.favorite === true
 
             });
 
         });
+
+
+        // ⭐ お気に入りを上にする
+        sortCustomers();
 
 
         showCustomers(customers);
@@ -245,6 +258,161 @@ async function loadCustomers(){
 
         customerList.innerHTML =
             "顧客一覧の読み込みに失敗しました";
+
+    }
+
+}
+
+
+// ==================================================
+// お気に入り順に並び替え
+// ==================================================
+
+function sortCustomers(){
+
+    customers.sort((a, b) => {
+
+        // お気に入りを先に
+        if(a.favorite && !b.favorite){
+
+            return -1;
+
+        }
+
+        if(!a.favorite && b.favorite){
+
+            return 1;
+
+        }
+
+        // 同じ状態なら名前順
+        return a.name.localeCompare(
+            b.name,
+            "ja"
+        );
+
+    });
+
+}
+
+
+// ==================================================
+// お気に入り切り替え
+// ==================================================
+
+async function toggleFavorite(customer){
+
+    const newFavorite =
+        !customer.favorite;
+
+
+    try {
+
+        await updateDoc(
+
+            doc(
+                db,
+                "customers",
+                customer.id
+            ),
+
+            {
+                favorite:
+                    newFavorite
+            }
+
+        );
+
+
+        // ローカルデータ更新
+        customer.favorite =
+            newFavorite;
+
+
+        console.log(
+            "お気に入り変更",
+            customer.name,
+            newFavorite
+        );
+
+
+        // 並び替え
+        sortCustomers();
+
+
+        // 現在の検索状態を取得
+        const text =
+            searchInput
+                ? searchInput.value
+                    .toLowerCase()
+                    .trim()
+                : "";
+
+
+        if(text === ""){
+
+            showCustomers(customers);
+
+        }
+        else{
+
+            const result =
+                customers.filter(customer => {
+
+                    return (
+
+                        customer.name
+                            .toLowerCase()
+                            .includes(text)
+
+                        ||
+
+                        customer.searchName
+                            .includes(text)
+
+                        ||
+
+                        customer.postal
+                            .includes(text)
+
+                        ||
+
+                        customer.address1
+                            .toLowerCase()
+                            .includes(text)
+
+                        ||
+
+                        customer.address2
+                            .toLowerCase()
+                            .includes(text)
+
+                        ||
+
+                        customer.tel
+                            .includes(text)
+
+                    );
+
+                });
+
+
+            showCustomers(result);
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "お気に入り変更エラー",
+            error
+        );
+
+
+        alert(
+            "お気に入りの変更に失敗しました"
+        );
 
     }
 
@@ -298,11 +466,39 @@ function showCustomers(list){
             `🚗 訪問回数：${customer.visitCount}回`;
 
 
+        // ------------------------------------------
+        // ⭐ お気に入りボタン
+        // ------------------------------------------
+
+        const favoriteIcon =
+            customer.favorite
+                ? "⭐"
+                : "☆";
+
+
+        const favoriteText =
+            customer.favorite
+                ? "お気に入り"
+                : "お気に入り";
+
+
         div.innerHTML = `
 
-            <h3>
-                🏢 ${customer.name}
-            </h3>
+            <div class="customer-header">
+
+                <h3>
+                    🏢 ${customer.name}
+                </h3>
+
+                <button
+                    type="button"
+                    class="favorite-btn"
+                    title="${favoriteText}"
+                >
+                    ${favoriteIcon}
+                </button>
+
+            </div>
 
 
             <p>
@@ -348,6 +544,23 @@ function showCustomers(list){
             </div>
 
         `;
+
+
+        // ------------------------------------------
+        // ⭐ お気に入り
+        // ------------------------------------------
+
+        div
+            .querySelector(".favorite-btn")
+            .onclick = async (event) => {
+
+                event.stopPropagation();
+
+                await toggleFavorite(
+                    customer
+                );
+
+            };
 
 
         // ------------------------------------------
@@ -431,7 +644,12 @@ async function addCustomer(){
 
 
     await addDoc(
-        collection(db, "customers"),
+
+        collection(
+            db,
+            "customers"
+        ),
+
         {
 
             name:
@@ -446,10 +664,15 @@ async function addCustomer(){
             tel:
                 tel,
 
+            // ⭐ 新規顧客はお気に入りOFF
+            favorite:
+                false,
+
             createdAt:
                 new Date()
 
         }
+
     );
 
 
@@ -581,12 +804,17 @@ importBtn.addEventListener(
 
             const customerRef =
                 doc(
-                    collection(db, "customers")
+                    collection(
+                        db,
+                        "customers"
+                    )
                 );
 
 
             batch.set(
+
                 customerRef,
+
                 {
 
                     name:
@@ -622,10 +850,15 @@ importBtn.addEventListener(
                     contactHonorific:
                         row[10]?.trim() || "",
 
+                    // ⭐ CSV登録時もお気に入りOFF
+                    favorite:
+                        false,
+
                     createdAt:
                         new Date()
 
                 }
+
             );
 
 
@@ -694,6 +927,8 @@ searchInput.addEventListener(
 
         if(text === ""){
 
+            sortCustomers();
+
             showCustomers(customers);
 
             return;
@@ -740,6 +975,29 @@ searchInput.addEventListener(
                 );
 
             });
+
+
+        // ⭐ 検索結果でもお気に入りを上にする
+        result.sort((a, b) => {
+
+            if(a.favorite && !b.favorite){
+
+                return -1;
+
+            }
+
+            if(!a.favorite && b.favorite){
+
+                return 1;
+
+            }
+
+            return a.name.localeCompare(
+                b.name,
+                "ja"
+            );
+
+        });
 
 
         showCustomers(result);
