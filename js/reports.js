@@ -169,6 +169,10 @@ function showReports(data){
                 👤 担当：${report.name || ""}
             </p>
 
+${report.status === "draft"
+    ? `<p class="draft-label">📝 下書き</p>`
+    : `<p class="submitted-label">✅ 提出済み</p>`
+}
 
             ${taskHtml}
 
