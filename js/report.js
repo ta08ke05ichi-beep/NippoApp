@@ -807,3 +807,209 @@ function showRecentCustomers(){
 // ==========================
 
 showRecentCustomers();
+
+// =====================================
+// 📋 コピーした日報を読み込む
+// =====================================
+
+function loadCopyData(){
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    // コピーじゃなければ何もしない
+    if(
+        params.get("copy") !== "true"
+    ){
+
+        return;
+
+    }
+
+
+    const saved =
+        sessionStorage.getItem(
+            "nippo_copy_data"
+        );
+
+
+    if(!saved){
+
+        return;
+
+    }
+
+
+    try{
+
+        const copyData =
+            JSON.parse(saved);
+
+
+        const tasks =
+            copyData.tasks || [];
+
+
+        if(tasks.length === 0){
+
+            return;
+
+        }
+
+
+        // 最初の訪問カード
+        const firstCard =
+            document.querySelector(
+                ".visit-card"
+            );
+
+
+        if(!firstCard){
+
+            return;
+
+        }
+
+
+        tasks.forEach(
+            (task,index) => {
+
+                let card;
+
+
+                // 1件目
+                if(index === 0){
+
+                    card =
+                        firstCard;
+
+                }
+
+                // 2件目以降
+                else{
+
+                    const first =
+                        document.querySelector(
+                            ".visit-card"
+                        );
+
+
+                    card =
+                        first.cloneNode(true);
+
+
+                    const count =
+                        document.querySelectorAll(
+                            ".visit-card"
+                        ).length + 1;
+
+
+                    card.querySelector(
+                        ".visit-title"
+                    ).textContent =
+                        `訪問${count}`;
+
+
+                    card.querySelector(
+                        ".customer-detail"
+                    ).style.display =
+                        "none";
+
+
+                    card.querySelector(
+                        ".customer-result"
+                    ).innerHTML =
+                        "";
+
+
+                    tasksArea.appendChild(
+                        card
+                    );
+
+                }
+
+
+                // ==========================
+                // 顧客
+                // ==========================
+
+                card.querySelector(
+                    ".customer-search"
+                ).value =
+                    task.customer || "";
+
+
+                card.querySelector(
+                    ".customer-name"
+                ).textContent =
+                    task.customer || "";
+
+
+                card.querySelector(
+                    ".customer-address"
+                ).textContent =
+                    task.address || "";
+
+
+                card.querySelector(
+                    ".customer-tel"
+                ).textContent =
+                    task.tel || "";
+
+
+                card.querySelector(
+                    ".customer-detail"
+                ).style.display =
+                    "block";
+
+
+                // ==========================
+                // 作業分類
+                // ==========================
+
+                card.querySelector(
+                    ".work"
+                ).value =
+                    task.work || "";
+
+
+                // ==========================
+                // 作業内容
+                // ==========================
+
+                card.querySelector(
+                    ".content"
+                ).value =
+                    task.content || "";
+
+            }
+        );
+
+
+        // コピー情報を削除
+        sessionStorage.removeItem(
+            "nippo_copy_data"
+        );
+
+
+        console.log(
+            "📋 日報コピー完了"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "コピー読み込みエラー",
+            error
+        );
+
+    }
+
+}
+
+
+loadCopyData();

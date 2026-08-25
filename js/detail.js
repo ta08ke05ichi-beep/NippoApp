@@ -151,3 +151,67 @@ document.getElementById("deleteBtn")
     }
 
 });
+
+// ==============================
+// 📋 日報コピー
+// ==============================
+
+document.getElementById("copyBtn")
+.addEventListener("click", async () => {
+
+    try {
+
+        const snap =
+            await getDoc(
+                doc(db, "reports", id)
+            );
+
+        if(!snap.exists()){
+
+            alert("日報が見つかりません");
+
+            return;
+
+        }
+
+        const data =
+            snap.data();
+
+
+        // コピーする内容
+        const copyData = {
+
+            tasks:
+                Array.isArray(data.tasks)
+                    ? data.tasks
+                    : []
+
+        };
+
+
+        // 一時保存
+        sessionStorage.setItem(
+            "nippo_copy_data",
+            JSON.stringify(copyData)
+        );
+
+
+        // 日報入力画面へ
+        location.href =
+            "report.html?copy=true";
+
+    }
+    catch(error){
+
+        console.error(
+            "コピーエラー",
+            error
+        );
+
+        alert(
+            "日報のコピーに失敗しました"
+        );
+
+    }
+
+});
