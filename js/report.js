@@ -24,6 +24,11 @@ const addTaskBtn =
 const saveBtn =
     document.getElementById("saveBtn");
 
+const draftBtn =
+    document.getElementById("draftBtn");
+
+console.log("draftBtn確認:", draftBtn);
+
 const dateInput =
     document.getElementById("date");
 
