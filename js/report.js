@@ -6,6 +6,7 @@ import {
     addDoc,
     getDoc,
     doc,
+    updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
@@ -468,9 +469,8 @@ addTaskBtn.onclick = () => {
 
 };
 
-
 // ======================
-// 保存
+// 💾 保存
 // ======================
 
 saveBtn.onclick = async () => {
@@ -478,52 +478,104 @@ saveBtn.onclick = async () => {
     const tasks = [];
 
     document.querySelectorAll(".visit-card")
-    .forEach(card => {
+        .forEach(card => {
 
-        tasks.push({
+            tasks.push({
 
-            customer:
-                card.querySelector(".customer-name").textContent,
+                customer:
+                    card.querySelector(".customer-name").textContent,
 
-            address:
-                card.querySelector(".customer-address").textContent,
+                address:
+                    card.querySelector(".customer-address").textContent,
 
-            tel:
-                card.querySelector(".customer-tel").textContent,
+                tel:
+                    card.querySelector(".customer-tel").textContent,
 
-            work:
-                card.querySelector(".work").value,
+                work:
+                    card.querySelector(".work").value,
 
-            content:
-                card.querySelector(".content").value
+                content:
+                    card.querySelector(".content").value
+
+            });
 
         });
 
-    });
+
+    // URLから下書きIDを取得
+    const params =
+        new URLSearchParams(location.search);
+
+    const draftId =
+        params.get("draftId");
+
 
     try {
 
-        await addDoc(
-            collection(db, "reports"),
-            {
-                date: dateInput.value,
-                name: nameInput.value,
-                tasks: tasks,
-                status: "submitted",
-                createdAt: serverTimestamp()
-            }
-        );
+        // ==========================
+        // 📝 下書きから開いた場合
+        // ==========================
 
-        alert("日報を保存しました");
+        if (draftId) {
+
+            const draftRef =
+                doc(db, "reports", draftId);
+
+            await updateDoc(
+                draftRef,
+                {
+                    date: dateInput.value,
+                    name: nameInput.value,
+                    tasks: tasks,
+                    status: "submitted",
+                    updatedAt: serverTimestamp()
+                }
+            );
+
+            alert(
+                "✅ 日報を正式に保存しました！"
+            );
+
+        }
+
+        // ==========================
+        // 🆕 新しく作った日報の場合
+        // ==========================
+
+        else {
+
+            await addDoc(
+                collection(db, "reports"),
+                {
+                    date: dateInput.value,
+                    name: nameInput.value,
+                    tasks: tasks,
+                    status: "submitted",
+                    createdAt: serverTimestamp()
+                }
+            );
+
+            alert(
+                "日報を保存しました"
+            );
+
+        }
+
 
         location.reload();
+
 
     }
     catch(error) {
 
-        console.error(error);
+        console.error(
+            "保存エラー",
+            error
+        );
 
-        alert("保存エラー");
+        alert(
+            "保存エラー"
+        );
 
     }
 
