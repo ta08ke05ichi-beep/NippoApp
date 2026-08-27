@@ -4,6 +4,8 @@ import {
     collection,
     getDocs,
     addDoc,
+    getDoc,
+    doc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
@@ -1030,3 +1032,210 @@ function loadCopyData(){
 
 
 loadCopyData();
+
+// =====================================
+// 📝 下書きを読み込む
+// =====================================
+
+async function loadDraftData() {
+
+    const params =
+        new URLSearchParams(location.search);
+
+    const draftId =
+        params.get("draftId");
+
+
+    // 下書きじゃなければ何もしない
+    if (!draftId) {
+        return;
+    }
+
+
+    try {
+
+        const draftRef =
+            doc(db, "reports", draftId);
+
+        const snapshot =
+            await getDoc(draftRef);
+
+
+        if (!snapshot.exists()) {
+
+            alert("下書きが見つかりません。");
+
+            return;
+
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        console.log(
+            "📝 下書き読み込み:",
+            data
+        );
+
+
+        // ==========================
+        // 基本情報
+        // ==========================
+
+        dateInput.value =
+            data.date || "";
+
+        nameInput.value =
+            data.name || "";
+
+
+        // ==========================
+        // 訪問データ
+        // ==========================
+
+        const tasks =
+            data.tasks || [];
+
+
+        if (tasks.length === 0) {
+            return;
+        }
+
+
+        const firstCard =
+            document.querySelector(
+                ".visit-card"
+            );
+
+
+        // 最初のカードを使う
+        tasks.forEach(
+            (task, index) => {
+
+                let card;
+
+
+                if (index === 0) {
+
+                    card =
+                        firstCard;
+
+                }
+                else {
+
+                    const first =
+                        document.querySelector(
+                            ".visit-card"
+                        );
+
+
+                    card =
+                        first.cloneNode(true);
+
+
+                    const count =
+                        document.querySelectorAll(
+                            ".visit-card"
+                        ).length + 1;
+
+
+                    card.querySelector(
+                        ".visit-title"
+                    ).textContent =
+                        `訪問${count}`;
+
+
+                    card.querySelector(
+                        ".customer-detail"
+                    ).style.display =
+                        "none";
+
+
+                    card.querySelector(
+                        ".customer-result"
+                    ).innerHTML =
+                        "";
+
+
+                    tasksArea.appendChild(
+                        card
+                    );
+
+                }
+
+
+                // 顧客
+                card.querySelector(
+                    ".customer-search"
+                ).value =
+                    task.customer || "";
+
+
+                card.querySelector(
+                    ".customer-name"
+                ).textContent =
+                    task.customer || "";
+
+
+                card.querySelector(
+                    ".customer-address"
+                ).textContent =
+                    task.address || "";
+
+
+                card.querySelector(
+                    ".customer-tel"
+                ).textContent =
+                    task.tel || "";
+
+
+                card.querySelector(
+                    ".customer-detail"
+                ).style.display =
+                    "block";
+
+
+                // 作業分類
+                card.querySelector(
+                    ".work"
+                ).value =
+                    task.work || "";
+
+
+                // 作業内容
+                card.querySelector(
+                    ".content"
+                ).value =
+                    task.content || "";
+
+            }
+        );
+
+
+        console.log(
+            "📝 下書き復元完了"
+        );
+
+
+    }
+    catch(error) {
+
+        console.error(
+            "下書き読み込みエラー",
+            error
+        );
+
+
+        alert(
+            "下書きの読み込みに失敗しました。"
+        );
+
+    }
+
+}
+
+
+// 下書き読み込み
+loadDraftData();
