@@ -4,12 +4,23 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>日報一覧</title>
 
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/reports.css">
+<link
+    rel="stylesheet"
+    href="../css/common.css"
+>
+
+<link
+    rel="stylesheet"
+    href="../css/reports.css"
+>
 
 </head>
 
@@ -27,13 +38,13 @@
 <main class="reports-container">
 
 
-    <!-- =========================
+    <!-- ==========================
          🔍 キーワード検索
-    ========================== -->
+    =========================== -->
 
     <div class="search-box">
 
-        <input 
+        <input
             id="searchInput"
             type="text"
             placeholder="顧客名・担当者・作業内容で検索"
@@ -42,67 +53,84 @@
     </div>
 
 
-
-    <!-- =========================
-         👤 担当者
-    ========================== -->
+    <!-- ==========================
+         🔎 絞り込み
+    =========================== -->
 
     <div class="filter-box">
 
-        <select id="personFilter">
 
-            <option value="">
-                👤 担当者：全員
-            </option>
+        <!-- 担当者 -->
 
-        </select>
+        <div class="filter-item">
 
+            <label for="nameFilter">
+                👤 担当者
+            </label>
 
-        <!-- =========================
-             📅 年月
-        ========================== -->
+            <select id="nameFilter">
 
-        <input
-            id="monthFilter"
-            type="month"
-        >
+                <option value="all">
+                    全員
+                </option>
 
+            </select>
 
-        <!-- =========================
-             📝 状態
-        ========================== -->
-
-        <select id="statusFilter">
-
-            <option value="">
-                📝 状態：すべて
-            </option>
-
-            <option value="submitted">
-                ✅ 提出済み
-            </option>
-
-            <option value="draft">
-                📝 下書き
-            </option>
-
-        </select>
+        </div>
 
 
-        <button
-            type="button"
-            id="clearFilterBtn"
-        >
-            🔄 条件をクリア
-        </button>
+        <!-- 年月 -->
+
+        <div class="filter-item">
+
+            <label for="monthFilter">
+                📅 年月
+            </label>
+
+            <select id="monthFilter">
+
+                <option value="all">
+                    すべて
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- 状態 -->
+
+        <div class="filter-item">
+
+            <label for="statusFilter">
+                📝 状態
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    すべて
+                </option>
+
+                <option value="submitted">
+                    ✅ 提出済み
+                </option>
+
+                <option value="draft">
+                    📝 下書き
+                </option>
+
+            </select>
+
+        </div>
+
 
     </div>
 
 
-
-    <!-- =========================
-         日報一覧
-    ========================== -->
+    <!-- ==========================
+         📋 日報一覧
+    =========================== -->
 
     <div id="reportList">
 
@@ -114,14 +142,21 @@
 </main>
 
 
-
-<!-- ===== 共通下部ナビ ===== -->
+<!-- ==========================
+     共通下部ナビ
+=========================== -->
 
 <nav class="bottom-nav">
 
-    <a href="../index.html" class="nav-item">
 
-        <span class="nav-icon">🏠</span>
+    <a
+        href="../index.html"
+        class="nav-item"
+    >
+
+        <span class="nav-icon">
+            🏠
+        </span>
 
         <span class="nav-text">
             ホーム
@@ -130,9 +165,14 @@
     </a>
 
 
-    <a href="report.html" class="nav-item">
+    <a
+        href="report.html"
+        class="nav-item"
+    >
 
-        <span class="nav-icon">📝</span>
+        <span class="nav-icon">
+            📝
+        </span>
 
         <span class="nav-text">
             日報入力
@@ -141,9 +181,14 @@
     </a>
 
 
-    <a href="reports.html" class="nav-item">
+    <a
+        href="reports.html"
+        class="nav-item"
+    >
 
-        <span class="nav-icon">📋</span>
+        <span class="nav-icon">
+            📋
+        </span>
 
         <span class="nav-text">
             日報一覧
@@ -152,9 +197,14 @@
     </a>
 
 
-    <a href="customers.html" class="nav-item">
+    <a
+        href="customers.html"
+        class="nav-item"
+    >
 
-        <span class="nav-icon">🏢</span>
+        <span class="nav-icon">
+            🏢
+        </span>
 
         <span class="nav-text">
             顧客一覧
@@ -162,8 +212,8 @@
 
     </a>
 
-</nav>
 
+</nav>
 
 
 <script

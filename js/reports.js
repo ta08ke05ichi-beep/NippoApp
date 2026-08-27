@@ -22,16 +22,13 @@ const searchInput =
     document.getElementById("searchInput");
 
 const personFilter =
-    document.getElementById("personFilter");
+    document.getElementById("nameFilter");
 
 const monthFilter =
     document.getElementById("monthFilter");
 
 const statusFilter =
     document.getElementById("statusFilter");
-
-const clearFilterBtn =
-    document.getElementById("clearFilterBtn");
 
 
 let reports = [];
@@ -63,8 +60,7 @@ async function loadReports(){
 
             reports.push({
 
-                id:
-                    doc.id,
+                id: doc.id,
 
                 ...doc.data()
 
@@ -74,16 +70,23 @@ async function loadReports(){
 
 
         console.log(
-            "日報データ確認",
-            reports[0]
+            "日報データ件数:",
+            reports.length
         );
 
 
         // ==========================
-        // 担当者一覧作成
+        // 担当者一覧
         // ==========================
 
         createPersonFilter();
+
+
+        // ==========================
+        // 年月一覧
+        // ==========================
+
+        createMonthFilter();
 
 
         // ==========================
@@ -110,7 +113,7 @@ async function loadReports(){
 
 
 // ==============================
-// 担当者フィルター作成
+// 👤 担当者フィルター
 // ==============================
 
 function createPersonFilter(){
@@ -125,24 +128,29 @@ function createPersonFilter(){
 
 
     const people =
-        [...new Set(
+        [
+            ...new Set(
 
-            reports
-                .map(report =>
-                    report.name
-                )
-                .filter(name =>
-                    name
-                )
+                reports
+                    .map(
+                        report =>
+                            report.name
+                    )
+                    .filter(
+                        name =>
+                            name
+                    )
 
-        )];
+            )
+        ];
 
 
-    people.sort((a,b)=>
-        a.localeCompare(
-            b,
-            "ja"
-        )
+    people.sort(
+        (a,b)=>
+            a.localeCompare(
+                b,
+                "ja"
+            )
     );
 
 
@@ -172,7 +180,96 @@ function createPersonFilter(){
 
 
 // ==============================
-// 絞り込み
+// 📅 年月フィルター
+// ==============================
+
+function createMonthFilter(){
+
+    monthFilter.innerHTML = `
+
+        <option value="">
+            📅 年月：すべて
+        </option>
+
+    `;
+
+
+    const months =
+        [
+            ...new Set(
+
+                reports
+                    .map(
+                        report => {
+
+                            if(
+                                !report.date
+                            ){
+
+                                return "";
+
+                            }
+
+
+                            // 2026-08-27
+                            // → 2026-08
+
+                            return report.date
+                                .substring(
+                                    0,
+                                    7
+                                );
+
+                        }
+                    )
+                    .filter(
+                        month =>
+                            month
+                    )
+
+            )
+        ];
+
+
+    // 新しい年月を上に
+
+    months.sort(
+        (a,b) =>
+            b.localeCompare(a)
+    );
+
+
+    months.forEach(month => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            month;
+
+
+        const parts =
+            month.split("-");
+
+
+        option.textContent =
+            `📅 ${parts[0]}年${parts[1]}月`;
+
+
+        monthFilter.appendChild(
+            option
+        );
+
+    });
+
+}
+
+
+// ==============================
+// 🔎 絞り込み
 // ==============================
 
 function filterReports(){
@@ -313,7 +410,7 @@ function filterReports(){
 
 
 // ==============================
-// 日報表示
+// 📋 日報表示
 // ==============================
 
 function showReports(data){
@@ -352,9 +449,9 @@ function showReports(data){
         let taskHtml = "";
 
 
-        // ==============================
-        // 作業データ
-        // ==============================
+        // ==========================
+        // 訪問データ
+        // ==========================
 
         if(
             !Array.isArray(report.tasks) ||
@@ -402,9 +499,9 @@ function showReports(data){
         }
 
 
-        // ==============================
+        // ==========================
         // 状態
-        // ==============================
+        // ==========================
 
         const statusHtml =
 
@@ -427,9 +524,9 @@ function showReports(data){
                 `;
 
 
-        // ==============================
+        // ==========================
         // カード
-        // ==============================
+        // ==========================
 
         div.innerHTML = `
 
@@ -454,16 +551,16 @@ function showReports(data){
         `;
 
 
-        // ==============================
-        // 詳細
-        // ==============================
+        // ==========================
+        // クリック
+        // ==========================
 
         div.addEventListener(
             "click",
             () => {
 
-
                 // 下書き
+
                 if(
                     report.status === "draft"
                 ){
@@ -480,6 +577,7 @@ function showReports(data){
 
 
                 // 提出済み
+
                 location.href =
                     "report-detail.html?id=" +
                     encodeURIComponent(
@@ -528,33 +626,7 @@ statusFilter.addEventListener(
 
 
 // ==============================
-// 🔄 条件クリア
-// ==============================
-
-clearFilterBtn.addEventListener(
-    "click",
-    () => {
-
-        searchInput.value =
-            "";
-
-        personFilter.value =
-            "";
-
-        monthFilter.value =
-            "";
-
-        statusFilter.value =
-            "";
-
-        filterReports();
-
-    }
-);
-
-
-// ==============================
-// 起動
+// 🚀 起動
 // ==============================
 
 loadReports();
