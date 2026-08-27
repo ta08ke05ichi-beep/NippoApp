@@ -37,20 +37,52 @@
 
 <main>
 
+    <!-- 絞り込み -->
 
-<div id="visitList">
+    <div class="filter-card">
 
-読み込み中...
+        <label>担当者</label>
 
-</div>
+        <select id="nameFilter">
+            <option value="全員">全員</option>
+        </select>
 
 
-<button id="backBtn">
+        <label>顧客名</label>
 
-← ホームへ戻る
+        <input
+            type="text"
+            id="customerFilter"
+            placeholder="顧客名で検索"
+        >
 
-</button>
+    </div>
 
+
+    <!-- 訪問件数 -->
+
+    <div class="visit-summary">
+
+        🚗 今月の訪問
+        <strong id="visitCount">0件</strong>
+
+    </div>
+
+
+    <!-- 訪問一覧 -->
+
+    <div id="visitList">
+
+        読み込み中...
+
+    </div>
+
+
+    <button id="backBtn">
+
+        ← ホームへ戻る
+
+    </button>
 
 </main>
 
