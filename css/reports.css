@@ -1,12 +1,13 @@
-/* ==============================
+/* =========================================
    日報一覧
+   PC・スマホ対応
    ブラックテーマ
-============================== */
+========================================= */
 
 
-/* ==============================
+/* =========================================
    全体
-============================== */
+========================================= */
 
 body{
 
@@ -17,9 +18,9 @@ body{
 }
 
 
-/* ==============================
+/* =========================================
    ヘッダー
-============================== */
+========================================= */
 
 body > header.app-header{
 
@@ -44,8 +45,6 @@ body > header.app-header{
 
 body > header.app-header h1{
 
-    display:block !important;
-
     margin:0 !important;
 
     padding:0 !important;
@@ -63,40 +62,47 @@ body > header.app-header h1{
 }
 
 
-/* ==============================
+/* =========================================
    日報一覧全体
-============================== */
+========================================= */
 
 .reports-container{
+
+    width:100%;
 
     max-width:900px;
 
     margin:20px auto;
 
-    padding:15px;
+    padding:15px 20px 100px;
 
-    padding-bottom:90px;
+    box-sizing:border-box;
 
     color:#fff !important;
 
 }
 
 
-/* ==============================
-   検索ボックス
-============================== */
+/* =========================================
+   🔍 検索ボックス
+========================================= */
 
 .search-box{
+
+    width:100%;
 
     background:#222 !important;
 
     padding:15px;
 
-    margin-bottom:20px;
+    margin-bottom:15px;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.4);
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.4);
+
+    box-sizing:border-box;
 
 }
 
@@ -105,9 +111,11 @@ body > header.app-header h1{
 
     width:100%;
 
+    height:48px;
+
     box-sizing:border-box;
 
-    padding:13px;
+    padding:10px 14px;
 
     font-size:16px;
 
@@ -118,6 +126,8 @@ body > header.app-header h1{
     background:#111 !important;
 
     color:#fff !important;
+
+    outline:none;
 
 }
 
@@ -131,29 +141,128 @@ body > header.app-header h1{
 
 .search-box input:focus{
 
+    border-color:#1976d2;
+
+}
+
+
+/* =========================================
+   🔎 絞り込みボックス
+========================================= */
+
+.filter-box{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:12px;
+
+    width:100%;
+
+    margin-bottom:20px;
+
+    padding:15px;
+
+    background:#222 !important;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.4);
+
+    box-sizing:border-box;
+
+}
+
+
+/* =========================================
+   フィルター項目
+========================================= */
+
+.filter-item{
+
+    min-width:0;
+
+}
+
+
+.filter-item label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#fff !important;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================================
+   セレクト
+========================================= */
+
+.filter-item select{
+
+    width:100%;
+
+    height:46px;
+
+    padding:8px 10px;
+
+    margin:0;
+
+    box-sizing:border-box;
+
+    border:1px solid #555;
+
+    border-radius:10px;
+
+    background:#111 !important;
+
+    color:#fff !important;
+
+    font-size:15px;
+
     outline:none;
+
+    cursor:pointer;
+
+}
+
+
+.filter-item select:focus{
 
     border-color:#1976d2;
 
 }
 
 
-/* ==============================
+/* =========================================
    日報一覧
-============================== */
+========================================= */
 
 #reportList{
+
+    width:100%;
 
     color:#fff !important;
 
 }
 
 
-/* ==============================
+/* =========================================
    日報カード
-============================== */
+========================================= */
 
 .report-card{
+
+    width:100%;
 
     background:#222 !important;
 
@@ -161,14 +270,43 @@ body > header.app-header h1{
 
     padding:20px;
 
-    margin-bottom:20px;
+    margin-bottom:18px;
 
     border-radius:14px;
 
-    box-shadow:0 3px 10px rgba(0,0,0,.4);
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.4);
+
+    box-sizing:border-box;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s ease,
+        background .15s ease;
 
 }
 
+
+.report-card:hover{
+
+    background:#292929 !important;
+
+    transform:translateY(-2px);
+
+}
+
+
+.report-card:active{
+
+    transform:scale(.99);
+
+}
+
+
+/* =========================================
+   カード内文字
+========================================= */
 
 .report-card *{
 
@@ -177,109 +315,159 @@ body > header.app-header h1{
 }
 
 
-/* ==============================
-   日報カード見出し
-============================== */
-
 .report-card h3{
 
-    margin-top:0;
-
-    margin-bottom:10px;
+    margin:0 0 12px;
 
     padding-bottom:10px;
 
     border-bottom:2px solid #444;
 
-    color:#fff !important;
+    font-size:20px;
+
+    line-height:1.5;
 
 }
 
-
-/* ==============================
-   日報カード文章
-============================== */
 
 .report-card p{
 
-    margin:10px 0;
+    margin:8px 0;
+
+    font-size:15px;
 
     font-weight:bold;
 
-    color:#fff !important;
+    line-height:1.6;
 
 }
 
 
-/* ==============================
-   訪問カード
-============================== */
+/* =========================================
+   訪問・作業内容
+========================================= */
 
-.visit-card{
-
-    background:#1b2735 !important;
-
-    color:#fff !important;
-
-    border-left:5px solid #1976d2;
-
-    padding:15px;
+.task{
 
     margin-top:12px;
 
+    padding:13px;
+
+    background:#1b2735 !important;
+
+    border-left:4px solid #1976d2;
+
     border-radius:10px;
+
+    color:#fff !important;
 
     line-height:1.8;
 
-}
-
-
-.visit-card *{
-
-    color:#fff !important;
+    word-break:break-word;
 
 }
 
 
-/* ==============================
-   詳細ボタン
-============================== */
+.task + .task{
 
-.report-card button{
-
-    width:100%;
-
-    margin-top:15px;
-
-    padding:14px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#1976d2 !important;
-
-    color:#fff !important;
-
-    font-size:16px;
-
-    cursor:pointer;
+    margin-top:10px;
 
 }
 
 
-.report-card button:hover{
+/* =========================================
+   下書き
+========================================= */
 
-    background:#1565c0 !important;
+.draft-label{
+
+    display:inline-block;
+
+    width:auto;
+
+    padding:5px 10px;
+
+    background:#4a3520 !important;
+
+    border-radius:8px;
+
+    color:#ffd180 !important;
+
+    font-size:13px !important;
 
 }
 
 
-/* ==============================
-   スマホ
-============================== */
+/* =========================================
+   提出済み
+========================================= */
+
+.submitted-label{
+
+    display:inline-block;
+
+    width:auto;
+
+    padding:5px 10px;
+
+    background:#173b25 !important;
+
+    border-radius:8px;
+
+    color:#9be7b0 !important;
+
+    font-size:13px !important;
+
+}
+
+
+/* =========================================
+   該当なし
+========================================= */
+
+.no-reports{
+
+    padding:30px 15px;
+
+    text-align:center;
+
+    color:#aaa !important;
+
+    background:#222;
+
+    border-radius:14px;
+
+}
+
+
+/* =========================================
+   📱 スマホ
+========================================= */
 
 @media(max-width:600px){
+
+    /* 全体 */
+
+    .reports-container{
+
+        margin:10px auto;
+
+        padding:
+            10px
+            10px
+            95px;
+
+    }
+
+
+    /* ヘッダー */
+
+    body > header.app-header{
+
+        padding:15px 10px !important;
+
+    }
+
 
     body > header.app-header h1{
 
@@ -288,48 +476,184 @@ body > header.app-header h1{
     }
 
 
+    /* 検索 */
+
+    .search-box{
+
+        padding:12px;
+
+        margin-bottom:12px;
+
+        border-radius:12px;
+
+    }
+
+
+    .search-box input{
+
+        height:46px;
+
+        font-size:16px;
+
+    }
+
+
+    /* =================================
+       絞り込み
+    ================================= */
+
+    .filter-box{
+
+        display:flex;
+
+        flex-direction:column;
+
+        gap:12px;
+
+        padding:12px;
+
+        margin-bottom:15px;
+
+        border-radius:12px;
+
+    }
+
+
+    .filter-item{
+
+        width:100%;
+
+    }
+
+
+    .filter-item label{
+
+        margin-bottom:6px;
+
+        font-size:13px;
+
+    }
+
+
+    .filter-item select{
+
+        width:100%;
+
+        height:46px;
+
+        font-size:15px;
+
+    }
+
+
+    /* =================================
+       日報カード
+    ================================= */
+
+    .report-card{
+
+        padding:15px;
+
+        margin-bottom:14px;
+
+        border-radius:12px;
+
+    }
+
+
+    .report-card h3{
+
+        font-size:18px;
+
+        margin-bottom:10px;
+
+        padding-bottom:8px;
+
+    }
+
+
+    .report-card p{
+
+        font-size:14px;
+
+        margin:7px 0;
+
+    }
+
+
+    /* =================================
+       作業
+    ================================= */
+
+    .task{
+
+        padding:11px;
+
+        margin-top:10px;
+
+        font-size:14px;
+
+        line-height:1.7;
+
+    }
+
+
+    /* =================================
+       状態
+    ================================= */
+
+    .draft-label,
+    .submitted-label{
+
+        font-size:12px !important;
+
+        padding:4px 8px;
+
+    }
+
+}
+
+
+/* =========================================
+   📱 小さいスマホ
+========================================= */
+
+@media(max-width:380px){
+
     .reports-container{
 
-        padding:10px;
+        padding-left:8px;
 
-        padding-bottom:80px;
+        padding-right:8px;
 
     }
 
 
     .report-card{
 
-        padding:15px;
+        padding:13px;
 
     }
 
-}
 
-/* =================================
-   スマホ：下部ナビを共通サイズに統一
-================================= */
+    .report-card h3{
 
-@media(max-width:600px){
+        font-size:17px;
 
-    .bottom-nav{
-        height:70px !important;
     }
 
-    .bottom-nav .nav-item{
-        height:70px !important;
-        flex:1 !important;
+
+    .filter-box{
+
+        padding:10px;
+
     }
 
-    .bottom-nav .nav-icon{
-        font-size:22px !important;
-        line-height:1 !important;
-        margin-bottom:4px !important;
-    }
 
-    .bottom-nav .nav-text{
-        font-size:11px !important;
-        line-height:1 !important;
-        font-weight:600 !important;
+    .filter-item select{
+
+        font-size:14px;
+
     }
 
 }
