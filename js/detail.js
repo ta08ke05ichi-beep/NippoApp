@@ -52,10 +52,6 @@ async function loadDetail(){
                 </p>
 
                 <p>
-                🕒 ${task.start || ""} ～ ${task.end || ""}
-                </p>
-
-                <p>
                 🔧 ${task.work || ""}
                 </p>
 

@@ -139,10 +139,6 @@ function showReports(data){
 
                         🏢 ${task.customer || ""}<br>
 
-                        ⏰ ${task.start || ""}
-                        ～ 
-                        ${task.end || ""}<br>
-
                         🔧 ${task.content || ""}
 
                     </div>
