@@ -11,22 +11,30 @@ import {
 // ==============================
 
 document.getElementById("reportBtn").addEventListener("click", () => {
+
     location.href = "pages/report.html";
+
 });
 
 
 document.getElementById("reportsBtn").addEventListener("click", () => {
+
     location.href = "pages/reports.html";
+
 });
 
 
 document.getElementById("customersBtn").addEventListener("click", () => {
+
     location.href = "pages/customers.html";
+
 });
 
 
 document.getElementById("summaryBtn").addEventListener("click", () => {
+
     location.href = "pages/summary.html";
+
 });
 
 
@@ -36,6 +44,7 @@ document.getElementById("summaryBtn").addEventListener("click", () => {
 
 const monthVisitBtn =
     document.getElementById("monthVisitBtn");
+
 
 if (monthVisitBtn) {
 
@@ -64,8 +73,6 @@ async function loadTodayReports() {
 
     try {
 
-        console.log("今日の日報読み込み開始");
-
         const today = new Date();
 
         const year =
@@ -73,11 +80,11 @@ async function loadTodayReports() {
 
         const month =
             String(today.getMonth() + 1)
-            .padStart(2, "0");
+                .padStart(2, "0");
 
         const day =
             String(today.getDate())
-            .padStart(2, "0");
+                .padStart(2, "0");
 
         const todayText =
             `${year}-${month}-${day}`;
@@ -92,11 +99,25 @@ async function loadTodayReports() {
         let count = 0;
 
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach(docSnap => {
 
-            const data = doc.data();
+            const data =
+                docSnap.data();
 
-            if (data.date === todayText) {
+
+            // 下書きは除外
+            if (
+                data.status === "draft"
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                data.date === todayText
+            ) {
 
                 count++;
 
@@ -106,7 +127,9 @@ async function loadTodayReports() {
 
 
         const element =
-            document.getElementById("todayCount");
+            document.getElementById(
+                "todayCount"
+            );
 
 
         if (element) {
@@ -115,11 +138,6 @@ async function loadTodayReports() {
                 `${count}件`;
 
         }
-
-        console.log(
-            "今日の日報件数:",
-            count
-        );
 
     }
     catch (error) {
@@ -133,15 +151,18 @@ async function loadTodayReports() {
 
 }
 
+
 // ==============================
-// 今月の訪問
+// 今月のデータ
 // ==============================
 
-async function loadMonthReports() {
+async function loadMonthlyDashboard() {
 
     try {
 
-        const today = new Date();
+        const today =
+            new Date();
+
 
         const month =
             `${today.getFullYear()}-${String(
@@ -155,16 +176,34 @@ async function loadMonthReports() {
             );
 
 
-        let count = 0;
+        let visitCount = 0;
+
+        let workCount = 0;
+
+        const visitedCustomers =
+            new Set();
 
 
-        snapshot.forEach((docSnap) => {
+        const personCounts = {};
+
+
+        snapshot.forEach(docSnap => {
 
             const data =
                 docSnap.data();
 
 
-            // 今月の日報だけ
+            // 下書き除外
+            if (
+                data.status === "draft"
+            ) {
+
+                return;
+
+            }
+
+
+            // 今月だけ
             if (
                 !data.date ||
                 !data.date.startsWith(month)
@@ -175,7 +214,6 @@ async function loadMonthReports() {
             }
 
 
-            // tasksがない日報は除外
             if (
                 !Array.isArray(data.tasks)
             ) {
@@ -185,38 +223,223 @@ async function loadMonthReports() {
             }
 
 
-            // tasksの数 = 訪問件数
-            count += data.tasks.length;
+            const person =
+                data.name || "担当者不明";
+
+
+            if (
+                !personCounts[person]
+            ) {
+
+                personCounts[person] = 0;
+
+            }
+
+
+            data.tasks.forEach(task => {
+
+                // ==========================
+                // 🚗 訪問件数
+                // ==========================
+
+                visitCount++;
+
+                personCounts[person]++;
+
+
+                // ==========================
+                // 🏢 訪問顧客
+                // ==========================
+
+                if (
+                    task.customer
+                ) {
+
+                    visitedCustomers.add(
+                        task.customer
+                    );
+
+                }
+
+
+                // ==========================
+                // 🔧 作業件数
+                // ==========================
+
+                if (
+                    task.work ||
+                    task.content
+                ) {
+
+                    workCount++;
+
+                }
+
+            });
 
         });
 
 
-        const element =
-            document.getElementById("monthCount");
+        // ==============================
+        // 件数表示
+        // ==============================
+
+        const monthElement =
+            document.getElementById(
+                "monthCount"
+            );
 
 
-        if (element) {
+        if (monthElement) {
 
-            element.textContent =
-                `${count}件`;
+            monthElement.textContent =
+                `${visitCount}件`;
 
         }
 
 
+        const workElement =
+            document.getElementById(
+                "workCount"
+            );
+
+
+        if (workElement) {
+
+            workElement.textContent =
+                `${workCount}件`;
+
+        }
+
+
+        const customerElement =
+            document.getElementById(
+                "visitedCustomerCount"
+            );
+
+
+        if (customerElement) {
+
+            customerElement.textContent =
+                `${visitedCustomers.size}社`;
+
+        }
+
+
+        // ==============================
+        // 👤 担当者別
+        // ==============================
+
+        showPersonSummary(
+            personCounts
+        );
+
+
         console.log(
-            "今月の訪問件数:",
-            count
+            "今月訪問:",
+            visitCount
+        );
+
+        console.log(
+            "今月作業:",
+            workCount
+        );
+
+        console.log(
+            "今月訪問顧客:",
+            visitedCustomers.size
         );
 
     }
     catch (error) {
 
         console.error(
-            "今月の訪問読み込みエラー",
+            "月間ダッシュボード読み込みエラー",
             error
         );
 
     }
+
+}
+
+
+// ==============================
+// 👤 担当者別表示
+// ==============================
+
+function showPersonSummary(
+    personCounts
+) {
+
+    const element =
+        document.getElementById(
+            "personSummary"
+        );
+
+
+    if (!element) {
+
+        return;
+
+    }
+
+
+    element.innerHTML = "";
+
+
+    const people =
+        Object.keys(
+            personCounts
+        ).sort((a, b) =>
+            a.localeCompare(
+                b,
+                "ja"
+            )
+        );
+
+
+    if (
+        people.length === 0
+    ) {
+
+        element.innerHTML =
+            "<p>今月の訪問はありません</p>";
+
+        return;
+
+    }
+
+
+    people.forEach(name => {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "person-summary-item";
+
+
+        div.innerHTML = `
+
+            <p>
+                👤 ${name}
+            </p>
+
+            <strong>
+                🚗 ${personCounts[name]}件
+            </strong>
+
+        `;
+
+
+        element.appendChild(
+            div
+        );
+
+    });
 
 }
 
@@ -236,7 +459,9 @@ async function loadCustomerTotal() {
 
 
         const element =
-            document.getElementById("customerTotal");
+            document.getElementById(
+                "customerTotal"
+            );
 
 
         if (element) {
@@ -245,12 +470,6 @@ async function loadCustomerTotal() {
                 `${snapshot.size}社`;
 
         }
-
-
-        console.log(
-            "登録顧客数:",
-            snapshot.size
-        );
 
     }
     catch (error) {
@@ -282,31 +501,34 @@ async function loadRecentReports() {
         const reports = [];
 
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach(docSnap => {
 
             reports.push({
 
-                id: doc.id,
+                id:
+                    docSnap.id,
 
-                ...doc.data()
+                ...docSnap.data()
 
             });
 
         });
 
 
-        // 日付の新しい順
-
         reports.sort((a, b) => {
 
             return (b.date || "")
-                .localeCompare(a.date || "");
+                .localeCompare(
+                    a.date || ""
+                );
 
         });
 
 
         const element =
-            document.getElementById("recentReports");
+            document.getElementById(
+                "recentReports"
+            );
 
 
         if (!element) {
@@ -319,7 +541,9 @@ async function loadRecentReports() {
         element.innerHTML = "";
 
 
-        if (reports.length === 0) {
+        if (
+            reports.length === 0
+        ) {
 
             element.innerHTML =
                 "<p>最近の日報はありません</p>";
@@ -331,29 +555,62 @@ async function loadRecentReports() {
 
         reports
             .slice(0, 5)
-            .forEach((report) => {
+            .forEach(report => {
 
-                element.innerHTML += `
+                const div =
+                    document.createElement(
+                        "div"
+                    );
 
-                    <div
-                        class="report-card"
-                        onclick="openReport('${report.id}')"
-                    >
 
-                        <p>
-                            📅 ${report.date || ""}
-                        </p>
+                div.className =
+                    "report-card";
 
-                        <p>
-                            👤 ${report.name || ""}
-                        </p>
 
-                    </div>
+                div.innerHTML = `
+
+                    <p>
+                        📅 ${report.date || ""}
+                    </p>
+
+                    <p>
+                        👤 ${report.name || ""}
+                    </p>
+
+                    ${
+                        report.status === "draft"
+                            ? `<p>📝 下書き</p>`
+                            : `<p>✅ 提出済み</p>`
+                    }
 
                 `;
 
-            });
 
+                div.onclick = () => {
+
+                    if (
+                        report.status === "draft"
+                    ) {
+
+                        location.href =
+                            `pages/report.html?draftId=${report.id}`;
+
+                    }
+                    else {
+
+                        location.href =
+                            `pages/report-detail.html?id=${report.id}`;
+
+                    }
+
+                };
+
+
+                element.appendChild(
+                    div
+                );
+
+            });
 
     }
     catch (error) {
@@ -369,24 +626,17 @@ async function loadRecentReports() {
 
 
 // ==============================
-// 日報詳細
-// ==============================
-
-window.openReport = function(id) {
-
-    location.href =
-        `pages/report-detail.html?id=${id}`;
-
-};
-
-
-// ==============================
 // ホーム画面読み込み
 // ==============================
 
 Promise.all([
+
     loadTodayReports(),
-    loadMonthReports(),
+
+    loadMonthlyDashboard(),
+
     loadCustomerTotal(),
+
     loadRecentReports()
+
 ]);
