@@ -11,12 +11,27 @@ import {
 console.log("reports.js 起動");
 
 
+// ==============================
+// 要素取得
+// ==============================
+
 const reportList =
     document.getElementById("reportList");
 
-
 const searchInput =
     document.getElementById("searchInput");
+
+const personFilter =
+    document.getElementById("personFilter");
+
+const monthFilter =
+    document.getElementById("monthFilter");
+
+const statusFilter =
+    document.getElementById("statusFilter");
+
+const clearFilterBtn =
+    document.getElementById("clearFilterBtn");
 
 
 let reports = [];
@@ -48,7 +63,8 @@ async function loadReports(){
 
             reports.push({
 
-                id:doc.id,
+                id:
+                    doc.id,
 
                 ...doc.data()
 
@@ -63,7 +79,18 @@ async function loadReports(){
         );
 
 
-        showReports(reports);
+        // ==========================
+        // 担当者一覧作成
+        // ==========================
+
+        createPersonFilter();
+
+
+        // ==========================
+        // 日報表示
+        // ==========================
+
+        filterReports();
 
     }
     catch(error){
@@ -83,6 +110,209 @@ async function loadReports(){
 
 
 // ==============================
+// 担当者フィルター作成
+// ==============================
+
+function createPersonFilter(){
+
+    personFilter.innerHTML = `
+
+        <option value="">
+            👤 担当者：全員
+        </option>
+
+    `;
+
+
+    const people =
+        [...new Set(
+
+            reports
+                .map(report =>
+                    report.name
+                )
+                .filter(name =>
+                    name
+                )
+
+        )];
+
+
+    people.sort((a,b)=>
+        a.localeCompare(
+            b,
+            "ja"
+        )
+    );
+
+
+    people.forEach(name => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            name;
+
+
+        option.textContent =
+            "👤 " + name;
+
+
+        personFilter.appendChild(
+            option
+        );
+
+    });
+
+}
+
+
+// ==============================
+// 絞り込み
+// ==============================
+
+function filterReports(){
+
+    const keyword =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    const person =
+        personFilter.value;
+
+
+    const month =
+        monthFilter.value;
+
+
+    const status =
+        statusFilter.value;
+
+
+    const result =
+        reports.filter(report => {
+
+
+            // ==========================
+            // 👤 担当者
+            // ==========================
+
+            if(
+                person &&
+                report.name !== person
+            ){
+
+                return false;
+
+            }
+
+
+            // ==========================
+            // 📅 年月
+            // ==========================
+
+            if(month){
+
+                const reportDate =
+                    report.date || "";
+
+
+                if(
+                    !reportDate.startsWith(
+                        month
+                    )
+                ){
+
+                    return false;
+
+                }
+
+            }
+
+
+            // ==========================
+            // 📝 状態
+            // ==========================
+
+            if(status){
+
+                if(
+                    report.status !== status
+                ){
+
+                    return false;
+
+                }
+
+            }
+
+
+            // ==========================
+            // 🔍 キーワード
+            // ==========================
+
+            if(keyword){
+
+                let target =
+
+                    (report.name || "") +
+
+                    (report.date || "");
+
+
+                if(
+                    Array.isArray(
+                        report.tasks
+                    )
+                ){
+
+                    report.tasks.forEach(
+                        task => {
+
+                            target +=
+
+                                (task.customer || "") +
+
+                                (task.content || "") +
+
+                                (task.work || "");
+
+                        }
+                    );
+
+                }
+
+
+                if(
+                    !target
+                        .toLowerCase()
+                        .includes(keyword)
+                ){
+
+                    return false;
+
+                }
+
+            }
+
+
+            return true;
+
+        });
+
+
+    showReports(result);
+
+}
+
+
+// ==============================
 // 日報表示
 // ==============================
 
@@ -93,23 +323,28 @@ function showReports(data){
 
     if(data.length === 0){
 
-        reportList.innerHTML =
-            "<p>日報がありません</p>";
+        reportList.innerHTML = `
+
+            <p class="no-reports">
+                該当する日報がありません
+            </p>
+
+        `;
 
         return;
 
     }
 
 
-    data.forEach(report=>{
+    data.forEach(report => {
 
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
-        // ★ここが重要
-        // card → report-card に変更
         div.className =
             "report-card";
 
@@ -121,54 +356,98 @@ function showReports(data){
         // 作業データ
         // ==============================
 
-        if(!Array.isArray(report.tasks) ||
-           report.tasks.length === 0){
+        if(
+            !Array.isArray(report.tasks) ||
+            report.tasks.length === 0
+        ){
 
             taskHtml = `
-                <p>訪問データなし</p>
+
+                <p>
+                    訪問データなし
+                </p>
+
             `;
 
         }
         else{
 
-            report.tasks.forEach(task=>{
+            report.tasks.forEach(
+                task => {
 
-                taskHtml += `
+                    taskHtml += `
 
-                    <div class="task">
+                        <div class="task">
 
-                        🏢 ${task.customer || ""}<br>
+                            🏢
+                            ${task.customer || ""}
 
-                        🔧 ${task.content || ""}
+                            <br>
 
-                    </div>
+                            🔧
+                            ${task.work || ""}
 
-                `;
+                            <br>
 
-            });
+                            📝
+                            ${task.content || ""}
+
+                        </div>
+
+                    `;
+
+                }
+            );
 
         }
 
 
         // ==============================
-        // 日報カード
+        // 状態
+        // ==============================
+
+        const statusHtml =
+
+            report.status === "draft"
+
+                ?
+
+                `
+                    <p class="draft-label">
+                        📝 下書き
+                    </p>
+                `
+
+                :
+
+                `
+                    <p class="submitted-label">
+                        ✅ 提出済み
+                    </p>
+                `;
+
+
+        // ==============================
+        // カード
         // ==============================
 
         div.innerHTML = `
 
             <h3>
-                📅 ${report.date || ""}
+                📅
+                ${report.date || ""}
             </h3>
 
 
             <p>
-                👤 担当：${report.name || ""}
+                👤
+                担当：
+                ${report.name || ""}
             </p>
 
-${report.status === "draft"
-    ? `<p class="draft-label">📝 下書き</p>`
-    : `<p class="submitted-label">✅ 提出済み</p>`
-}
+
+            ${statusHtml}
+
 
             ${taskHtml}
 
@@ -176,36 +455,44 @@ ${report.status === "draft"
 
 
         // ==============================
-        // 詳細画面
+        // 詳細
         // ==============================
 
         div.addEventListener(
-    "click",
-    ()=>{
-
-        // 📝 下書きの場合
-        if(report.status === "draft"){
-
-            location.href =
-                "report.html?draftId=" +
-                encodeURIComponent(report.id);
-
-            return;
-
-        }
+            "click",
+            () => {
 
 
-        // ✅ 提出済みの場合
-        location.href =
-            "report-detail.html?id=" +
-            encodeURIComponent(report.id);
+                // 下書き
+                if(
+                    report.status === "draft"
+                ){
 
-    }
-);
+                    location.href =
+                        "report.html?draftId=" +
+                        encodeURIComponent(
+                            report.id
+                        );
+
+                    return;
+
+                }
 
 
-        reportList.appendChild(div);
+                // 提出済み
+                location.href =
+                    "report-detail.html?id=" +
+                    encodeURIComponent(
+                        report.id
+                    );
 
+            }
+        );
+
+
+        reportList.appendChild(
+            div
+        );
 
     });
 
@@ -213,62 +500,54 @@ ${report.status === "draft"
 
 
 // ==============================
-// 検索
+// 🔍 イベント
 // ==============================
 
 searchInput.addEventListener(
     "input",
-    ()=>{
+    filterReports
+);
 
 
-        const text =
-            searchInput.value
-                .toLowerCase()
-                .trim();
+personFilter.addEventListener(
+    "change",
+    filterReports
+);
 
 
-        const result =
-            reports.filter(report=>{
+monthFilter.addEventListener(
+    "change",
+    filterReports
+);
 
 
-                let target =
-
-                    (report.name || "") +
-
-                    (report.date || "");
-
-
-                if(
-                    Array.isArray(report.tasks)
-                ){
-
-                    report.tasks.forEach(task=>{
-
-                        target +=
-
-                            (task.customer || "") +
-
-                            (task.content || "") +
-
-                            (task.start || "") +
-
-                            (task.end || "");
-
-                    });
-
-                }
+statusFilter.addEventListener(
+    "change",
+    filterReports
+);
 
 
-                return target
-                    .toLowerCase()
-                    .includes(text);
+// ==============================
+// 🔄 条件クリア
+// ==============================
 
+clearFilterBtn.addEventListener(
+    "click",
+    () => {
 
-            });
+        searchInput.value =
+            "";
 
+        personFilter.value =
+            "";
 
-        showReports(result);
+        monthFilter.value =
+            "";
 
+        statusFilter.value =
+            "";
+
+        filterReports();
 
     }
 );
