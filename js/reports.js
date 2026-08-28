@@ -11,9 +11,9 @@ import {
 console.log("reports.js 起動");
 
 
-// =====================================
+// ==============================
 // 要素取得
-// =====================================
+// ==============================
 
 const reportList =
     document.getElementById("reportList");
@@ -34,84 +34,65 @@ const clearFilterBtn =
     document.getElementById("clearFilterBtn");
 
 
-// =====================================
-// データ
-// =====================================
-
 let reports = [];
 
 
-// =====================================
+// ==============================
 // 日報読み込み
-// =====================================
+// ==============================
 
-async function loadReports(){
+async function loadReports() {
 
-    try{
+    try {
 
-        console.log("日報読み込み開始");
-
-
-        const q =
-            query(
-                collection(db, "reports"),
-                orderBy("date", "desc")
-            );
-
+        const q = query(
+            collection(db, "reports"),
+            orderBy("date", "desc")
+        );
 
         const snapshot =
             await getDocs(q);
 
-
         reports = [];
-
 
         snapshot.forEach(docSnap => {
 
             reports.push({
-
-                id:
-                    docSnap.id,
-
+                id: docSnap.id,
                 ...docSnap.data()
-
             });
 
         });
 
-
         console.log(
-            "日報件数:",
+            "日報読み込み完了:",
             reports.length
         );
 
 
-        // 担当者一覧
+        // 担当者
         createPersonFilter();
 
 
-        // 日報表示
+        // 年月
+        createMonthFilter();
+
+
+        // 初期表示
         filterReports();
 
     }
-    catch(error){
+    catch (error) {
 
         console.error(
-            "日報読み込みエラー:",
+            "日報読み込みエラー",
             error
         );
 
-
         reportList.innerHTML = `
-
-            <div class="error-message">
-
-                <p>
-                    ⚠️ 日報の読み込みに失敗しました。
-                </p>
-
+            <div class="no-reports">
+                <p>日報の読み込みに失敗しました。</p>
             </div>
-
         `;
 
     }
@@ -119,89 +100,128 @@ async function loadReports(){
 }
 
 
-// =====================================
+// ==============================
 // 担当者フィルター
-// =====================================
+// ==============================
 
-function createPersonFilter(){
+function createPersonFilter() {
 
-    if(!personFilter){
-
+    if (!personFilter) {
         return;
-
     }
 
 
     personFilter.innerHTML = `
-
         <option value="">
-            👤 担当者：全員
+            全員
         </option>
-
     `;
 
 
     const people = [
-
         ...new Set(
-
             reports
-
-                .map(
-                    report =>
-                        report.name
-                )
-
-                .filter(
-                    name =>
-                        name &&
-                        name.trim() !== ""
-                )
-
+                .map(report => report.name)
+                .filter(name => name)
         )
-
     ];
 
 
-    people.sort(
-        (a, b) =>
-            a.localeCompare(
-                b,
-                "ja"
-            )
+    people.sort((a, b) =>
+        a.localeCompare(b, "ja")
     );
 
 
     people.forEach(name => {
 
         const option =
-            document.createElement(
-                "option"
-            );
+            document.createElement("option");
 
-
-        option.value =
-            name;
-
+        option.value = name;
 
         option.textContent =
-            `👤 ${name}`;
+            name;
 
-
-        personFilter.appendChild(
-            option
-        );
+        personFilter.appendChild(option);
 
     });
 
 }
 
 
-// =====================================
-// 絞り込み
-// =====================================
+// ==============================
+// 年月フィルター
+// ==============================
 
-function filterReports(){
+function createMonthFilter() {
+
+    if (!monthFilter) {
+        return;
+    }
+
+
+    monthFilter.innerHTML = `
+        <option value="">
+            すべて
+        </option>
+    `;
+
+
+    const months = [
+        ...new Set(
+
+            reports
+                .map(report => {
+
+                    if (!report.date) {
+                        return "";
+                    }
+
+                    // 2026-08-27 → 2026-08
+                    return report.date.substring(0, 7);
+
+                })
+                .filter(month => month)
+
+        )
+    ];
+
+
+    // 新しい年月を上
+    months.sort((a, b) =>
+        b.localeCompare(a)
+    );
+
+
+    months.forEach(month => {
+
+        const option =
+            document.createElement("option");
+
+
+        option.value = month;
+
+
+        const [year, mon] =
+            month.split("-");
+
+
+        option.textContent =
+            `${year}年${Number(mon)}月`;
+
+
+        monthFilter.appendChild(option);
+
+    });
+
+}
+
+
+// ==============================
+// フィルター
+// ==============================
+
+function filterReports() {
 
     const keyword =
         searchInput
@@ -233,36 +253,37 @@ function filterReports(){
         reports.filter(report => {
 
 
-            // =================================
+            // ==========================
             // 担当者
-            // =================================
+            // ==========================
 
-            if(
+            if (
                 person &&
                 person !== "all" &&
                 report.name !== person
-            ){
+            ) {
 
                 return false;
 
             }
 
 
-            // =================================
+            // ==========================
             // 年月
-            // =================================
+            // ==========================
 
-            if(month){
+            if (
+                month &&
+                month !== "all"
+            ) {
 
                 const reportDate =
                     report.date || "";
 
 
-                if(
-                    !reportDate.startsWith(
-                        month
-                    )
-                ){
+                if (
+                    !reportDate.startsWith(month)
+                ) {
 
                     return false;
 
@@ -271,19 +292,31 @@ function filterReports(){
             }
 
 
-            // =================================
+            // ==========================
             // 状態
-            // =================================
+            // ==========================
 
-            // 「全て」は条件にしない
-            if(
+            if (
                 status &&
                 status !== "all"
-            ){
+            ) {
 
-                if(
-                    report.status !== status
-                ){
+                // 下書き
+                if (
+                    status === "draft" &&
+                    report.status !== "draft"
+                ) {
+
+                    return false;
+
+                }
+
+
+                // 提出済み
+                if (
+                    status === "submitted" &&
+                    report.status === "draft"
+                ) {
 
                     return false;
 
@@ -292,47 +325,52 @@ function filterReports(){
             }
 
 
-            // =================================
+            // ==========================
             // キーワード
-            // =================================
+            // ==========================
 
-            if(keyword){
+            if (keyword) {
 
-                let target =
+                let target = "";
 
-                    (report.name || "") +
+                target +=
+                    report.name || "";
 
-                    (report.date || "");
+                target +=
+                    report.date || "";
 
 
-                if(
-                    Array.isArray(
-                        report.tasks
-                    )
-                ){
+                if (
+                    Array.isArray(report.tasks)
+                ) {
 
-                    report.tasks.forEach(
-                        task => {
+                    report.tasks.forEach(task => {
 
-                            target +=
+                        target +=
+                            task.customer || "";
 
-                                (task.customer || "") +
+                        target +=
+                            task.content || "";
 
-                                (task.content || "") +
+                        target +=
+                            task.work || "";
 
-                                (task.work || "");
+                        target +=
+                            task.address || "";
 
-                        }
-                    );
+                        target +=
+                            task.tel || "";
+
+                    });
 
                 }
 
 
-                if(
+                if (
                     !target
                         .toLowerCase()
                         .includes(keyword)
-                ){
+                ) {
 
                     return false;
 
@@ -357,39 +395,33 @@ function filterReports(){
 }
 
 
-// =====================================
+// ==============================
 // 日報表示
-// =====================================
+// ==============================
 
-function showReports(data){
+function showReports(data) {
 
     reportList.innerHTML = "";
 
 
-    // =================================
-    // 0件
-    // =================================
-
-    if(data.length === 0){
+    if (data.length === 0) {
 
         reportList.innerHTML = `
-
             <div class="no-reports">
 
                 <div class="no-reports-icon">
                     📋
                 </div>
 
-                <p>
+                <h3>
                     該当する日報がありません
+                </h3>
+
+                <p>
+                    検索条件を変更してください
                 </p>
 
-                <small>
-                    検索条件を変更してください
-                </small>
-
             </div>
-
         `;
 
         return;
@@ -397,160 +429,116 @@ function showReports(data){
     }
 
 
-    // =================================
-    // 件数
-    // =================================
-
-    const countBox =
-        document.createElement("div");
-
-
-    countBox.className =
-        "report-count";
-
-
-    countBox.textContent =
-        `📋 ${data.length}件の日報`;
-
-
-    reportList.appendChild(
-        countBox
-    );
-
-
-    // =================================
-    // カード
-    // =================================
-
     data.forEach(report => {
 
 
         const div =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
 
         div.className =
             "report-card";
 
 
-        // =================================
-        // 状態
-        // =================================
-
-        const isDraft =
-            report.status === "draft";
-
-
-        const statusHtml =
-            isDraft
-
-                ? `
-
-                    <span class="status-badge draft">
-                        📝 下書き
-                    </span>
-
-                `
-
-                : `
-
-                    <span class="status-badge submitted">
-                        ✅ 提出済み
-                    </span>
-
-                `;
-
-
-        // =================================
+        // ==========================
         // 作業内容
-        // =================================
+        // ==========================
 
         let taskHtml = "";
 
 
-        if(
+        if (
             !Array.isArray(report.tasks) ||
             report.tasks.length === 0
-        ){
+        ) {
 
             taskHtml = `
-
-                <div class="no-task">
+                <div class="task empty-task">
                     訪問データなし
                 </div>
-
             `;
 
         }
-        else{
+        else {
 
-            report.tasks.forEach(
-                (task, index) => {
+            report.tasks.forEach(task => {
 
-                    taskHtml += `
+                taskHtml += `
 
-                        <div class="task">
+                    <div class="task">
 
-                            <div class="task-number">
-                                訪問${index + 1}
-                            </div>
-
-                            <div class="task-row">
-                                <span>🏢</span>
-                                <span>
-                                    ${task.customer || "顧客名なし"}
-                                </span>
-                            </div>
-
-                            <div class="task-row">
-                                <span>🔧</span>
-                                <span>
-                                    ${task.work || "作業分類なし"}
-                                </span>
-                            </div>
-
-                            ${
-                                task.content
-                                    ?
-
-                                    `
-
-                                    <div class="task-row">
-                                        <span>📝</span>
-                                        <span>
-                                            ${task.content}
-                                        </span>
-                                    </div>
-
-                                    `
-
-                                    :
-
-                                    ""
-                            }
-
+                        <div class="task-customer">
+                            🏢
+                            ${escapeHtml(
+                                task.customer || "顧客名なし"
+                            )}
                         </div>
 
-                    `;
+                        <div class="task-work">
+                            🔧
+                            ${escapeHtml(
+                                task.work || ""
+                            )}
+                        </div>
 
-                }
-            );
+                        <div class="task-content">
+                            📝
+                            ${escapeHtml(
+                                task.content || ""
+                            )}
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
 
         }
 
 
-        // =================================
-        // カードHTML
-        // =================================
+        // ==========================
+        // 状態
+        // ==========================
+
+        let statusHtml;
+
+
+        if (report.status === "draft") {
+
+            statusHtml = `
+                <span class="status-badge draft">
+                    📝 下書き
+                </span>
+            `;
+
+        }
+        else {
+
+            statusHtml = `
+                <span class="status-badge submitted">
+                    ✅ 提出済み
+                </span>
+            `;
+
+        }
+
+
+        // ==========================
+        // カード
+        // ==========================
 
         div.innerHTML = `
 
             <div class="report-header">
 
                 <div class="report-date">
-                    📅 ${report.date || ""}
+
+                    📅
+                    ${escapeHtml(
+                        report.date || ""
+                    )}
+
                 </div>
 
                 ${statusHtml}
@@ -561,10 +549,10 @@ function showReports(data){
             <div class="report-person">
 
                 👤
-
-                <span>
-                    ${report.name || "担当者なし"}
-                </span>
+                担当：
+                ${escapeHtml(
+                    report.name || ""
+                )}
 
             </div>
 
@@ -576,27 +564,29 @@ function showReports(data){
             </div>
 
 
-            <div class="detail-link">
+            <div class="report-open">
 
-                詳細を見る
-                <span>→</span>
+                ${report.status === "draft"
+                    ? "📝 下書きを編集 →"
+                    : "📋 詳細を見る →"
+                }
 
             </div>
 
         `;
 
 
-        // =================================
+        // ==========================
         // クリック
-        // =================================
+        // ==========================
 
         div.addEventListener(
             "click",
             () => {
 
-
-                // 下書き
-                if(isDraft){
+                if (
+                    report.status === "draft"
+                ) {
 
                     location.href =
                         "report.html?draftId=" +
@@ -609,7 +599,6 @@ function showReports(data){
                 }
 
 
-                // 提出済み
                 location.href =
                     "report-detail.html?id=" +
                     encodeURIComponent(
@@ -620,20 +609,34 @@ function showReports(data){
         );
 
 
-        reportList.appendChild(
-            div
-        );
+        reportList.appendChild(div);
 
     });
 
 }
 
 
-// =====================================
-// イベント
-// =====================================
+// ==============================
+// HTMLエスケープ
+// ==============================
 
-if(searchInput){
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+// ==============================
+// 検索
+// ==============================
+
+if (searchInput) {
 
     searchInput.addEventListener(
         "input",
@@ -643,7 +646,11 @@ if(searchInput){
 }
 
 
-if(personFilter){
+// ==============================
+// 担当者変更
+// ==============================
+
+if (personFilter) {
 
     personFilter.addEventListener(
         "change",
@@ -653,7 +660,11 @@ if(personFilter){
 }
 
 
-if(monthFilter){
+// ==============================
+// 年月変更
+// ==============================
+
+if (monthFilter) {
 
     monthFilter.addEventListener(
         "change",
@@ -663,7 +674,11 @@ if(monthFilter){
 }
 
 
-if(statusFilter){
+// ==============================
+// 状態変更
+// ==============================
+
+if (statusFilter) {
 
     statusFilter.addEventListener(
         "change",
@@ -673,44 +688,31 @@ if(statusFilter){
 }
 
 
-// =====================================
+// ==============================
 // 条件クリア
-// =====================================
+// ==============================
 
-if(clearFilterBtn){
+if (clearFilterBtn) {
 
     clearFilterBtn.addEventListener(
         "click",
         () => {
 
-
-            if(searchInput){
-
+            if (searchInput) {
                 searchInput.value = "";
-
             }
 
-
-            if(personFilter){
-
+            if (personFilter) {
                 personFilter.value = "";
-
             }
 
-
-            if(monthFilter){
-
+            if (monthFilter) {
                 monthFilter.value = "";
-
             }
 
-
-            if(statusFilter){
-
+            if (statusFilter) {
                 statusFilter.value = "";
-
             }
-
 
             filterReports();
 
@@ -720,8 +722,8 @@ if(clearFilterBtn){
 }
 
 
-// =====================================
-// 起動
-// =====================================
+// ==============================
+// 開始
+// ==============================
 
 loadReports();
