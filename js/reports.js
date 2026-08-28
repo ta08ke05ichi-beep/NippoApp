@@ -153,66 +153,57 @@ function createPersonFilter() {
 // 年月フィルター
 // ==============================
 
-function createMonthFilter() {
+function createMonthFilter(){
 
-    if (!monthFilter) {
+    if(!monthFilter){
         return;
     }
 
-
-    monthFilter.innerHTML = `
-        <option value="">
-            すべて
-        </option>
-    `;
-
+    monthFilter.innerHTML = "";
 
     const months = [
         ...new Set(
-
             reports
                 .map(report => {
 
-                    if (!report.date) {
+                    if(!report.date){
                         return "";
                     }
 
-                    // 2026-08-27 → 2026-08
                     return report.date.substring(0, 7);
 
                 })
                 .filter(month => month)
-
         )
     ];
 
-
-    // 新しい年月を上
     months.sort((a, b) =>
         b.localeCompare(a)
     );
-
 
     months.forEach(month => {
 
         const option =
             document.createElement("option");
 
-
         option.value = month;
-
 
         const [year, mon] =
             month.split("-");
 
-
         option.textContent =
             `${year}年${Number(mon)}月`;
-
 
         monthFilter.appendChild(option);
 
     });
+
+    // 最新の年月を最初に選択
+    if(months.length > 0){
+
+        monthFilter.value = months[0];
+
+    }
 
 }
 
