@@ -45,55 +45,96 @@ async function loadReports() {
 
     try {
 
+        console.log("日報読み込み開始");
+
+
         const q = query(
             collection(db, "reports"),
             orderBy("date", "desc")
         );
 
+
         const snapshot =
             await getDocs(q);
 
+
         reports = [];
+
 
         snapshot.forEach(docSnap => {
 
+            const data =
+                docSnap.data();
+
+
             reports.push({
-                id: docSnap.id,
-                ...docSnap.data()
+
+                id:
+                    docSnap.id,
+
+                ...data
+
             });
 
         });
 
+
         console.log(
-            "日報読み込み完了:",
+            "日報件数:",
             reports.length
         );
 
 
-        // 担当者
+        console.log(
+            "担当者データ:",
+            reports.map(report => report.name)
+        );
+
+
+        // ==========================
+        // フィルター作成
+        // ==========================
+
         createPersonFilter();
 
-
-        // 年月
         createMonthFilter();
 
 
+        // ==========================
         // 初期表示
+        // ==========================
+
         filterReports();
 
+
     }
-    catch (error) {
+    catch(error) {
 
         console.error(
-            "日報読み込みエラー",
+            "日報読み込みエラー:",
             error
         );
 
-        reportList.innerHTML = `
-            <div class="no-reports">
-                <p>日報の読み込みに失敗しました。</p>
-            </div>
-        `;
+
+        if(reportList){
+
+            reportList.innerHTML = `
+
+                <div class="no-reports">
+
+                    <h3>
+                        日報の読み込みに失敗しました
+                    </h3>
+
+                    <p>
+                        ページを再読み込みしてください。
+                    </p>
+
+                </div>
+
+            `;
+
+        }
 
     }
 
@@ -106,12 +147,19 @@ async function loadReports() {
 
 function createPersonFilter() {
 
-    if (!personFilter) {
+    if(!personFilter){
+
+        console.error(
+            "personFilter が見つかりません"
+        );
+
         return;
+
     }
 
 
-    // いったん空にする
+    // 一旦空にする
+
     personFilter.innerHTML = "";
 
 
@@ -122,10 +170,14 @@ function createPersonFilter() {
     const allOption =
         document.createElement("option");
 
-    allOption.value = "";
+
+    allOption.value =
+        "";
+
 
     allOption.textContent =
         "全員";
+
 
     personFilter.appendChild(
         allOption
@@ -133,41 +185,65 @@ function createPersonFilter() {
 
 
     // ==========================
-    // 日報に入っている担当者
+    // 担当者取得
     // ==========================
 
-    const people = [
-        ...new Set(
-            reports
-                .map(report => report.name)
-                .filter(name =>
-                    name &&
-                    name.trim() !== ""
-                )
-        )
-    ];
+    const people = [];
 
 
+    reports.forEach(report => {
+
+        const name =
+            String(
+                report.name || ""
+            ).trim();
+
+
+        if(
+            name &&
+            !people.includes(name)
+        ){
+
+            people.push(name);
+
+        }
+
+    });
+
+
+    // ==========================
     // 名前順
-    people.sort((a, b) =>
-        a.localeCompare(b, "ja")
-    );
+    // ==========================
+
+    people.sort((a,b) => {
+
+        return a.localeCompare(
+            b,
+            "ja"
+        );
+
+    });
 
 
     // ==========================
-    // 担当者を追加
+    // 担当者追加
     // ==========================
 
     people.forEach(name => {
 
         const option =
-            document.createElement("option");
+            document.createElement(
+                "option"
+            );
+
 
         option.value =
             name;
 
+
         option.textContent =
             name;
+
 
         personFilter.appendChild(
             option
@@ -177,7 +253,7 @@ function createPersonFilter() {
 
 
     console.log(
-        "担当者一覧:",
+        "担当者フィルター作成:",
         people
     );
 
@@ -185,66 +261,120 @@ function createPersonFilter() {
 
 
 // ==============================
-// 年月フィルター
+// 📅 年月フィルター
 // ==============================
 
-function createMonthFilter(){
+function createMonthFilter() {
 
     if(!monthFilter){
+
+        console.error(
+            "monthFilter が見つかりません"
+        );
+
         return;
+
     }
+
 
     monthFilter.innerHTML = "";
 
-    const months = [
-        ...new Set(
-            reports
-                .map(report => {
 
-                    if(!report.date){
-                        return "";
-                    }
+    const months = [];
 
-                    return report.date.substring(0, 7);
 
-                })
-                .filter(month => month)
-        )
-    ];
+    reports.forEach(report => {
 
-    months.sort((a, b) =>
+        const date =
+            String(
+                report.date || ""
+            ).trim();
+
+
+        if(!date){
+
+            return;
+
+        }
+
+
+        // 2026-08-31 → 2026-08
+        const month =
+            date.substring(0,7);
+
+
+        if(
+            !months.includes(month)
+        ){
+
+            months.push(month);
+
+        }
+
+    });
+
+
+    // 新しい年月を上
+    months.sort((a,b) =>
         b.localeCompare(a)
     );
+
 
     months.forEach(month => {
 
         const option =
-            document.createElement("option");
+            document.createElement(
+                "option"
+            );
 
-        option.value = month;
 
-        const [year, mon] =
+        option.value =
+            month;
+
+
+        const parts =
             month.split("-");
 
-        option.textContent =
-            `${year}年${Number(mon)}月`;
 
-        monthFilter.appendChild(option);
+        const year =
+            parts[0];
+
+
+        const monthNumber =
+            Number(parts[1]);
+
+
+        option.textContent =
+            `${year}年${monthNumber}月`;
+
+
+        monthFilter.appendChild(
+            option
+        );
 
     });
 
-    // 最新の年月を最初に選択
+
+    // 最新の年月を選択
+
     if(months.length > 0){
 
-        monthFilter.value = months[0];
+        monthFilter.value =
+            months[0];
 
     }
+
+
+    console.log(
+        "年月フィルター作成:",
+        months
+    );
 
 }
 
 
 // ==============================
-// フィルター
+// 🔎 絞り込み
 // ==============================
 
 function filterReports() {
@@ -280,14 +410,13 @@ function filterReports() {
 
 
             // ==========================
-            // 担当者
+            // 👤 担当者
             // ==========================
 
-            if (
+            if(
                 person &&
-                person !== "all" &&
                 report.name !== person
-            ) {
+            ){
 
                 return false;
 
@@ -295,21 +424,20 @@ function filterReports() {
 
 
             // ==========================
-            // 年月
+            // 📅 年月
             // ==========================
 
-            if (
-                month &&
-                month !== "all"
-            ) {
+            if(month){
 
                 const reportDate =
                     report.date || "";
 
 
-                if (
-                    !reportDate.startsWith(month)
-                ) {
+                if(
+                    !reportDate.startsWith(
+                        month
+                    )
+                ){
 
                     return false;
 
@@ -319,30 +447,28 @@ function filterReports() {
 
 
             // ==========================
-            // 状態
+            // 📝 状態
             // ==========================
 
-            if (
+            if(
                 status &&
                 status !== "all"
-            ) {
+            ){
 
-                // 下書き
-                if (
+                if(
                     status === "draft" &&
                     report.status !== "draft"
-                ) {
+                ){
 
                     return false;
 
                 }
 
 
-                // 提出済み
-                if (
+                if(
                     status === "submitted" &&
                     report.status === "draft"
-                ) {
+                ){
 
                     return false;
 
@@ -352,37 +478,45 @@ function filterReports() {
 
 
             // ==========================
-            // キーワード
+            // 🔍 キーワード
             // ==========================
 
-            if (keyword) {
+            if(keyword){
 
                 let target = "";
 
+
                 target +=
                     report.name || "";
+
 
                 target +=
                     report.date || "";
 
 
-                if (
-                    Array.isArray(report.tasks)
-                ) {
+                if(
+                    Array.isArray(
+                        report.tasks
+                    )
+                ){
 
                     report.tasks.forEach(task => {
 
                         target +=
                             task.customer || "";
 
+
                         target +=
                             task.content || "";
+
 
                         target +=
                             task.work || "";
 
+
                         target +=
                             task.address || "";
+
 
                         target +=
                             task.tel || "";
@@ -392,11 +526,11 @@ function filterReports() {
                 }
 
 
-                if (
+                if(
                     !target
                         .toLowerCase()
                         .includes(keyword)
-                ) {
+                ){
 
                     return false;
 
@@ -422,17 +556,29 @@ function filterReports() {
 
 
 // ==============================
-// 日報表示
+// 📋 日報表示
 // ==============================
 
 function showReports(data) {
 
+    if(!reportList){
+
+        return;
+
+    }
+
+
     reportList.innerHTML = "";
 
 
-    if (data.length === 0) {
+    // ==========================
+    // 該当なし
+    // ==========================
+
+    if(data.length === 0){
 
         reportList.innerHTML = `
+
             <div class="no-reports">
 
                 <div class="no-reports-icon">
@@ -448,6 +594,7 @@ function showReports(data) {
                 </p>
 
             </div>
+
         `;
 
         return;
@@ -455,11 +602,16 @@ function showReports(data) {
     }
 
 
+    // ==========================
+    // 日報カード
+    // ==========================
+
     data.forEach(report => {
 
-
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         div.className =
@@ -467,25 +619,29 @@ function showReports(data) {
 
 
         // ==========================
-        // 作業内容
+        // 訪問内容
         // ==========================
 
         let taskHtml = "";
 
 
-        if (
+        if(
             !Array.isArray(report.tasks) ||
             report.tasks.length === 0
-        ) {
+        ){
 
             taskHtml = `
+
                 <div class="task empty-task">
+
                     訪問データなし
+
                 </div>
+
             `;
 
         }
-        else {
+        else{
 
             report.tasks.forEach(task => {
 
@@ -494,24 +650,33 @@ function showReports(data) {
                     <div class="task">
 
                         <div class="task-customer">
+
                             🏢
                             ${escapeHtml(
-                                task.customer || "顧客名なし"
+                                task.customer ||
+                                "顧客名なし"
                             )}
+
                         </div>
 
+
                         <div class="task-work">
+
                             🔧
                             ${escapeHtml(
                                 task.work || ""
                             )}
+
                         </div>
 
+
                         <div class="task-content">
+
                             📝
                             ${escapeHtml(
                                 task.content || ""
                             )}
+
                         </div>
 
                     </div>
@@ -527,31 +692,41 @@ function showReports(data) {
         // 状態
         // ==========================
 
-        let statusHtml;
+        let statusHtml = "";
 
 
-        if (report.status === "draft") {
+        if(
+            report.status === "draft"
+        ){
 
             statusHtml = `
+
                 <span class="status-badge draft">
+
                     📝 下書き
+
                 </span>
+
             `;
 
         }
-        else {
+        else{
 
             statusHtml = `
+
                 <span class="status-badge submitted">
+
                     ✅ 提出済み
+
                 </span>
+
             `;
 
         }
 
 
         // ==========================
-        // カード
+        // HTML
         // ==========================
 
         div.innerHTML = `
@@ -566,6 +741,7 @@ function showReports(data) {
                     )}
 
                 </div>
+
 
                 ${statusHtml}
 
@@ -592,7 +768,8 @@ function showReports(data) {
 
             <div class="report-open">
 
-                ${report.status === "draft"
+                ${
+                    report.status === "draft"
                     ? "📝 下書きを編集 →"
                     : "📋 詳細を見る →"
                 }
@@ -610,9 +787,9 @@ function showReports(data) {
             "click",
             () => {
 
-                if (
+                if(
                     report.status === "draft"
-                ) {
+                ){
 
                     location.href =
                         "report.html?draftId=" +
@@ -635,7 +812,9 @@ function showReports(data) {
         );
 
 
-        reportList.appendChild(div);
+        reportList.appendChild(
+            div
+        );
 
     });
 
@@ -649,20 +828,40 @@ function showReports(data) {
 function escapeHtml(value) {
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
 // ==============================
-// 検索
+// 🔍 検索イベント
 // ==============================
 
-if (searchInput) {
+if(searchInput){
 
     searchInput.addEventListener(
         "input",
@@ -673,10 +872,10 @@ if (searchInput) {
 
 
 // ==============================
-// 担当者変更
+// 👤 担当者変更
 // ==============================
 
-if (personFilter) {
+if(personFilter){
 
     personFilter.addEventListener(
         "change",
@@ -687,10 +886,10 @@ if (personFilter) {
 
 
 // ==============================
-// 年月変更
+// 📅 年月変更
 // ==============================
 
-if (monthFilter) {
+if(monthFilter){
 
     monthFilter.addEventListener(
         "change",
@@ -701,10 +900,10 @@ if (monthFilter) {
 
 
 // ==============================
-// 状態変更
+// 📝 状態変更
 // ==============================
 
-if (statusFilter) {
+if(statusFilter){
 
     statusFilter.addEventListener(
         "change",
@@ -715,30 +914,49 @@ if (statusFilter) {
 
 
 // ==============================
-// 条件クリア
+// 🔄 条件クリア
 // ==============================
 
-if (clearFilterBtn) {
+if(clearFilterBtn){
 
     clearFilterBtn.addEventListener(
         "click",
         () => {
 
-            if (searchInput) {
+            if(searchInput){
+
                 searchInput.value = "";
+
             }
 
-            if (personFilter) {
+
+            if(personFilter){
+
                 personFilter.value = "";
+
             }
 
-            if (monthFilter) {
-                monthFilter.value = "";
+
+            if(monthFilter){
+
+                // 最新月に戻す
+                if(
+                    monthFilter.options.length > 0
+                ){
+
+                    monthFilter.selectedIndex = 0;
+
+                }
+
             }
 
-            if (statusFilter) {
+
+            if(statusFilter){
+
                 statusFilter.value = "";
+
             }
+
 
             filterReports();
 
@@ -749,7 +967,7 @@ if (clearFilterBtn) {
 
 
 // ==============================
-// 開始
+// 🚀 起動
 // ==============================
 
 loadReports();
