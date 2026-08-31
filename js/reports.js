@@ -101,7 +101,7 @@ async function loadReports() {
 
 
 // ==============================
-// 担当者フィルター
+// 👤 担当者フィルター
 // ==============================
 
 function createPersonFilter() {
@@ -111,40 +111,75 @@ function createPersonFilter() {
     }
 
 
-    personFilter.innerHTML = `
-        <option value="">
-            全員
-        </option>
-    `;
+    // いったん空にする
+    personFilter.innerHTML = "";
 
+
+    // ==========================
+    // 全員
+    // ==========================
+
+    const allOption =
+        document.createElement("option");
+
+    allOption.value = "";
+
+    allOption.textContent =
+        "全員";
+
+    personFilter.appendChild(
+        allOption
+    );
+
+
+    // ==========================
+    // 日報に入っている担当者
+    // ==========================
 
     const people = [
         ...new Set(
             reports
                 .map(report => report.name)
-                .filter(name => name)
+                .filter(name =>
+                    name &&
+                    name.trim() !== ""
+                )
         )
     ];
 
 
+    // 名前順
     people.sort((a, b) =>
         a.localeCompare(b, "ja")
     );
 
+
+    // ==========================
+    // 担当者を追加
+    // ==========================
 
     people.forEach(name => {
 
         const option =
             document.createElement("option");
 
-        option.value = name;
+        option.value =
+            name;
 
         option.textContent =
             name;
 
-        personFilter.appendChild(option);
+        personFilter.appendChild(
+            option
+        );
 
     });
+
+
+    console.log(
+        "担当者一覧:",
+        people
+    );
 
 }
 
