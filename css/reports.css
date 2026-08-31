@@ -1,13 +1,12 @@
-/* =========================================
+/* =====================================
    日報一覧
-   PC・スマホ対応
-   ブラックテーマ
-========================================= */
+   PC・スマホ対応 完成版
+===================================== */
 
 
-/* =========================================
+/* =====================================
    全体
-========================================= */
+===================================== */
 
 body{
 
@@ -18,94 +17,98 @@ body{
 }
 
 
-/* =========================================
+/* =====================================
    ヘッダー
-========================================= */
+===================================== */
 
 body > header.app-header{
 
-    display:block !important;
-
     width:100% !important;
 
-    min-height:60px !important;
+    min-height:60px;
 
-    padding:18px !important;
+    padding:18px;
 
     background:#111 !important;
 
     color:#fff !important;
 
-    text-align:center !important;
+    text-align:center;
 
-    box-sizing:border-box !important;
+    box-sizing:border-box;
 
 }
 
 
 body > header.app-header h1{
 
-    margin:0 !important;
+    margin:0;
 
-    padding:0 !important;
+    padding:0;
 
     color:#fff !important;
 
     background:transparent !important;
 
-    font-size:24px !important;
+    font-size:24px;
 
-    font-weight:bold !important;
+    font-weight:bold;
 
-    line-height:1.5 !important;
+    line-height:1.4;
 
 }
 
 
-/* =========================================
-   日報一覧全体
-========================================= */
+/* =====================================
+   メイン
+===================================== */
 
 .reports-container{
 
     width:100%;
 
-    max-width:900px;
+    max-width:1000px;
 
-    margin:20px auto;
+    margin:0 auto;
 
-    padding:15px 20px 100px;
+    padding:20px;
+
+    padding-bottom:100px;
 
     box-sizing:border-box;
-
-    color:#fff !important;
 
 }
 
 
-/* =========================================
-   🔍 検索ボックス
-========================================= */
+/* =====================================
+   フィルターエリア
+===================================== */
 
 .search-box{
 
     width:100%;
 
-    background:#222 !important;
+    background:#1c1c1c;
 
-    padding:15px;
+    padding:18px;
 
-    margin-bottom:15px;
+    margin-bottom:20px;
 
     border-radius:14px;
 
+    border:1px solid #333;
+
     box-shadow:
-        0 3px 10px rgba(0,0,0,.4);
+        0 3px 10px rgba(0,0,0,.35);
 
     box-sizing:border-box;
 
 }
 
+
+/* =====================================
+   検索
+===================================== */
 
 .search-box input{
 
@@ -113,11 +116,11 @@ body > header.app-header h1{
 
     height:48px;
 
+    padding:0 14px;
+
+    margin:0 0 12px 0;
+
     box-sizing:border-box;
-
-    padding:10px 14px;
-
-    font-size:16px;
 
     border:1px solid #555;
 
@@ -127,74 +130,121 @@ body > header.app-header h1{
 
     color:#fff !important;
 
-    outline:none;
+    font-size:16px;
 
 }
 
 
 .search-box input::placeholder{
 
-    color:#999 !important;
+    color:#999;
 
 }
 
 
 .search-box input:focus{
 
+    outline:none;
+
     border-color:#1976d2;
 
 }
 
 
-/* =========================================
-   🔎 絞り込みボックス
-========================================= */
+/* =====================================
+   フィルター共通
+===================================== */
 
-.filter-box{
+#personFilter,
+#monthFilter,
+#statusFilter{
+
+    height:46px;
+
+    margin:0;
+
+    padding:0 12px;
+
+    border:1px solid #555;
+
+    border-radius:10px;
+
+    background:#111 !important;
+
+    color:#fff !important;
+
+    font-size:15px;
+
+    box-sizing:border-box;
+
+    cursor:pointer;
+
+}
+
+
+/* =====================================
+   フィルター横並び
+===================================== */
+
+.filter-area{
 
     display:grid;
 
     grid-template-columns:
         repeat(3, 1fr);
 
-    gap:12px;
+    gap:10px;
+
+    margin-top:10px;
+
+}
+
+
+/* =====================================
+   クリアボタン
+===================================== */
+
+#clearFilterBtn{
 
     width:100%;
 
-    margin-bottom:20px;
+    height:44px;
 
-    padding:15px;
+    margin-top:12px;
 
-    background:#222 !important;
+    padding:0;
 
-    border-radius:14px;
+    border:1px solid #555;
 
-    box-shadow:
-        0 3px 10px rgba(0,0,0,.4);
+    border-radius:10px;
 
-    box-sizing:border-box;
-
-}
-
-
-/* =========================================
-   フィルター項目
-========================================= */
-
-.filter-item{
-
-    min-width:0;
-
-}
-
-
-.filter-item label{
-
-    display:block;
-
-    margin-bottom:7px;
+    background:#333 !important;
 
     color:#fff !important;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+}
+
+
+#clearFilterBtn:hover{
+
+    background:#444 !important;
+
+}
+
+
+/* =====================================
+   日報件数
+===================================== */
+
+.report-count{
+
+    margin-bottom:12px;
+
+    color:#aaa;
 
     font-size:14px;
 
@@ -203,66 +253,11 @@ body > header.app-header h1{
 }
 
 
-/* =========================================
-   セレクト
-========================================= */
-
-.filter-item select{
-
-    width:100%;
-
-    height:46px;
-
-    padding:8px 10px;
-
-    margin:0;
-
-    box-sizing:border-box;
-
-    border:1px solid #555;
-
-    border-radius:10px;
-
-    background:#111 !important;
-
-    color:#fff !important;
-
-    font-size:15px;
-
-    outline:none;
-
-    cursor:pointer;
-
-}
-
-
-.filter-item select:focus{
-
-    border-color:#1976d2;
-
-}
-
-
-/* =========================================
-   日報一覧
-========================================= */
-
-#reportList{
-
-    width:100%;
-
-    color:#fff !important;
-
-}
-
-
-/* =========================================
+/* =====================================
    日報カード
-========================================= */
+===================================== */
 
 .report-card{
-
-    width:100%;
 
     background:#222 !important;
 
@@ -270,20 +265,20 @@ body > header.app-header h1{
 
     padding:20px;
 
-    margin-bottom:18px;
+    margin-bottom:16px;
 
     border-radius:14px;
+
+    border:1px solid #333;
 
     box-shadow:
         0 3px 10px rgba(0,0,0,.4);
 
-    box-sizing:border-box;
-
     cursor:pointer;
 
     transition:
-        transform .15s ease,
-        background .15s ease;
+        transform .15s,
+        background .15s;
 
 }
 
@@ -292,197 +287,469 @@ body > header.app-header h1{
 
     background:#292929 !important;
 
-    transform:translateY(-2px);
+    transform:
+        translateY(-2px);
 
 }
 
 
-.report-card:active{
+/* =====================================
+   日報ヘッダー
+===================================== */
 
-    transform:scale(.99);
+.report-header{
 
-}
+    display:flex;
 
+    justify-content:space-between;
 
-/* =========================================
-   カード内文字
-========================================= */
+    align-items:center;
 
-.report-card *{
+    gap:12px;
 
-    color:#fff !important;
-
-}
-
-
-.report-card h3{
-
-    margin:0 0 12px;
-
-    padding-bottom:10px;
-
-    border-bottom:2px solid #444;
-
-    font-size:20px;
-
-    line-height:1.5;
+    margin-bottom:12px;
 
 }
 
 
-.report-card p{
+/* =====================================
+   日付
+===================================== */
 
-    margin:8px 0;
+.report-date{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:#fff;
+
+}
+
+
+/* =====================================
+   担当者
+===================================== */
+
+.report-person{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-bottom:15px;
+
+    color:#ddd;
 
     font-size:15px;
 
     font-weight:bold;
+
+}
+
+
+/* =====================================
+   状態
+===================================== */
+
+.status-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:5px 9px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+}
+
+
+.status-badge.submitted{
+
+    background:#173d28;
+
+    color:#7ee2a8;
+
+}
+
+
+.status-badge.draft{
+
+    background:#443a18;
+
+    color:#ffd86b;
+
+}
+
+
+/* =====================================
+   作業一覧
+===================================== */
+
+.task-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+/* =====================================
+   作業
+===================================== */
+
+.task{
+
+    background:#1b2735;
+
+    border-left:4px solid #1976d2;
+
+    padding:12px;
+
+    border-radius:10px;
 
     line-height:1.6;
 
 }
 
 
-/* =========================================
-   訪問・作業内容
-========================================= */
+/* =====================================
+   訪問番号
+===================================== */
 
-.task{
+.task-number{
 
-    margin-top:12px;
+    margin-bottom:7px;
 
-    padding:13px;
+    color:#75b9ff;
 
-    background:#1b2735 !important;
+    font-size:13px;
 
-    border-left:4px solid #1976d2;
-
-    border-radius:10px;
-
-    color:#fff !important;
-
-    line-height:1.8;
-
-    word-break:break-word;
+    font-weight:bold;
 
 }
 
 
-.task + .task{
+/* =====================================
+   作業行
+===================================== */
 
-    margin-top:10px;
+.task-row{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:8px;
+
+    margin-top:4px;
+
+    color:#fff;
+
+    font-size:14px;
 
 }
 
 
-/* =========================================
-   下書き
-========================================= */
+.task-row span:first-child{
 
-.draft-label{
+    flex:0 0 auto;
 
-    display:inline-block;
+}
 
-    width:auto;
 
-    padding:5px 10px;
+/* =====================================
+   作業なし
+===================================== */
 
-    background:#4a3520 !important;
+.no-task{
+
+    padding:12px;
+
+    background:#181818;
 
     border-radius:8px;
 
-    color:#ffd180 !important;
+    color:#999;
 
-    font-size:13px !important;
-
-}
-
-
-/* =========================================
-   提出済み
-========================================= */
-
-.submitted-label{
-
-    display:inline-block;
-
-    width:auto;
-
-    padding:5px 10px;
-
-    background:#173b25 !important;
-
-    border-radius:8px;
-
-    color:#9be7b0 !important;
-
-    font-size:13px !important;
+    font-size:14px;
 
 }
 
 
-/* =========================================
+/* =====================================
+   詳細リンク
+===================================== */
+
+.detail-link{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-top:15px;
+
+    padding-top:12px;
+
+    border-top:1px solid #333;
+
+    color:#75b9ff;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+
+.detail-link span{
+
+    font-size:18px;
+
+}
+
+
+/* =====================================
    該当なし
-========================================= */
+===================================== */
 
 .no-reports{
 
-    padding:30px 15px;
-
     text-align:center;
 
-    color:#aaa !important;
+    padding:50px 20px;
 
-    background:#222;
+    background:#1c1c1c;
+
+    border:1px solid #333;
 
     border-radius:14px;
+
+    color:#aaa;
 
 }
 
 
-/* =========================================
-   📱 スマホ
-========================================= */
+.no-reports-icon{
 
-@media(max-width:600px){
+    font-size:40px;
 
-    /* 全体 */
+    margin-bottom:12px;
+
+}
+
+
+.no-reports p{
+
+    margin:0 0 8px;
+
+    color:#fff;
+
+    font-weight:bold;
+
+}
+
+
+.no-reports small{
+
+    color:#888;
+
+}
+
+
+/* =====================================
+   エラー
+===================================== */
+
+.error-message{
+
+    padding:20px;
+
+    background:#321c1c;
+
+    border:1px solid #633;
+
+    border-radius:12px;
+
+    color:#ffaaaa;
+
+    text-align:center;
+
+}
+
+
+/* =====================================
+   下部ナビ
+===================================== */
+
+.bottom-nav{
+
+    position:fixed !important;
+
+    left:0 !important;
+
+    right:0 !important;
+
+    bottom:0 !important;
+
+    width:100% !important;
+
+    height:70px !important;
+
+    display:flex !important;
+
+    flex-direction:row !important;
+
+    justify-content:space-around !important;
+
+    align-items:stretch !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:#fff !important;
+
+    border-top:1px solid #ddd !important;
+
+    border-radius:0 !important;
+
+    box-shadow:
+        0 -3px 12px rgba(0,0,0,.15) !important;
+
+    z-index:99999 !important;
+
+}
+
+
+.bottom-nav .nav-item{
+
+    flex:1 !important;
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+    justify-content:center !important;
+
+    align-items:center !important;
+
+    gap:4px;
+
+    height:70px !important;
+
+    color:#333 !important;
+
+    text-decoration:none !important;
+
+}
+
+
+.bottom-nav .nav-icon{
+
+    display:block !important;
+
+    font-size:22px !important;
+
+    line-height:1 !important;
+
+    color:#333 !important;
+
+}
+
+
+.bottom-nav .nav-text{
+
+    display:block !important;
+
+    font-size:11px !important;
+
+    line-height:1 !important;
+
+    font-weight:bold !important;
+
+    color:#333 !important;
+
+    white-space:nowrap;
+
+}
+
+
+/* =====================================
+   タブレット
+===================================== */
+
+@media (max-width:800px){
 
     .reports-container{
 
-        margin:10px auto;
+        padding:15px;
 
-        padding:
-            10px
-            10px
-            95px;
+        padding-bottom:95px;
 
     }
 
 
-    /* ヘッダー */
+    .filter-area{
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+/* =====================================
+   スマホ
+===================================== */
+
+@media (max-width:600px){
 
     body > header.app-header{
 
-        padding:15px 10px !important;
+        padding:15px 10px;
 
     }
 
 
     body > header.app-header h1{
 
-        font-size:20px !important;
+        font-size:20px;
 
     }
 
 
-    /* 検索 */
+    .reports-container{
+
+        padding:10px;
+
+        padding-bottom:95px;
+
+    }
+
+
+    /* フィルター */
 
     .search-box{
 
         padding:12px;
-
-        margin-bottom:12px;
 
         border-radius:12px;
 
@@ -498,161 +765,174 @@ body > header.app-header h1{
     }
 
 
-    /* =================================
-       絞り込み
-    ================================= */
-
-    .filter-box{
+    .filter-area{
 
         display:flex;
 
         flex-direction:column;
 
-        gap:12px;
-
-        padding:12px;
-
-        margin-bottom:15px;
-
-        border-radius:12px;
+        gap:8px;
 
     }
 
 
-    .filter-item{
-
-        width:100%;
-
-    }
-
-
-    .filter-item label{
-
-        margin-bottom:6px;
-
-        font-size:13px;
-
-    }
-
-
-    .filter-item select{
+    #personFilter,
+    #monthFilter,
+    #statusFilter{
 
         width:100%;
 
         height:46px;
 
-        font-size:15px;
+        font-size:14px;
 
     }
 
 
-    /* =================================
-       日報カード
-    ================================= */
+    #clearFilterBtn{
+
+        height:44px;
+
+        margin-top:8px;
+
+    }
+
+
+    /* カード */
 
     .report-card{
 
         padding:15px;
 
-        margin-bottom:14px;
+        margin-bottom:12px;
 
         border-radius:12px;
 
     }
 
 
-    .report-card h3{
+    .report-header{
 
-        font-size:18px;
-
-        margin-bottom:10px;
-
-        padding-bottom:8px;
+        align-items:flex-start;
 
     }
 
 
-    .report-card p{
+    .report-date{
+
+        font-size:16px;
+
+    }
+
+
+    .status-badge{
+
+        font-size:11px;
+
+        padding:5px 7px;
+
+    }
+
+
+    .report-person{
 
         font-size:14px;
 
-        margin:7px 0;
+        margin-bottom:12px;
 
     }
 
-
-    /* =================================
-       作業
-    ================================= */
 
     .task{
-
-        padding:11px;
-
-        margin-top:10px;
-
-        font-size:14px;
-
-        line-height:1.7;
-
-    }
-
-
-    /* =================================
-       状態
-    ================================= */
-
-    .draft-label,
-    .submitted-label{
-
-        font-size:12px !important;
-
-        padding:4px 8px;
-
-    }
-
-}
-
-
-/* =========================================
-   📱 小さいスマホ
-========================================= */
-
-@media(max-width:380px){
-
-    .reports-container{
-
-        padding-left:8px;
-
-        padding-right:8px;
-
-    }
-
-
-    .report-card{
-
-        padding:13px;
-
-    }
-
-
-    .report-card h3{
-
-        font-size:17px;
-
-    }
-
-
-    .filter-box{
 
         padding:10px;
 
     }
 
 
-    .filter-item select{
+    .task-row{
 
-        font-size:14px;
+        font-size:13px;
+
+    }
+
+
+    .detail-link{
+
+        font-size:12px;
+
+    }
+
+
+    /* 下部ナビ */
+
+    .bottom-nav{
+
+        height:68px !important;
+
+    }
+
+
+    .bottom-nav .nav-item{
+
+        height:68px !important;
+
+    }
+
+
+    .bottom-nav .nav-icon{
+
+        font-size:21px !important;
+
+    }
+
+
+    .bottom-nav .nav-text{
+
+        font-size:10px !important;
+
+    }
+
+}
+
+
+/* =====================================
+   小さいスマホ
+===================================== */
+
+@media (max-width:380px){
+
+    body > header.app-header h1{
+
+        font-size:18px;
+
+    }
+
+
+    .report-date{
+
+        font-size:15px;
+
+    }
+
+
+    .status-badge{
+
+        font-size:10px;
+
+    }
+
+
+    .bottom-nav .nav-icon{
+
+        font-size:20px !important;
+
+    }
+
+
+    .bottom-nav .nav-text{
+
+        font-size:9px !important;
 
     }
 

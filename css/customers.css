@@ -1,37 +1,48 @@
-/* ==============================
+/* =========================================================
    顧客一覧
-   ブラックテーマ
-============================== */
+   PC・スマホ対応 / ブラックテーマ
+========================================================= */
 
 
-/* ==============================
+/* =========================================================
    全体
-============================== */
+========================================================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
 
-    background:#111;
-
-    color:white;
-
     font-family:
+        "Yu Gothic",
         "メイリオ",
         sans-serif;
+
+    background:#111 !important;
+
+    color:#fff !important;
+
+    padding-bottom:85px;
 
 }
 
 
-/* ==============================
+/* =========================================================
    ヘッダー
-============================== */
+========================================================= */
 
 header{
 
-    background:#1f3a5f;
-
-    color:white;
+    width:100%;
 
     padding:18px;
+
+    background:#1f3a5f !important;
+
+    color:#fff !important;
 
     text-align:center;
 
@@ -40,42 +51,49 @@ header{
 
 }
 
-
 header h1{
 
     margin:0;
 
-    color:white;
+    color:#fff !important;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    line-height:1.4;
 
 }
 
 
-/* ==============================
-   全体
-============================== */
+/* =========================================================
+   メイン
+========================================================= */
 
 .customer-container{
+
+    width:100%;
 
     max-width:900px;
 
     margin:20px auto;
 
-    padding:20px;
-
-    padding-bottom:90px;
+    padding:0 20px 20px;
 
 }
 
 
-/* ==============================
+/* =========================================================
    カード
-============================== */
+========================================================= */
 
 .card{
 
+    width:100%;
+
     background:#222 !important;
 
-    color:white !important;
+    color:#fff !important;
 
     border-radius:15px;
 
@@ -88,93 +106,116 @@ header h1{
 
 }
 
-
 .card h2{
 
-    margin-top:0;
+    margin:0 0 18px;
+
+    color:#fff !important;
 
     font-size:20px;
 
-    color:white;
+    font-weight:bold;
 
 }
 
 
-/* ==============================
+/* =========================================================
    ラベル
-============================== */
+========================================================= */
 
 label{
 
     display:block;
 
-    font-weight:bold;
-
     margin-top:15px;
 
-    margin-bottom:5px;
+    margin-bottom:6px;
 
-    color:white;
+    color:#fff !important;
+
+    font-size:15px;
+
+    font-weight:bold;
 
 }
 
 
-/* ==============================
-   入力
-============================== */
+/* =========================================================
+   入力欄
+========================================================= */
 
 input{
 
+    display:block;
+
     width:100%;
 
-    padding:12px;
+    min-height:46px;
 
-    box-sizing:border-box;
+    padding:11px 12px;
+
+    background:#111 !important;
+
+    color:#fff !important;
 
     border:1px solid #555;
 
-    border-radius:8px;
-
-    font-size:16px;
-
-    background:#111;
-
-    color:white;
-
-}
-
-
-input::placeholder{
-
-    color:#999;
-
-}
-
-
-input:focus{
+    border-radius:9px;
 
     outline:none;
 
+    font-size:16px;
+
+}
+
+input::placeholder{
+
+    color:#999 !important;
+
+}
+
+input:focus{
+
     border-color:#1976d2;
+
+    box-shadow:
+        0 0 0 2px rgba(25,118,210,.2);
 
 }
 
 
-/* ==============================
+/* =========================================================
+   ファイル選択
+========================================================= */
+
+input[type="file"]{
+
+    background:#111 !important;
+
+    color:#fff !important;
+
+    padding:10px;
+
+}
+
+
+/* =========================================================
    ボタン
-============================== */
+========================================================= */
 
 button{
 
     width:100%;
 
+    min-height:46px;
+
     margin-top:15px;
 
-    padding:13px;
+    padding:12px 15px;
 
-    background:#1976d2;
+    background:#1976d2 !important;
 
-    color:white;
+    color:#fff !important;
 
     border:none;
 
@@ -182,17 +223,19 @@ button{
 
     font-size:16px;
 
+    font-weight:bold;
+
     cursor:pointer;
 
-}
+    transition:.2s;
 
+}
 
 button:hover{
 
-    background:#1565c0;
+    background:#1565c0 !important;
 
 }
-
 
 button:active{
 
@@ -201,9 +244,26 @@ button:active{
 }
 
 
-/* ==============================
+/* =========================================================
+   CSV読み込み状態
+========================================================= */
+
+#importStatus{
+
+    margin-top:10px;
+
+    color:#ccc !important;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
    顧客一覧
-============================== */
+========================================================= */
 
 #customerList{
 
@@ -216,21 +276,23 @@ button:active{
 }
 
 
-/* ==============================
+/* =========================================================
    顧客カード
-============================== */
+========================================================= */
 
 .customer-card{
 
+    width:100%;
+
     background:#222 !important;
 
-    color:white !important;
+    color:#fff !important;
+
+    border-left:5px solid #1976d2;
 
     border-radius:15px;
 
-    padding:15px;
-
-    border-left:5px solid #1976d2;
+    padding:16px;
 
     box-shadow:
         0 3px 10px rgba(0,0,0,.4);
@@ -238,7 +300,6 @@ button:active{
     transition:.2s;
 
 }
-
 
 .customer-card:hover{
 
@@ -249,158 +310,337 @@ button:active{
 
 }
 
-
 .customer-card h3{
 
-    margin-top:0;
+    margin:0 0 10px;
 
-    margin-bottom:10px;
+    color:#fff !important;
 
-    color:white !important;
+    font-size:18px;
+
+    line-height:1.5;
 
 }
-
 
 .customer-card p{
 
-    margin:8px 0;
-
-    font-size:14px;
+    margin:7px 0;
 
     color:#ddd !important;
 
+    font-size:14px;
+
+    line-height:1.6;
+
 }
-
-
-/* 顧客カード内の文字を確実に白 */
 
 .customer-card *{
 
-    color:white !important;
+    color:#fff !important;
 
 }
 
 
-/* ==============================
-   履歴ボタン
-============================== */
+/* =========================================================
+   顧客カード ヘッダー
+========================================================= */
 
-.history-btn{
-
-    margin-top:10px;
-
-    background:#444;
-
-    color:white;
-
-}
-
-
-.history-btn:hover{
-
-    background:#555;
-
-}
-
-
-/* ==============================
-   CSV読み込み状態
-============================== */
-
-#importStatus{
-
-    margin-top:10px;
-
-    font-size:14px;
-
-    color:#ccc;
-
-}
-
-
-/* ==============================
-   下部ナビ
-============================== */
-
-.bottom-nav{
-
-    position:fixed;
-
-    bottom:0;
-
-    left:0;
-
-    width:100%;
-
-    height:60px;
+.customer-header{
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
 
-    background:#222;
+    justify-content:space-between;
 
-    padding:0;
-
-    border-top:1px solid #444;
-
-    box-shadow:
-        0 -2px 8px rgba(0,0,0,.4);
-
-    z-index:1000;
+    gap:10px;
 
 }
 
-
-.bottom-nav a{
+.customer-header h3{
 
     flex:1;
 
-    max-width:180px;
+    margin:0;
 
-    height:60px;
+}
+
+
+/* =========================================================
+   お気に入りボタン
+========================================================= */
+
+.favorite-btn{
+
+    flex-shrink:0;
+
+    width:38px;
+
+    height:38px;
+
+    margin:0;
+
+    padding:0;
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
 
-    text-decoration:none;
+    justify-content:center;
 
-    color:#ccc !important;
+    background:transparent !important;
 
-    background:transparent;
+    border:none;
 
-    font-size:14px;
+    color:#fff !important;
 
-    font-weight:bold;
+    font-size:24px;
+
+    line-height:1;
+
+    cursor:pointer;
+
+}
+
+.favorite-btn:hover{
+
+    background:transparent !important;
+
+    transform:scale(1.15);
 
 }
 
 
-.bottom-nav a:hover{
+/* =========================================================
+   履歴ボタン
+========================================================= */
 
-    background:#333;
+.history-btn{
 
-    color:white !important;
+    width:100%;
+
+    margin-top:12px;
+
+    background:#444 !important;
+
+    color:#fff !important;
+
+}
+
+.history-btn:hover{
+
+    background:#555 !important;
 
 }
 
 
-/* ==============================
+/* =========================================================
+   下部ナビ
+   全ページ共通サイズ
+========================================================= */
+
+.bottom-nav{
+
+    position:fixed !important;
+
+    left:0 !important;
+
+    right:0 !important;
+
+    bottom:0 !important;
+
+    width:100% !important;
+
+    height:70px !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    display:flex !important;
+
+    flex-direction:row !important;
+
+    justify-content:space-around !important;
+
+    align-items:stretch !important;
+
+    background:#fff !important;
+
+    border-top:1px solid #e5e7eb !important;
+
+    border-radius:0 !important;
+
+    box-shadow:
+        0 -3px 12px rgba(0,0,0,.08) !important;
+
+    z-index:99999 !important;
+
+}
+
+
+/* =========================================================
+   ナビリンク
+========================================================= */
+
+.bottom-nav .nav-item{
+
+    flex:1 !important;
+
+    width:auto !important;
+
+    height:70px !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+    justify-content:center !important;
+
+    align-items:center !important;
+
+    gap:3px !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    border-radius:0 !important;
+
+    box-shadow:none !important;
+
+    color:#333 !important;
+
+    text-decoration:none !important;
+
+    font-size:12px !important;
+
+    font-weight:600 !important;
+
+    line-height:1 !important;
+
+}
+
+
+/* =========================================================
+   ナビ アイコン
+========================================================= */
+
+.bottom-nav .nav-icon{
+
+    display:block !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#333 !important;
+
+    font-size:22px !important;
+
+    line-height:1 !important;
+
+}
+
+
+/* =========================================================
+   ナビ文字
+========================================================= */
+
+.bottom-nav .nav-text{
+
+    display:block !important;
+
+    margin:3px 0 0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#333 !important;
+
+    font-size:11px !important;
+
+    font-weight:600 !important;
+
+    line-height:1.2 !important;
+
+    white-space:nowrap !important;
+
+}
+
+
+/* =========================================================
+   ナビ タップ
+========================================================= */
+
+.bottom-nav .nav-item:hover{
+
+    background:#f4f6f9 !important;
+
+}
+
+.bottom-nav .nav-item:active{
+
+    background:#eef0f3 !important;
+
+}
+
+
+/* =========================================================
+   ナビの疑似要素を無効化
+========================================================= */
+
+.bottom-nav a::before,
+.bottom-nav a::after{
+
+    display:none !important;
+
+}
+
+
+/* =========================================================
    スマホ
-============================== */
+========================================================= */
 
 @media(max-width:600px){
 
+    body{
+
+        padding-bottom:82px;
+
+    }
+
+
+    header{
+
+        padding:15px 12px;
+
+    }
+
+
+    header h1{
+
+        font-size:20px;
+
+    }
+
+
     .customer-container{
 
-        padding:10px;
+        margin:12px auto;
 
-        padding-bottom:80px;
+        padding:0 10px 15px;
 
     }
 
@@ -409,50 +649,152 @@ button:active{
 
         padding:15px;
 
+        margin-bottom:15px;
+
+        border-radius:13px;
+
+    }
+
+
+    .card h2{
+
+        font-size:18px;
+
+        margin-bottom:15px;
+
+    }
+
+
+    label{
+
+        font-size:14px;
+
+        margin-top:13px;
+
+    }
+
+
+    input{
+
+        min-height:45px;
+
+        font-size:16px;
+
+    }
+
+
+    button{
+
+        min-height:45px;
+
+        font-size:15px;
+
     }
 
 
     .customer-card{
 
-        padding:15px;
+        padding:14px;
+
+        border-radius:13px;
 
     }
 
 
-    .bottom-nav a{
+    .customer-card h3{
 
-        font-size:12px;
+        font-size:16px;
+
+    }
+
+
+    .customer-card p{
+
+        font-size:13px;
+
+    }
+
+
+    .favorite-btn{
+
+        width:36px;
+
+        height:36px;
+
+        font-size:22px;
+
+    }
+
+
+    /* スマホ下部ナビ */
+
+    .bottom-nav{
+
+        height:68px !important;
+
+    }
+
+
+    .bottom-nav .nav-item{
+
+        height:68px !important;
+
+        font-size:11px !important;
+
+        gap:3px !important;
+
+    }
+
+
+    .bottom-nav .nav-icon{
+
+        font-size:21px !important;
+
+    }
+
+
+    .bottom-nav .nav-text{
+
+        font-size:11px !important;
 
     }
 
 }
 
-.customer-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-}
 
-.customer-header h3{
-    margin:0;
-    flex:1;
-}
+/* =========================================================
+   小さいスマホ
+========================================================= */
 
-.favorite-btn{
-    border:none;
-    background:transparent;
-    font-size:24px;
-    cursor:pointer;
-    padding:2px;
-    width:32px;
-    height:32px;
-    line-height:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+@media(max-width:380px){
 
-.favorite-btn:hover{
-    transform:scale(1.15);
+    .customer-container{
+
+        padding-left:8px;
+
+        padding-right:8px;
+
+    }
+
+
+    .card{
+
+        padding:13px;
+
+    }
+
+
+    .bottom-nav .nav-icon{
+
+        font-size:20px !important;
+
+    }
+
+
+    .bottom-nav .nav-text{
+
+        font-size:10px !important;
+
+    }
+
 }
