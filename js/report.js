@@ -151,7 +151,6 @@ async function loadCustomers() {
 
 loadCustomers();
 
-
 // ======================
 // 顧客検索
 // ======================
@@ -163,19 +162,6 @@ function searchCustomer(input) {
             .trim()
             .toLowerCase();
 
-                const card =
-        input.closest(".visit-card");
-
-    if (!card) {
-        return;
-    }
-
-    const favoriteFilter =
-        card.querySelector(".favorite-filter-btn");
-
-    const favoriteOnly =
-        favoriteFilter &&
-        favoriteFilter.classList.contains("active");
 
     const card =
         input.closest(".visit-card");
@@ -184,49 +170,67 @@ function searchCustomer(input) {
         return;
     }
 
+
     const result =
-        card.querySelector(".customer-result");
+        card.querySelector(
+            ".customer-result"
+        );
 
     if (!result) {
         return;
     }
 
-    result.innerHTML = "";
 
-    if (!keyword) {
-        return;
-    }
+    const favoriteFilter =
+        card.querySelector(
+            ".favorite-filter-btn"
+        );
+
+
+    const favoriteOnly =
+        favoriteFilter &&
+        favoriteFilter.classList.contains(
+            "active"
+        );
+
+
+    // いったん結果を空にする
+
+    result.innerHTML = "";
 
 
     // ======================
     // 顧客検索
     // ======================
 
-   let list =
-    customers.filter(customer => {
+    let list =
+        customers.filter(customer => {
 
-        const target =
-            (customer.name || "") +
-            (customer.kana || "") +
-            (customer.tel || "") +
-            (customer.searchName || "");
+            const target =
+                (customer.name || "") +
+                (customer.kana || "") +
+                (customer.tel || "") +
+                (customer.searchName || "");
 
-        const matchKeyword =
-            !keyword ||
-            target
-                .toLowerCase()
-                .includes(keyword);
 
-        const matchFavorite =
-            !favoriteOnly ||
-            customer.favorite === true;
+            const matchKeyword =
+                !keyword ||
+                target
+                    .toLowerCase()
+                    .includes(keyword);
 
-        return (
-            matchKeyword &&
-            matchFavorite
-        );
 
-    });
+            const matchFavorite =
+                !favoriteOnly ||
+                customer.favorite === true;
+
+
+            return (
+                matchKeyword &&
+                matchFavorite
+            );
+
+        });
 
 
     // ======================
@@ -258,8 +262,27 @@ function searchCustomer(input) {
     });
 
 
+    console.log(
+        "検索結果件数:",
+        list.length
+    );
+
+
     // ======================
-    // 検索結果
+    // 検索文字も
+    // お気に入りもない場合
+    // ======================
+
+    if (
+        !keyword &&
+        !favoriteOnly
+    ) {
+        return;
+    }
+
+
+    // ======================
+    // 最大20件表示
     // ======================
 
     list
@@ -267,7 +290,9 @@ function searchCustomer(input) {
         .forEach(customer => {
 
             const div =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             div.className =
                 "customer-item";
@@ -278,13 +303,16 @@ function searchCustomer(input) {
             // ======================
 
             const favoriteButton =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
             favoriteButton.type =
                 "button";
 
             favoriteButton.className =
                 "favorite-button";
+
 
             favoriteButton.textContent =
                 customer.favorite === true
@@ -301,20 +329,23 @@ function searchCustomer(input) {
                 async function(event) {
 
                     event.preventDefault();
+
                     event.stopPropagation();
 
 
                     const oldFavorite =
                         customer.favorite === true;
 
+
                     const newFavorite =
                         !oldFavorite;
 
 
-                    // すぐ画面変更
+                    // 先に画面変更
 
                     customer.favorite =
                         newFavorite;
+
 
                     favoriteButton.textContent =
                         newFavorite
@@ -347,7 +378,21 @@ function searchCustomer(input) {
                         );
 
 
+                        // お気に入り表示中なら
+                        // 再検索
+
+                        if (
+                            favoriteOnly
+                        ) {
+
+                            searchCustomer(
+                                input
+                            );
+
+                        }
+
                     }
+
                     catch(error) {
 
                         console.error(
@@ -356,10 +401,11 @@ function searchCustomer(input) {
                         );
 
 
-                        // 保存失敗なら元に戻す
+                        // 元に戻す
 
                         customer.favorite =
                             oldFavorite;
+
 
                         favoriteButton.textContent =
                             oldFavorite
@@ -382,14 +428,18 @@ function searchCustomer(input) {
             // ======================
 
             const info =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             info.className =
                 "customer-info";
 
 
             const name =
-                document.createElement("strong");
+                document.createElement(
+                    "strong"
+                );
 
             name.textContent =
                 customer.name ||
@@ -397,13 +447,16 @@ function searchCustomer(input) {
 
 
             const tel =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             tel.textContent =
                 customer.tel || "";
 
 
             info.appendChild(name);
+
             info.appendChild(tel);
 
 
