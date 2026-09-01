@@ -511,27 +511,68 @@ function showCustomers(list){
         // ⭐ お気に入り
         // ------------------------------------------
 
+
 const favoriteButton =
     div.querySelector(".favorite-btn");
 
-if(favoriteButton){
+favoriteButton.onclick = async function(event){
 
-    favoriteButton.addEventListener(
-        "click",
-        async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-            event.preventDefault();
-            event.stopPropagation();
+    console.log("⭐ お気に入りクリック:", customer.name);
 
-            await toggleFavorite(
-                customer,
-                favoriteButton
-            );
+    const oldFavorite =
+        customer.favorite === true;
 
-        }
-    );
+    const newFavorite =
+        !oldFavorite;
 
-}
+    // 画面を即変更
+    customer.favorite = newFavorite;
+
+    this.textContent =
+        newFavorite ? "⭐" : "☆";
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "customers",
+                customer.id
+            ),
+            {
+                favorite: newFavorite
+            }
+        );
+
+        console.log(
+            "⭐ お気に入り保存成功:",
+            customer.name
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "⭐ お気に入り保存失敗:",
+            error
+        );
+
+        // 保存失敗したら元に戻す
+        customer.favorite = oldFavorite;
+
+        this.textContent =
+            oldFavorite ? "⭐" : "☆";
+
+        alert(
+            "お気に入りの保存に失敗しました"
+        );
+
+    }
+
+};
 
 
         // ------------------------------------------

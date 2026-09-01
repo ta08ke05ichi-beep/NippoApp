@@ -408,6 +408,12 @@ button:active{
 
 }
 
+.favorite-btn{
+    position:relative !important;
+    z-index:9999 !important;
+    pointer-events:auto !important;
+}
+
 .customer-header{
     position:relative;
 }
