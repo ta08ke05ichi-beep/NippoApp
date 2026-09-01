@@ -387,3 +387,43 @@ body {
     display: none !important;
 
 }
+
+/* ========================================
+   顧客検索 お気に入りボタン
+======================================== */
+
+.favorite-button {
+    width: 45px !important;
+    min-width: 45px !important;
+    height: 45px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    background: transparent !important;
+
+    color: #333 !important;
+
+    border: none !important;
+    border-radius: 8px !important;
+
+    font-size: 26px !important;
+
+    cursor: pointer;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    flex-shrink: 0;
+}
+
+
+.favorite-button:hover {
+    background: #f4f4f4 !important;
+}
+
+
+.favorite-button:active {
+    transform: scale(0.9);
+}
