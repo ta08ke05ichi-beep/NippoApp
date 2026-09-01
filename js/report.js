@@ -1638,7 +1638,7 @@ document.addEventListener(
         ) {
 
             button.textContent =
-                "⭐ お気に入り表示中";
+                "⭐ お気に入り";
 
         } else {
 

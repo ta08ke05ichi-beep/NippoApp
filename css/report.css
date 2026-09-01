@@ -602,3 +602,47 @@ button:active{
     flex: 1;
     cursor: pointer;
 }
+
+/* ==============================
+   ⭐ お気に入りフィルター
+============================== */
+
+.favorite-filter-btn{
+
+    width:auto;
+
+    margin:0 0 10px 0;
+
+    padding:9px 12px;
+
+    border:1px solid #555;
+
+    border-radius:8px;
+
+    background:#222;
+
+    color:#fff;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+}
+
+
+.favorite-filter-btn:hover{
+
+    background:#333;
+
+}
+
+
+/* お気に入り表示中 */
+
+.favorite-filter-btn.active{
+
+    background:#333;
+
+    border-color:#777;
+
+}
