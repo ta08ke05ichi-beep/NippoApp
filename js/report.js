@@ -163,7 +163,6 @@ function searchCustomer(input) {
             .trim()
             .toLowerCase();
 
-
     const card =
         input.closest(".visit-card");
 
@@ -171,19 +170,14 @@ function searchCustomer(input) {
         return;
     }
 
-
     const result =
-        card.querySelector(
-            ".customer-result"
-        );
+        card.querySelector(".customer-result");
 
     if (!result) {
         return;
     }
 
-
     result.innerHTML = "";
-
 
     if (!keyword) {
         return;
@@ -191,7 +185,7 @@ function searchCustomer(input) {
 
 
     // ======================
-    // 検索
+    // 顧客検索
     // ======================
 
     let list =
@@ -211,7 +205,7 @@ function searchCustomer(input) {
 
 
     // ======================
-    // ⭐お気に入りを上にする
+    // ⭐お気に入りを上に
     // ======================
 
     list.sort((a, b) => {
@@ -239,29 +233,16 @@ function searchCustomer(input) {
     });
 
 
-    console.log(
-        "検索結果件数",
-        list.length
-    );
-
-
     // ======================
-    // 最大20件
+    // 検索結果
     // ======================
 
     list
         .slice(0, 20)
         .forEach(customer => {
 
-
-            // ======================
-            // 顧客行
-            // ======================
-
             const div =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             div.className =
                 "customer-item";
@@ -272,9 +253,7 @@ function searchCustomer(input) {
             // ======================
 
             const favoriteButton =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
             favoriteButton.type =
                 "button";
@@ -289,15 +268,14 @@ function searchCustomer(input) {
 
 
             // ======================
-            // ⭐クリック
+            // ⭐お気に入りクリック
             // ======================
 
             favoriteButton.addEventListener(
                 "click",
-                async function (event) {
+                async function(event) {
 
                     event.preventDefault();
-
                     event.stopPropagation();
 
 
@@ -308,7 +286,7 @@ function searchCustomer(input) {
                         !oldFavorite;
 
 
-                    // 先に画面変更
+                    // すぐ画面変更
 
                     customer.favorite =
                         newFavorite;
@@ -338,27 +316,22 @@ function searchCustomer(input) {
 
 
                         console.log(
-                            "⭐お気に入り保存完了",
+                            "⭐お気に入り変更:",
                             customer.name,
                             newFavorite
                         );
 
 
-                        // 検索結果を更新
-
-                        searchCustomer(input);
-
                     }
-
-                    catch (error) {
+                    catch(error) {
 
                         console.error(
-                            "お気に入り保存エラー",
+                            "お気に入り保存エラー:",
                             error
                         );
 
 
-                        // 失敗したら元に戻す
+                        // 保存失敗なら元に戻す
 
                         customer.favorite =
                             oldFavorite;
@@ -384,18 +357,14 @@ function searchCustomer(input) {
             // ======================
 
             const info =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             info.className =
                 "customer-info";
 
 
             const name =
-                document.createElement(
-                    "strong"
-                );
+                document.createElement("strong");
 
             name.textContent =
                 customer.name ||
@@ -403,16 +372,13 @@ function searchCustomer(input) {
 
 
             const tel =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             tel.textContent =
                 customer.tel || "";
 
 
             info.appendChild(name);
-
             info.appendChild(tel);
 
 
@@ -422,7 +388,7 @@ function searchCustomer(input) {
 
             info.addEventListener(
                 "click",
-                function () {
+                function() {
 
                     selectCustomer(
                         input,
