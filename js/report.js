@@ -30,21 +30,20 @@ const saveBtn =
 const draftBtn =
     document.getElementById("draftBtn");
 
-console.log("draftBtn確認:", draftBtn);
-
 const dateInput =
     document.getElementById("date");
 
 const nameInput =
     document.getElementById("name");
 
+console.log("draftBtn確認:", draftBtn);
+
 
 // ======================
 // 日付自動入力
 // ======================
 
-const today =
-    new Date();
+const today = new Date();
 
 const yyyy =
     today.getFullYear();
@@ -72,9 +71,9 @@ let customers = [];
 // 顧客読み込み
 // ======================
 
-async function loadCustomers(){
+async function loadCustomers() {
 
-    try{
+    try {
 
         const snap =
             await getDocs(
@@ -86,39 +85,35 @@ async function loadCustomers(){
 
         customers = [];
 
-        snap.forEach(doc => {
+        snap.forEach(docSnap => {
 
             customers.push({
 
-                id:
-                    doc.id,
+                id: docSnap.id,
 
-                ...doc.data()
+                ...docSnap.data()
 
             });
 
         });
 
 
-        // ⭐ お気に入りを上にする
+        // ⭐お気に入りを上にする
+
         customers.sort((a, b) => {
 
-            if(
+            if (
                 a.favorite === true &&
                 b.favorite !== true
-            ){
-
+            ) {
                 return -1;
-
             }
 
-            if(
+            if (
                 a.favorite !== true &&
                 b.favorite === true
-            ){
-
+            ) {
                 return 1;
-
             }
 
             return (a.name || "")
@@ -135,14 +130,14 @@ async function loadCustomers(){
             customers.length
         );
 
-
         console.log(
             "顧客1件目確認",
             customers[0]
         );
 
     }
-    catch(e){
+
+    catch (e) {
 
         console.error(
             "顧客取得エラー",
@@ -161,7 +156,7 @@ loadCustomers();
 // 顧客検索
 // ======================
 
-function searchCustomer(input){
+function searchCustomer(input) {
 
     const keyword =
         input.value
@@ -169,37 +164,44 @@ function searchCustomer(input){
             .toLowerCase();
 
 
+    const card =
+        input.closest(".visit-card");
+
+    if (!card) {
+        return;
+    }
+
+
     const result =
-        input.nextElementSibling;
+        card.querySelector(
+            ".customer-result"
+        );
+
+    if (!result) {
+        return;
+    }
 
 
     result.innerHTML = "";
 
 
-    if(!keyword){
-
+    if (!keyword) {
         return;
-
     }
 
 
-    // ==========================
+    // ======================
     // 検索
-    // ==========================
+    // ======================
 
     let list =
-        customers.filter(c => {
+        customers.filter(customer => {
 
             const target =
-
-                (c.name || "") +
-
-                (c.kana || "") +
-
-                (c.tel || "") +
-
-                (c.searchName || "");
-
+                (customer.name || "") +
+                (customer.kana || "") +
+                (customer.tel || "") +
+                (customer.searchName || "");
 
             return target
                 .toLowerCase()
@@ -208,28 +210,24 @@ function searchCustomer(input){
         });
 
 
-    // ==========================
-    // ⭐ お気に入りを上にする
-    // ==========================
+    // ======================
+    // ⭐お気に入りを上にする
+    // ======================
 
     list.sort((a, b) => {
 
-        if(
+        if (
             a.favorite === true &&
             b.favorite !== true
-        ){
-
+        ) {
             return -1;
-
         }
 
-        if(
+        if (
             a.favorite !== true &&
             b.favorite === true
-        ){
-
+        ) {
             return 1;
-
         }
 
         return (a.name || "")
@@ -247,51 +245,209 @@ function searchCustomer(input){
     );
 
 
+    // ======================
     // 最大20件
+    // ======================
+
     list
         .slice(0, 20)
-        .forEach(c => {
+        .forEach(customer => {
+
+
+            // ======================
+            // 顧客行
+            // ======================
 
             const div =
-                document.createElement("div");
-
+                document.createElement(
+                    "div"
+                );
 
             div.className =
                 "customer-item";
 
 
-            // ⭐ お気に入り表示
-            const favoriteIcon =
-                c.favorite === true
+            // ======================
+            // ⭐お気に入りボタン
+            // ======================
+
+            const favoriteButton =
+                document.createElement(
+                    "button"
+                );
+
+            favoriteButton.type =
+                "button";
+
+            favoriteButton.className =
+                "favorite-button";
+
+            favoriteButton.textContent =
+                customer.favorite === true
                     ? "⭐"
                     : "☆";
 
 
-            div.innerHTML = `
+            // ======================
+            // ⭐クリック
+            // ======================
 
-                <strong>
-                    ${favoriteIcon}
-                    ${c.name || "会社名なし"}
-                </strong>
+            favoriteButton.addEventListener(
+                "click",
+                async function (event) {
 
-                <br>
+                    event.preventDefault();
 
-                ${c.tel || ""}
-
-            `;
+                    event.stopPropagation();
 
 
-            div.onclick = () => {
+                    const oldFavorite =
+                        customer.favorite === true;
 
-                selectCustomer(
-                    input,
-                    c
+                    const newFavorite =
+                        !oldFavorite;
+
+
+                    // 先に画面変更
+
+                    customer.favorite =
+                        newFavorite;
+
+                    favoriteButton.textContent =
+                        newFavorite
+                            ? "⭐"
+                            : "☆";
+
+
+                    try {
+
+                        await updateDoc(
+
+                            doc(
+                                db,
+                                "customers",
+                                customer.id
+                            ),
+
+                            {
+                                favorite:
+                                    newFavorite
+                            }
+
+                        );
+
+
+                        console.log(
+                            "⭐お気に入り保存完了",
+                            customer.name,
+                            newFavorite
+                        );
+
+
+                        // 検索結果を更新
+
+                        searchCustomer(input);
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "お気に入り保存エラー",
+                            error
+                        );
+
+
+                        // 失敗したら元に戻す
+
+                        customer.favorite =
+                            oldFavorite;
+
+                        favoriteButton.textContent =
+                            oldFavorite
+                                ? "⭐"
+                                : "☆";
+
+
+                        alert(
+                            "お気に入りの保存に失敗しました"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            // ======================
+            // 顧客情報
+            // ======================
+
+            const info =
+                document.createElement(
+                    "div"
                 );
 
-            };
+            info.className =
+                "customer-info";
 
 
-            result.appendChild(div);
+            const name =
+                document.createElement(
+                    "strong"
+                );
+
+            name.textContent =
+                customer.name ||
+                "会社名なし";
+
+
+            const tel =
+                document.createElement(
+                    "div"
+                );
+
+            tel.textContent =
+                customer.tel || "";
+
+
+            info.appendChild(name);
+
+            info.appendChild(tel);
+
+
+            // ======================
+            // 顧客選択
+            // ======================
+
+            info.addEventListener(
+                "click",
+                function () {
+
+                    selectCustomer(
+                        input,
+                        customer
+                    );
+
+                }
+            );
+
+
+            // ======================
+            // 表示
+            // ======================
+
+            div.appendChild(
+                favoriteButton
+            );
+
+            div.appendChild(
+                info
+            );
+
+            result.appendChild(
+                div
+            );
 
         });
 
@@ -305,12 +461,16 @@ function searchCustomer(input){
 function selectCustomer(
     input,
     customer
-){
+) {
 
     const card =
         input.closest(
             ".visit-card"
         );
+
+    if (!card) {
+        return;
+    }
 
 
     const detail =
@@ -318,12 +478,10 @@ function selectCustomer(
             ".customer-detail"
         );
 
-
     const hidden =
         card.querySelector(
             ".customer-value"
         );
-
 
     const result =
         card.querySelector(
@@ -337,23 +495,20 @@ function selectCustomer(
 
     card.querySelector(
         ".customer-name"
-    )
-    .textContent =
+    ).textContent =
         customer.name || "";
 
 
     card.querySelector(
         ".customer-address"
-    )
-    .textContent =
+    ).textContent =
         (customer.address1 || "") +
         (customer.address2 || "");
 
 
     card.querySelector(
         ".customer-tel"
-    )
-    .textContent =
+    ).textContent =
         customer.tel || "";
 
 
@@ -366,12 +521,10 @@ function selectCustomer(
 
 
     input.value =
-        customer.name;
+        customer.name || "";
 
 
-    // ==========================
     // 最近使った顧客に保存
-    // ==========================
 
     saveRecentCustomer(
         customer
@@ -386,13 +539,13 @@ function selectCustomer(
 
 document.addEventListener(
     "input",
-    e => {
+    function (e) {
 
-        if(
+        if (
             e.target.classList.contains(
                 "customer-search"
             )
-        ){
+        ) {
 
             searchCustomer(
                 e.target
@@ -428,19 +581,17 @@ addTaskBtn.onclick = () => {
 
     clone.querySelector(
         ".visit-title"
-    )
-    .textContent =
+    ).textContent =
         `訪問${count}`;
 
 
     clone.querySelectorAll(
-        "input,textarea,select"
-    )
-    .forEach(el => {
+        "input, textarea, select"
+    ).forEach(el => {
 
-        if(
+        if (
             el.type !== "hidden"
-        ){
+        ) {
 
             el.value = "";
 
@@ -451,15 +602,13 @@ addTaskBtn.onclick = () => {
 
     clone.querySelector(
         ".customer-detail"
-    )
-    .style.display =
+    ).style.display =
         "none";
 
 
     clone.querySelector(
         ".customer-result"
-    )
-    .innerHTML =
+    ).innerHTML =
         "";
 
 
@@ -469,181 +618,273 @@ addTaskBtn.onclick = () => {
 
 };
 
+
 // ======================
-// 💾 保存
+// 保存
 // ======================
 
-saveBtn.onclick = async () => {
+saveBtn.onclick =
+    async () => {
 
-    const tasks = [];
+        const tasks = [];
 
-    document.querySelectorAll(".visit-card")
-        .forEach(card => {
 
-            tasks.push({
+        document
+            .querySelectorAll(
+                ".visit-card"
+            )
+            .forEach(card => {
 
-                customer:
-                    card.querySelector(".customer-name").textContent,
+                tasks.push({
 
-                address:
-                    card.querySelector(".customer-address").textContent,
+                    customer:
+                        card.querySelector(
+                            ".customer-name"
+                        ).textContent,
 
-                tel:
-                    card.querySelector(".customer-tel").textContent,
+                    address:
+                        card.querySelector(
+                            ".customer-address"
+                        ).textContent,
 
-                work:
-                    card.querySelector(".work").value,
+                    tel:
+                        card.querySelector(
+                            ".customer-tel"
+                        ).textContent,
 
-                content:
-                    card.querySelector(".content").value
+                    work:
+                        card.querySelector(
+                            ".work"
+                        ).value,
+
+                    content:
+                        card.querySelector(
+                            ".content"
+                        ).value
+
+                });
 
             });
 
-        });
+
+        // URLから下書きID
+
+        const params =
+            new URLSearchParams(
+                location.search
+            );
+
+        const draftId =
+            params.get("draftId");
 
 
-    // URLから下書きIDを取得
-    const params =
-        new URLSearchParams(location.search);
+        try {
 
-    const draftId =
-        params.get("draftId");
+            // ======================
+            // 下書きから開いた場合
+            // ======================
+
+            if (draftId) {
+
+                const draftRef =
+                    doc(
+                        db,
+                        "reports",
+                        draftId
+                    );
 
 
-    try {
+                await updateDoc(
+                    draftRef,
+                    {
 
-        // ==========================
-        // 📝 下書きから開いた場合
-        // ==========================
+                        date:
+                            dateInput.value,
 
-        if (draftId) {
+                        name:
+                            nameInput.value,
 
-            const draftRef =
-                doc(db, "reports", draftId);
+                        tasks:
+                            tasks,
 
-            await updateDoc(
-                draftRef,
-                {
-                    date: dateInput.value,
-                    name: nameInput.value,
-                    tasks: tasks,
-                    status: "submitted",
-                    updatedAt: serverTimestamp()
-                }
+                        status:
+                            "submitted",
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+                );
+
+
+                alert(
+                    "✅ 日報を正式に保存しました！"
+                );
+
+            }
+
+
+            // ======================
+            // 新しい日報
+            // ======================
+
+            else {
+
+                await addDoc(
+
+                    collection(
+                        db,
+                        "reports"
+                    ),
+
+                    {
+
+                        date:
+                            dateInput.value,
+
+                        name:
+                            nameInput.value,
+
+                        tasks:
+                            tasks,
+
+                        status:
+                            "submitted",
+
+                        createdAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                alert(
+                    "日報を保存しました"
+                );
+
+            }
+
+
+            location.reload();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "保存エラー",
+                error
             );
 
             alert(
-                "✅ 日報を正式に保存しました！"
+                "保存エラー"
             );
 
         }
 
-        // ==========================
-        // 🆕 新しく作った日報の場合
-        // ==========================
+    };
 
-        else {
+
+// ======================
+// 📝 下書き保存
+// ======================
+
+draftBtn.onclick =
+    async () => {
+
+        const tasks = [];
+
+
+        document
+            .querySelectorAll(
+                ".visit-card"
+            )
+            .forEach(card => {
+
+                tasks.push({
+
+                    customer:
+                        card.querySelector(
+                            ".customer-name"
+                        ).textContent,
+
+                    address:
+                        card.querySelector(
+                            ".customer-address"
+                        ).textContent,
+
+                    tel:
+                        card.querySelector(
+                            ".customer-tel"
+                        ).textContent,
+
+                    work:
+                        card.querySelector(
+                            ".work"
+                        ).value,
+
+                    content:
+                        card.querySelector(
+                            ".content"
+                        ).value
+
+                });
+
+            });
+
+
+        try {
 
             await addDoc(
-                collection(db, "reports"),
+
+                collection(
+                    db,
+                    "reports"
+                ),
+
                 {
-                    date: dateInput.value,
-                    name: nameInput.value,
-                    tasks: tasks,
-                    status: "submitted",
-                    createdAt: serverTimestamp()
+
+                    date:
+                        dateInput.value,
+
+                    name:
+                        nameInput.value,
+
+                    tasks:
+                        tasks,
+
+                    status:
+                        "draft",
+
+                    createdAt:
+                        serverTimestamp()
+
                 }
+
             );
 
+
             alert(
-                "日報を保存しました"
+                "📝 下書きを保存しました"
             );
 
         }
 
+        catch (error) {
 
-        location.reload();
+            console.error(
+                "下書き保存エラー",
+                error
+            );
 
+            alert(
+                "下書きの保存に失敗しました"
+            );
 
-    }
-    catch(error) {
+        }
 
-        console.error(
-            "保存エラー",
-            error
-        );
-
-        alert(
-            "保存エラー"
-        );
-
-    }
-
-};
-
-
-// =====================================
-// 📝 下書き保存
-// =====================================
-
-draftBtn.onclick = async () => {
-
-    const tasks = [];
-
-    document.querySelectorAll(".visit-card")
-    .forEach(card => {
-
-        tasks.push({
-
-            customer:
-                card.querySelector(".customer-name").textContent,
-
-            address:
-                card.querySelector(".customer-address").textContent,
-
-            tel:
-                card.querySelector(".customer-tel").textContent,
-
-            work:
-                card.querySelector(".work").value,
-
-            content:
-                card.querySelector(".content").value
-
-        });
-
-    });
-
-    try {
-
-        await addDoc(
-            collection(db, "reports"),
-            {
-                date: dateInput.value,
-                name: nameInput.value,
-                tasks: tasks,
-                status: "draft",
-                createdAt: serverTimestamp()
-            }
-        );
-
-        alert("📝 下書きを保存しました");
-
-    }
-    catch(error) {
-
-        console.error(
-            "下書き保存エラー",
-            error
-        );
-
-        alert(
-            "下書きの保存に失敗しました"
-        );
-
-    }
-
-};
+    };
 
 
 // =====================================
@@ -660,12 +901,12 @@ const RECENT_CUSTOMERS_KEY =
 
 function saveRecentCustomer(
     customer
-){
+) {
 
     let recent = [];
 
 
-    try{
+    try {
 
         recent =
             JSON.parse(
@@ -675,7 +916,8 @@ function saveRecentCustomer(
             ) || [];
 
     }
-    catch(e){
+
+    catch (e) {
 
         recent = [];
 
@@ -683,6 +925,7 @@ function saveRecentCustomer(
 
 
     // 同じ顧客を削除
+
     recent =
         recent.filter(
             item =>
@@ -691,6 +934,7 @@ function saveRecentCustomer(
 
 
     // 一番上に追加
+
     recent.unshift({
 
         id:
@@ -717,7 +961,6 @@ function saveRecentCustomer(
         searchName:
             customer.searchName || "",
 
-        // ⭐ お気に入り状態も保存
         favorite:
             customer.favorite === true
 
@@ -725,13 +968,17 @@ function saveRecentCustomer(
 
 
     // 最大5件
+
     recent =
         recent.slice(0, 5);
 
 
     localStorage.setItem(
+
         RECENT_CUSTOMERS_KEY,
+
         JSON.stringify(recent)
+
     );
 
 
@@ -744,18 +991,21 @@ function saveRecentCustomer(
 // 最近使った顧客を取得
 // ==========================
 
-function getRecentCustomers(){
+function getRecentCustomers() {
 
-    try{
+    try {
 
         return JSON.parse(
+
             localStorage.getItem(
                 RECENT_CUSTOMERS_KEY
             )
+
         ) || [];
 
     }
-    catch(e){
+
+    catch (e) {
 
         return [];
 
@@ -768,7 +1018,7 @@ function getRecentCustomers(){
 // 最近使った顧客を表示
 // ==========================
 
-function showRecentCustomers(){
+function showRecentCustomers() {
 
     const lists =
         document.querySelectorAll(
@@ -785,14 +1035,14 @@ function showRecentCustomers(){
         list.innerHTML = "";
 
 
-        if(recent.length === 0){
+        if (
+            recent.length === 0
+        ) {
 
             list.innerHTML = `
-
                 <p class="no-recent">
                     まだありません
                 </p>
-
             `;
 
             return;
@@ -823,13 +1073,10 @@ function showRecentCustomers(){
 
 
             item.innerHTML = `
-
                 ${favoriteIcon}
-
                 <span>
                     ${customer.name}
                 </span>
-
             `;
 
 
@@ -841,10 +1088,8 @@ function showRecentCustomers(){
                     );
 
 
-                if(!card){
-
+                if (!card) {
                     return;
-
                 }
 
 
@@ -879,11 +1124,12 @@ function showRecentCustomers(){
 
 showRecentCustomers();
 
+
 // =====================================
 // 📋 コピーした日報を読み込む
 // =====================================
 
-function loadCopyData(){
+function loadCopyData() {
 
     const params =
         new URLSearchParams(
@@ -891,13 +1137,10 @@ function loadCopyData(){
         );
 
 
-    // コピーじゃなければ何もしない
-    if(
+    if (
         params.get("copy") !== "true"
-    ){
-
+    ) {
         return;
-
     }
 
 
@@ -907,14 +1150,12 @@ function loadCopyData(){
         );
 
 
-    if(!saved){
-
+    if (!saved) {
         return;
-
     }
 
 
-    try{
+    try {
 
         const copyData =
             JSON.parse(saved);
@@ -924,234 +1165,9 @@ function loadCopyData(){
             copyData.tasks || [];
 
 
-        if(tasks.length === 0){
-
-            return;
-
-        }
-
-
-        // 最初の訪問カード
-        const firstCard =
-            document.querySelector(
-                ".visit-card"
-            );
-
-
-        if(!firstCard){
-
-            return;
-
-        }
-
-
-        tasks.forEach(
-            (task,index) => {
-
-                let card;
-
-
-                // 1件目
-                if(index === 0){
-
-                    card =
-                        firstCard;
-
-                }
-
-                // 2件目以降
-                else{
-
-                    const first =
-                        document.querySelector(
-                            ".visit-card"
-                        );
-
-
-                    card =
-                        first.cloneNode(true);
-
-
-                    const count =
-                        document.querySelectorAll(
-                            ".visit-card"
-                        ).length + 1;
-
-
-                    card.querySelector(
-                        ".visit-title"
-                    ).textContent =
-                        `訪問${count}`;
-
-
-                    card.querySelector(
-                        ".customer-detail"
-                    ).style.display =
-                        "none";
-
-
-                    card.querySelector(
-                        ".customer-result"
-                    ).innerHTML =
-                        "";
-
-
-                    tasksArea.appendChild(
-                        card
-                    );
-
-                }
-
-
-                // ==========================
-                // 顧客
-                // ==========================
-
-                card.querySelector(
-                    ".customer-search"
-                ).value =
-                    task.customer || "";
-
-
-                card.querySelector(
-                    ".customer-name"
-                ).textContent =
-                    task.customer || "";
-
-
-                card.querySelector(
-                    ".customer-address"
-                ).textContent =
-                    task.address || "";
-
-
-                card.querySelector(
-                    ".customer-tel"
-                ).textContent =
-                    task.tel || "";
-
-
-                card.querySelector(
-                    ".customer-detail"
-                ).style.display =
-                    "block";
-
-
-                // ==========================
-                // 作業分類
-                // ==========================
-
-                card.querySelector(
-                    ".work"
-                ).value =
-                    task.work || "";
-
-
-                // ==========================
-                // 作業内容
-                // ==========================
-
-                card.querySelector(
-                    ".content"
-                ).value =
-                    task.content || "";
-
-            }
-        );
-
-
-        // コピー情報を削除
-        sessionStorage.removeItem(
-            "nippo_copy_data"
-        );
-
-
-        console.log(
-            "📋 日報コピー完了"
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "コピー読み込みエラー",
-            error
-        );
-
-    }
-
-}
-
-
-loadCopyData();
-
-// =====================================
-// 📝 下書きを読み込む
-// =====================================
-
-async function loadDraftData() {
-
-    const params =
-        new URLSearchParams(location.search);
-
-    const draftId =
-        params.get("draftId");
-
-
-    // 下書きじゃなければ何もしない
-    if (!draftId) {
-        return;
-    }
-
-
-    try {
-
-        const draftRef =
-            doc(db, "reports", draftId);
-
-        const snapshot =
-            await getDoc(draftRef);
-
-
-        if (!snapshot.exists()) {
-
-            alert("下書きが見つかりません。");
-
-            return;
-
-        }
-
-
-        const data =
-            snapshot.data();
-
-
-        console.log(
-            "📝 下書き読み込み:",
-            data
-        );
-
-
-        // ==========================
-        // 基本情報
-        // ==========================
-
-        dateInput.value =
-            data.date || "";
-
-        nameInput.value =
-            data.name || "";
-
-
-        // ==========================
-        // 訪問データ
-        // ==========================
-
-        const tasks =
-            data.tasks || [];
-
-
-        if (tasks.length === 0) {
+        if (
+            tasks.length === 0
+        ) {
             return;
         }
 
@@ -1162,12 +1178,18 @@ async function loadDraftData() {
             );
 
 
-        // 最初のカードを使う
+        if (!firstCard) {
+            return;
+        }
+
+
         tasks.forEach(
             (task, index) => {
 
                 let card;
 
+
+                // 1件目
 
                 if (index === 0) {
 
@@ -1175,6 +1197,10 @@ async function loadDraftData() {
                         firstCard;
 
                 }
+
+
+                // 2件目以降
+
                 else {
 
                     const first =
@@ -1219,6 +1245,7 @@ async function loadDraftData() {
 
 
                 // 顧客
+
                 card.querySelector(
                     ".customer-search"
                 ).value =
@@ -1250,6 +1277,7 @@ async function loadDraftData() {
 
 
                 // 作業分類
+
                 card.querySelector(
                     ".work"
                 ).value =
@@ -1257,6 +1285,238 @@ async function loadDraftData() {
 
 
                 // 作業内容
+
+                card.querySelector(
+                    ".content"
+                ).value =
+                    task.content || "";
+
+            }
+        );
+
+
+        sessionStorage.removeItem(
+            "nippo_copy_data"
+        );
+
+
+        console.log(
+            "📋 日報コピー完了"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "コピー読み込みエラー",
+            error
+        );
+
+    }
+
+}
+
+
+loadCopyData();
+
+
+// =====================================
+// 📝 下書きを読み込む
+// =====================================
+
+async function loadDraftData() {
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+
+    const draftId =
+        params.get("draftId");
+
+
+    if (!draftId) {
+        return;
+    }
+
+
+    try {
+
+        const draftRef =
+            doc(
+                db,
+                "reports",
+                draftId
+            );
+
+
+        const snapshot =
+            await getDoc(
+                draftRef
+            );
+
+
+        if (
+            !snapshot.exists()
+        ) {
+
+            alert(
+                "下書きが見つかりません。"
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        console.log(
+            "📝 下書き読み込み:",
+            data
+        );
+
+
+        // ==========================
+        // 基本情報
+        // ==========================
+
+        dateInput.value =
+            data.date || "";
+
+
+        nameInput.value =
+            data.name || "";
+
+
+        // ==========================
+        // 訪問データ
+        // ==========================
+
+        const tasks =
+            data.tasks || [];
+
+
+        if (
+            tasks.length === 0
+        ) {
+            return;
+        }
+
+
+        const firstCard =
+            document.querySelector(
+                ".visit-card"
+            );
+
+
+        tasks.forEach(
+            (task, index) => {
+
+                let card;
+
+
+                // 最初のカード
+
+                if (index === 0) {
+
+                    card =
+                        firstCard;
+
+                }
+
+
+                // 2件目以降
+
+                else {
+
+                    const first =
+                        document.querySelector(
+                            ".visit-card"
+                        );
+
+
+                    card =
+                        first.cloneNode(true);
+
+
+                    const count =
+                        document.querySelectorAll(
+                            ".visit-card"
+                        ).length + 1;
+
+
+                    card.querySelector(
+                        ".visit-title"
+                    ).textContent =
+                        `訪問${count}`;
+
+
+                    card.querySelector(
+                        ".customer-detail"
+                    ).style.display =
+                        "none";
+
+
+                    card.querySelector(
+                        ".customer-result"
+                    ).innerHTML =
+                        "";
+
+
+                    tasksArea.appendChild(
+                        card
+                    );
+
+                }
+
+
+                // 顧客
+
+                card.querySelector(
+                    ".customer-search"
+                ).value =
+                    task.customer || "";
+
+
+                card.querySelector(
+                    ".customer-name"
+                ).textContent =
+                    task.customer || "";
+
+
+                card.querySelector(
+                    ".customer-address"
+                ).textContent =
+                    task.address || "";
+
+
+                card.querySelector(
+                    ".customer-tel"
+                ).textContent =
+                    task.tel || "";
+
+
+                card.querySelector(
+                    ".customer-detail"
+                ).style.display =
+                    "block";
+
+
+                // 作業分類
+
+                card.querySelector(
+                    ".work"
+                ).value =
+                    task.work || "";
+
+
+                // 作業内容
+
                 card.querySelector(
                     ".content"
                 ).value =
@@ -1270,9 +1530,9 @@ async function loadDraftData() {
             "📝 下書き復元完了"
         );
 
-
     }
-    catch(error) {
+
+    catch (error) {
 
         console.error(
             "下書き読み込みエラー",
@@ -1289,5 +1549,8 @@ async function loadDraftData() {
 }
 
 
+// ======================
 // 下書き読み込み
+// ======================
+
 loadDraftData();
