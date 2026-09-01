@@ -374,32 +374,50 @@ button:active{
 
     flex-shrink:0;
 
-    width:38px;
+    width:38px !important;
+    min-width:38px !important;
+    max-width:38px !important;
 
-    height:38px;
+    height:38px !important;
+    min-height:38px !important;
 
-    margin:0;
+    margin:0 !important;
+    padding:0 !important;
 
-    padding:0;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
 
     background:transparent !important;
-
-    border:none;
+    border:none !important;
 
     color:#fff !important;
 
-    font-size:24px;
+    font-size:24px !important;
+    line-height:1 !important;
 
-    line-height:1;
+    cursor:pointer !important;
+    pointer-events:auto !important;
 
-    cursor:pointer;
+    position:relative;
+    z-index:10;
 
+    touch-action:manipulation;
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+.customer-header{
+    position:relative;
+}
+
+.favorite-btn:focus{
+    outline:none;
+}
+
+.favorite-btn:active{
+    transform:scale(.92);
 }
 
 .favorite-btn:hover{

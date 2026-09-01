@@ -511,23 +511,27 @@ function showCustomers(list){
         // ⭐ お気に入り
         // ------------------------------------------
 
-       const favoriteButton =
+const favoriteButton =
     div.querySelector(".favorite-btn");
 
-favoriteButton.addEventListener(
-    "click",
-    async (event) => {
+if(favoriteButton){
 
-        event.preventDefault();
-        event.stopPropagation();
+    favoriteButton.addEventListener(
+        "click",
+        async (event) => {
 
-        await toggleFavorite(
-            customer,
-            favoriteButton
-        );
+            event.preventDefault();
+            event.stopPropagation();
 
-    }
-);
+            await toggleFavorite(
+                customer,
+                favoriteButton
+            );
+
+        }
+    );
+
+}
 
 
         // ------------------------------------------
