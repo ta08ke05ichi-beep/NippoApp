@@ -1,10 +1,12 @@
-/* ==============================
+/* =========================================================
    日報入力
    ブラックテーマ
-============================== */
+   ========================================================= */
 
 
-/* 全体 */
+/* =========================================================
+   全体
+========================================================= */
 
 body{
 
@@ -15,9 +17,9 @@ body{
 }
 
 
-/* ==============================
-   全体
-============================== */
+/* =========================================================
+   日報入力コンテナ
+========================================================= */
 
 .report-container{
 
@@ -32,9 +34,9 @@ body{
 }
 
 
-/* ==============================
+/* =========================================================
    ヘッダー
-============================== */
+========================================================= */
 
 .app-header{
 
@@ -49,9 +51,9 @@ body{
 }
 
 
-/* ==============================
-   カード
-============================== */
+/* =========================================================
+   訪問カード
+========================================================= */
 
 .task-card{
 
@@ -66,8 +68,7 @@ body{
     border-radius:14px;
 
     box-shadow:
-        0 3px 10px
-        rgba(0,0,0,.4);
+        0 3px 10px rgba(0,0,0,.4);
 
 }
 
@@ -75,6 +76,8 @@ body{
 .task-card h2{
 
     margin-top:0;
+
+    margin-bottom:15px;
 
     font-size:20px;
 
@@ -87,9 +90,9 @@ body{
 }
 
 
-/* ==============================
+/* =========================================================
    ラベル
-============================== */
+========================================================= */
 
 label{
 
@@ -106,9 +109,9 @@ label{
 }
 
 
-/* ==============================
-   入力
-============================== */
+/* =========================================================
+   入力欄
+========================================================= */
 
 input,
 select,
@@ -150,8 +153,7 @@ textarea:focus{
     border-color:#1976d2;
 
     box-shadow:
-        0 0 0 2px
-        rgba(25,118,210,.2);
+        0 0 0 2px rgba(25,118,210,.2);
 
 }
 
@@ -165,9 +167,9 @@ textarea{
 }
 
 
-/* ==============================
+/* =========================================================
    顧客検索結果
-============================== */
+========================================================= */
 
 .customer-result{
 
@@ -178,19 +180,31 @@ textarea{
 
 .customer-item{
 
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    width:100%;
+
+    padding:10px;
+
+    margin-bottom:8px;
+
     background:#333;
 
     color:white;
 
     border:1px solid #444;
 
-    padding:14px;
-
-    margin-bottom:8px;
-
     border-radius:10px;
 
+    box-sizing:border-box;
+
     cursor:pointer;
+
+    transition:.15s;
 
 }
 
@@ -204,202 +218,198 @@ textarea{
 }
 
 
-/* ==============================
-   顧客詳細
-============================== */
+/* =========================================================
+   顧客情報
+========================================================= */
 
-.customer-detail{
-
-    margin-top:15px;
-
-    padding:15px;
-
-    background:#1b2735;
-
-    color:white;
-
-    border-left:5px solid #1976d2;
-
-    border-radius:10px;
-
-    line-height:1.8;
-
-}
-
-
-/* ==============================
-   ボタン
-============================== */
-
-button{
-
-    width:100%;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:12px;
-
-    font-size:18px;
-
-    cursor:pointer;
-
-    margin-bottom:15px;
-
-}
-
-
-.add-btn{
-
-    background:#444;
-
-    color:white;
-
-}
-
-
-.add-btn:hover{
-
-    background:#555;
-
-}
-
-
-.save-btn{
-
-    background:#1976d2;
-
-    color:white;
-
-    font-weight:bold;
-
-}
-
-
-.save-btn:hover{
-
-    background:#1565c0;
-
-}
-
-
-button:active{
-
-    transform:scale(.98);
-
-}
-
-
-/* ==============================
-   下部ナビ
-============================== */
-
-.bottom-nav{
-
-    position:fixed;
-
-    bottom:0;
-
-    left:0;
-
-    width:100%;
-
-    height:60px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:#222;
-
-    border-top:1px solid #444;
-
-    box-shadow:
-        0 -2px 8px
-        rgba(0,0,0,.4);
-
-    z-index:1000;
-
-}
-
-
-.bottom-nav a{
+.customer-info{
 
     flex:1;
 
-    max-width:180px;
+    min-width:0;
 
-    height:60px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    text-decoration:none;
-
-    color:#ccc;
-
-    font-size:14px;
-
-    font-weight:bold;
-
-}
-
-
-.bottom-nav a:hover{
-
-    background:#333;
+    cursor:pointer;
 
     color:white;
 
 }
 
 
-/* ==============================
-   スマホ
-============================== */
+.customer-info strong{
 
-@media(max-width:600px){
+    display:block;
 
-    .report-container{
+    color:white;
 
-        padding:10px;
+    font-size:16px;
 
-        padding-bottom:80px;
+    line-height:1.5;
 
-    }
-
-
-    .task-card{
-
-        padding:15px;
-
-    }
-
-
-    button{
-
-        font-size:16px;
-
-    }
-
-
-    .bottom-nav a{
-
-        font-size:12px;
-
-    }
+    word-break:break-all;
 
 }
 
-/* ==============================
+
+.customer-info div{
+
+    margin-top:3px;
+
+    color:#aaa;
+
+    font-size:13px;
+
+}
+
+
+/* =========================================================
+   ⭐ お気に入りボタン
+========================================================= */
+
+.favorite-button{
+
+    width:55px !important;
+
+    min-width:55px !important;
+
+    max-width:55px !important;
+
+    height:55px !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    display:flex !important;
+
+    align-items:center !important;
+
+    justify-content:center !important;
+
+    flex-shrink:0 !important;
+
+    box-sizing:border-box !important;
+
+    background:#fff !important;
+
+    border:2px solid #fff !important;
+
+    border-radius:10px !important;
+
+    color:#222 !important;
+
+    font-size:28px !important;
+
+    line-height:1 !important;
+
+    cursor:pointer !important;
+
+    transition:
+        transform .15s,
+        background .15s;
+
+}
+
+
+/* 未お気に入り */
+
+.favorite-button:not(.active){
+
+    color:#222 !important;
+
+}
+
+
+/* お気に入り */
+
+.favorite-button.active{
+
+    color:#ffd600 !important;
+
+}
+
+
+/* ホバー */
+
+.favorite-button:hover{
+
+    background:#f5f5f5 !important;
+
+}
+
+
+/* 押した瞬間 */
+
+.favorite-button:active{
+
+    transform:scale(.92) !important;
+
+}
+
+
+/* =========================================================
+   ⭐ お気に入りフィルター
+========================================================= */
+
+.favorite-filter-btn{
+
+    width:auto !important;
+
+    min-width:0 !important;
+
+    margin:10px 0 15px 0 !important;
+
+    padding:9px 12px !important;
+
+    display:inline-flex !important;
+
+    align-items:center !important;
+
+    justify-content:center !important;
+
+    background:#222 !important;
+
+    color:#fff !important;
+
+    border:1px solid #555 !important;
+
+    border-radius:8px !important;
+
+    font-size:14px !important;
+
+    line-height:1.2 !important;
+
+    cursor:pointer !important;
+
+    transition:.15s;
+
+}
+
+
+/* ホバー */
+
+.favorite-filter-btn:hover{
+
+    background:#333 !important;
+
+}
+
+
+/* お気に入り表示中 */
+
+.favorite-filter-btn.active{
+
+    background:#333 !important;
+
+    border-color:#777 !important;
+
+    color:#fff !important;
+
+}
+
+
+/* =========================================================
    最近使った顧客
-============================== */
+========================================================= */
 
 .recent-customers{
 
@@ -440,21 +450,21 @@ button:active{
 
 .recent-customer-item{
 
-    width:auto;
+    width:auto !important;
 
-    margin:0;
+    margin:0 !important;
 
-    padding:9px 12px;
+    padding:9px 12px !important;
 
-    border:1px solid #555;
+    border:1px solid #555 !important;
 
-    border-radius:8px;
+    border-radius:8px !important;
 
-    background:#222;
+    background:#222 !important;
 
-    color:#fff;
+    color:#fff !important;
 
-    font-size:14px;
+    font-size:14px !important;
 
     cursor:pointer;
 
@@ -463,7 +473,7 @@ button:active{
 
 .recent-customer-item:hover{
 
-    background:#333;
+    background:#333 !important;
 
 }
 
@@ -485,164 +495,355 @@ button:active{
 
 }
 
-/* =====================================
-   ⭐ お気に入りボタン
-===================================== */
 
-/* =====================================
-   ⭐ お気に入りボタン
-===================================== */
+/* =========================================================
+   ボタン共通
+========================================================= */
 
-.customer-item {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-}
+button{
 
+    width:100%;
 
-/* 星ボタン */
+    padding:16px;
 
-.favorite-button {
-    width: 55px !important;
-    min-width: 55px !important;
-    max-width: 55px !important;
+    border:none;
 
-    height: 55px !important;
+    border-radius:12px;
 
-    margin: 0 !important;
-    padding: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    flex-shrink: 0 !important;
-
-    background: #fff !important;
-
-    border: 2px solid #fff !important;
-    border-radius: 10px !important;
-
-    font-size: 28px !important;
-    line-height: 1 !important;
-
-    cursor: pointer !important;
-
-    box-sizing: border-box !important;
-
-    transition: transform 0.15s;
-}
-
-
-/* 未お気に入り ☆ */
-
-.favorite-button {
-    color: #222 !important;
-}
-
-
-/* 星にマウスを乗せたとき */
-
-.favorite-button:hover {
-    background: #f5f5f5 !important;
-}
-
-
-/* 押した瞬間 */
-
-.favorite-button:active {
-    transform: scale(0.92) !important;
-}
-
-
-/* 顧客情報 */
-
-.customer-info {
-    flex: 1 !important;
-
-    min-width: 0 !important;
-
-    cursor: pointer !important;
-
-    color: #fff !important;
-}
-
-
-/* 会社名 */
-
-.customer-info strong {
-    display: block !important;
-
-    color: #fff !important;
-
-    font-size: 16px !important;
-
-    line-height: 1.5 !important;
-
-    word-break: break-all !important;
-}
-
-
-/* 電話番号 */
-
-.customer-info div {
-    margin-top: 3px !important;
-
-    color: #aaa !important;
-
-    font-size: 13px !important;
-}
-
-.customer-item {
-    display: flex;
-    align-items: center;
-}
-
-.customer-info {
-    flex: 1;
-    cursor: pointer;
-}
-
-/* ==============================
-   ⭐ お気に入りフィルター
-============================== */
-
-.favorite-filter-btn{
-
-    width:auto;
-
-    margin:0 0 10px 0;
-
-    padding:9px 12px;
-
-    border:1px solid #555;
-
-    border-radius:8px;
-
-    background:#222;
-
-    color:#fff;
-
-    font-size:14px;
+    font-size:18px;
 
     cursor:pointer;
 
-}
-
-
-.favorite-filter-btn:hover{
-
-    background:#333;
+    margin-bottom:15px;
 
 }
 
 
-/* お気に入り表示中 */
+button:active{
 
-.favorite-filter-btn.active{
-
-    background:#333;
-
-    border-color:#777;
+    transform:scale(.98);
 
 }
+
+
+/* =========================================================
+   訪問追加ボタン
+========================================================= */
+
+.add-btn{
+
+    background:#444;
+
+    color:white;
+
+}
+
+
+.add-btn:hover{
+
+    background:#555;
+
+}
+
+
+/* =========================================================
+   保存ボタン
+========================================================= */
+
+.save-btn{
+
+    background:#1976d2;
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+
+.save-btn:hover{
+
+    background:#1565c0;
+
+}
+
+
+/* =========================================================
+   顧客詳細
+========================================================= */
+
+.customer-detail{
+
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#1b2735;
+
+    color:white;
+
+    border-left:5px solid #1976d2;
+
+    border-radius:10px;
+
+    line-height:1.8;
+
+}
+
+
+/* =========================================================
+   下部ナビ
+   PC・スマホ完全統一
+========================================================= */
+
+.bottom-nav{
+
+    position:fixed !important;
+
+    left:0 !important;
+
+    right:0 !important;
+
+    bottom:0 !important;
+
+    width:100% !important;
+
+    height:70px !important;
+
+    display:flex !important;
+
+    flex-direction:row !important;
+
+    justify-content:space-around !important;
+
+    align-items:stretch !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:#fff !important;
+
+    border-top:1px solid #e5e7eb !important;
+
+    border-radius:0 !important;
+
+    box-shadow:
+        0 -3px 12px rgba(0,0,0,.08) !important;
+
+    z-index:99999 !important;
+
+}
+
+
+/* =========================================================
+   ナビリンク
+========================================================= */
+
+.bottom-nav a,
+.bottom-nav a:link,
+.bottom-nav a:visited,
+.bottom-nav a:hover,
+.bottom-nav a:active{
+
+    flex:1 !important;
+
+    width:auto !important;
+
+    height:70px !important;
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+    justify-content:center !important;
+
+    align-items:center !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    border-radius:0 !important;
+
+    box-shadow:none !important;
+
+    color:#555 !important;
+
+    text-decoration:none !important;
+
+    font-size:12px !important;
+
+    font-weight:bold !important;
+
+}
+
+
+/* =========================================================
+   ナビアイコン
+========================================================= */
+
+.bottom-nav .nav-icon{
+
+    display:block !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    font-size:22px !important;
+
+    line-height:1 !important;
+
+}
+
+
+/* =========================================================
+   ナビ文字
+========================================================= */
+
+.bottom-nav .nav-text{
+
+    display:block !important;
+
+    margin-top:4px !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#555 !important;
+
+    font-size:11px !important;
+
+    font-weight:600 !important;
+
+    line-height:1 !important;
+
+    white-space:nowrap !important;
+
+}
+
+
+/* =========================================================
+   ナビタップ
+========================================================= */
+
+.bottom-nav a:active{
+
+    background:#f3f4f6 !important;
+
+}
+
+
+/* 不要な疑似要素を無効化 */
+
+.bottom-nav a::before,
+.bottom-nav a::after{
+
+    display:none !important;
+
+}
+
+
+/* =========================================================
+   ページ内容がナビに隠れないようにする
+========================================================= */
+
+body{
+
+    padding-bottom:85px;
+
+}
+
+
+/* =========================================================
+   スマホ
+========================================================= */
+
+@media(max-width:600px){
+
+    .report-container{
+
+        padding:10px;
+
+        padding-bottom:85px;
+
+    }
+
+
+    .task-card{
+
+        padding:15px;
+
+    }
+
+
+    .customer-item{
+
+        gap:10px;
+
+    }
+
+
+    .favorite-button{
+
+        width:50px !important;
+
+        min-width:50px !important;
+
+        max-width:50px !important;
+
+        height:50px !important;
+
+        font-size:25px !important;
+
+    }
+
+
+    button{
+
+        font-size:16px;
+
+    }
+
+
+    .bottom-nav{
+
+        height:70px !important;
+
+    }
+
+
+    .bottom-nav a{
+
+        height:70px !important;
+
+    }
+
+
+    .bottom-nav .nav-icon{
+
+        font-size:22px !important;
+
+    }
+
+
+    .bottom-nav .nav-text{
+
+        font-size:11px !important;
+
+    }
+
+}
+
