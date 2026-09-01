@@ -822,3 +822,33 @@ button:active{
     }
 
 }
+
+.favorite-button {
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+    width: 45px;
+    height: 40px;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.favorite-button:hover {
+    transform: scale(1.15);
+}
+
+.favorite-button:active {
+    transform: scale(0.9);
+}
+
+.customer-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.customer-item.is-favorite {
+    background: #fff8d6;
+}
