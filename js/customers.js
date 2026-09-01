@@ -511,23 +511,23 @@ function showCustomers(list){
         // ⭐ お気に入り
         // ------------------------------------------
 
-        div
-    .querySelector(".favorite-btn")
-    .onclick = async (event) => {
+       const favoriteButton =
+    div.querySelector(".favorite-btn");
 
+favoriteButton.addEventListener(
+    "click",
+    async (event) => {
+
+        event.preventDefault();
         event.stopPropagation();
- 
-
-        const button =
-            event.currentTarget;
-
 
         await toggleFavorite(
             customer,
-            button
+            favoriteButton
         );
 
-    };
+    }
+);
 
 
         // ------------------------------------------
@@ -1083,7 +1083,7 @@ searchInput.addEventListener(
         );
 
     }
-);
+); 
 
 
 // ==================================================
