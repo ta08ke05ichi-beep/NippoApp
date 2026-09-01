@@ -489,10 +489,25 @@ button:active{
    ⭐ お気に入りボタン
 ===================================== */
 
+/* =====================================
+   ⭐ お気に入りボタン
+===================================== */
+
+.customer-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+
+/* 星ボタン */
+
 .favorite-button {
-    width: 50px !important;
-    min-width: 50px !important;
-    height: 50px !important;
+    width: 55px !important;
+    min-width: 55px !important;
+    max-width: 55px !important;
+
+    height: 55px !important;
 
     margin: 0 !important;
     padding: 0 !important;
@@ -501,40 +516,81 @@ button:active{
     align-items: center !important;
     justify-content: center !important;
 
-    /* 枠の中を白に */
-    background: #ffffff !important;
+    flex-shrink: 0 !important;
 
-    /* 白い枠 */
-    border: 2px solid #ffffff !important;
+    background: #fff !important;
+
+    border: 2px solid #fff !important;
     border-radius: 10px !important;
 
-    font-size: 30px !important;
+    font-size: 28px !important;
     line-height: 1 !important;
 
     cursor: pointer !important;
 
-    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
 
-    transition: 0.15s;
+    transition: transform 0.15s;
 }
 
 
 /* 未お気に入り ☆ */
+
 .favorite-button {
     color: #222 !important;
 }
 
 
-/* マウスを乗せたとき */
+/* 星にマウスを乗せたとき */
+
 .favorite-button:hover {
     background: #f5f5f5 !important;
-    border-color: #ffffff !important;
 }
 
 
 /* 押した瞬間 */
+
 .favorite-button:active {
     transform: scale(0.92) !important;
+}
+
+
+/* 顧客情報 */
+
+.customer-info {
+    flex: 1 !important;
+
+    min-width: 0 !important;
+
+    cursor: pointer !important;
+
+    color: #fff !important;
+}
+
+
+/* 会社名 */
+
+.customer-info strong {
+    display: block !important;
+
+    color: #fff !important;
+
+    font-size: 16px !important;
+
+    line-height: 1.5 !important;
+
+    word-break: break-all !important;
+}
+
+
+/* 電話番号 */
+
+.customer-info div {
+    margin-top: 3px !important;
+
+    color: #aaa !important;
+
+    font-size: 13px !important;
 }
 
 .customer-item {
