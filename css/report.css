@@ -485,6 +485,10 @@ button:active{
 
 }
 
+/* =====================================
+   ⭐ お気に入りボタン
+===================================== */
+
 .favorite-button {
     width: 50px !important;
     min-width: 50px !important;
@@ -497,20 +501,25 @@ button:active{
     align-items: center !important;
     justify-content: center !important;
 
-    background: #111 !important;
+    /* 枠の中を白に */
+    background: #ffffff !important;
 
-    border: 2px solid #fff !important;
+    /* 白い枠 */
+    border: 2px solid #ffffff !important;
     border-radius: 10px !important;
 
     font-size: 30px !important;
     line-height: 1 !important;
 
     cursor: pointer !important;
+
     flex-shrink: 0 !important;
+
+    transition: 0.15s;
 }
 
 
-/* 押してないときの☆ */
+/* 未お気に入り ☆ */
 .favorite-button {
     color: #222 !important;
 }
@@ -518,8 +527,8 @@ button:active{
 
 /* マウスを乗せたとき */
 .favorite-button:hover {
-    background: #333 !important;
-    border-color: #fff !important;
+    background: #f5f5f5 !important;
+    border-color: #ffffff !important;
 }
 
 
