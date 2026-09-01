@@ -1643,7 +1643,7 @@ document.addEventListener(
         } else {
 
             button.textContent =
-                "⭐ お気に入りだけ表示";
+                "⭐ お気に入り";
 
         }
 
