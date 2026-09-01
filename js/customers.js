@@ -516,7 +516,7 @@ function showCustomers(list){
     .onclick = async (event) => {
 
         event.stopPropagation();
-
+ 
 
         const button =
             event.currentTarget;
@@ -879,18 +879,47 @@ importBtn.addEventListener(
 
 
 // ==================================================
-// 顧客検索
+// 🔍 顧客検索 強化版
 // ==================================================
 
 searchInput.addEventListener(
     "input",
     () => {
 
-        const text =
-            searchInput.value
+        // ------------------------------------------
+        // 検索文字を正規化
+        // ------------------------------------------
+
+        const normalize = (value) => {
+
+            return String(value || "")
                 .toLowerCase()
+
+                // 全角英数字 → 半角
+                .replace(/[Ａ-Ｚａ-ｚ０-９]/g, char =>
+                    String.fromCharCode(
+                        char.charCodeAt(0) - 0xfee0
+                    )
+                )
+
+                // 全角スペース → 半角スペース
+                .replace(/　/g, " ")
+
+                // スペース・ハイフン類を削除
+                .replace(/[\s\-ー－―‐]/g, "")
+
                 .trim();
 
+        };
+
+
+        const text =
+            normalize(searchInput.value);
+
+
+        // ------------------------------------------
+        // 入力なし
+        // ------------------------------------------
 
         if(text === ""){
 
@@ -903,50 +932,88 @@ searchInput.addEventListener(
         }
 
 
+        // ------------------------------------------
+        // 検索
+        // ------------------------------------------
+
         const result =
             customers.filter(customer => {
 
+                const name =
+                    normalize(customer.name);
+
+                const kana =
+                    normalize(customer.kana);
+
+                const searchName =
+                    normalize(customer.searchName);
+
+                const postal =
+                    normalize(customer.postal);
+
+                const address1 =
+                    normalize(customer.address1);
+
+                const address2 =
+                    normalize(customer.address2);
+
+                const tel =
+                    normalize(customer.tel);
+
+
                 return (
 
-                    customer.name
-                        .toLowerCase()
-                        .includes(text)
+                    // 顧客名
+                    name.includes(text)
 
                     ||
 
-                    customer.searchName
-                        .includes(text)
+                    // ふりがな
+                    kana.includes(text)
 
                     ||
 
-                    customer.postal
-                        .includes(text)
+                    // 検索用名前
+                    searchName.includes(text)
 
                     ||
 
-                    customer.address1
-                        .toLowerCase()
-                        .includes(text)
+                    // 郵便番号
+                    postal.includes(text)
 
                     ||
 
-                    customer.address2
-                        .toLowerCase()
-                        .includes(text)
+                    // 住所
+                    address1.includes(text)
 
                     ||
 
-                    customer.tel
-                        .includes(text)
+                    address2.includes(text)
+
+                    ||
+
+                    // 電話番号
+                    tel.includes(text)
 
                 );
 
             });
 
 
-        // ⭐ 検索結果でもお気に入りを上にする
+        // ------------------------------------------
+        // 🔥 検索順位
+        // ------------------------------------------
+
         result.sort((a, b) => {
 
+            const aName =
+                normalize(a.name);
+
+            const bName =
+                normalize(b.name);
+
+
+            // ⭐ お気に入り優先
             if(a.favorite && !b.favorite){
 
                 return -1;
@@ -959,15 +1026,61 @@ searchInput.addEventListener(
 
             }
 
-            return a.name.localeCompare(
-                b.name,
+
+            // 🎯 名前完全一致
+            if(aName === text && bName !== text){
+
+                return -1;
+
+            }
+
+            if(aName !== text && bName === text){
+
+                return 1;
+
+            }
+
+
+            // 🎯 名前が検索文字から始まる
+            const aStart =
+                aName.startsWith(text);
+
+            const bStart =
+                bName.startsWith(text);
+
+
+            if(aStart && !bStart){
+
+                return -1;
+
+            }
+
+            if(!aStart && bStart){
+
+                return 1;
+
+            }
+
+
+            // 🔤 それ以外は名前順
+            return aName.localeCompare(
+                bName,
                 "ja"
             );
 
         });
 
 
+        // ------------------------------------------
+        // 🔢 検索結果表示
+        // ------------------------------------------
+
         showCustomers(result);
+
+
+        console.log(
+            `顧客検索：${text} → ${result.length}件`
+        );
 
     }
 );
