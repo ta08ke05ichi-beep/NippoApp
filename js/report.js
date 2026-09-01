@@ -163,6 +163,20 @@ function searchCustomer(input) {
             .trim()
             .toLowerCase();
 
+                const card =
+        input.closest(".visit-card");
+
+    if (!card) {
+        return;
+    }
+
+    const favoriteFilter =
+        card.querySelector(".favorite-filter-btn");
+
+    const favoriteOnly =
+        favoriteFilter &&
+        favoriteFilter.classList.contains("active");
+
     const card =
         input.closest(".visit-card");
 
@@ -188,20 +202,31 @@ function searchCustomer(input) {
     // 顧客検索
     // ======================
 
-    let list =
-        customers.filter(customer => {
+   let list =
+    customers.filter(customer => {
 
-            const target =
-                (customer.name || "") +
-                (customer.kana || "") +
-                (customer.tel || "") +
-                (customer.searchName || "");
+        const target =
+            (customer.name || "") +
+            (customer.kana || "") +
+            (customer.tel || "") +
+            (customer.searchName || "");
 
-            return target
+        const matchKeyword =
+            !keyword ||
+            target
                 .toLowerCase()
                 .includes(keyword);
 
-        });
+        const matchFavorite =
+            !favoriteOnly ||
+            customer.favorite === true;
+
+        return (
+            matchKeyword &&
+            matchFavorite
+        );
+
+    });
 
 
     // ======================
@@ -1520,3 +1545,63 @@ async function loadDraftData() {
 // ======================
 
 loadDraftData();
+
+// =====================================
+// ⭐ お気に入りだけ表示
+// =====================================
+
+document.addEventListener(
+    "click",
+    function (e) {
+
+        if (
+            !e.target.classList.contains(
+                "favorite-filter-btn"
+            )
+        ) {
+            return;
+        }
+
+        const button =
+            e.target;
+
+        const card =
+            button.closest(
+                ".visit-card"
+            );
+
+        if (!card) {
+            return;
+        }
+
+        button.classList.toggle(
+            "active"
+        );
+
+        if (
+            button.classList.contains(
+                "active"
+            )
+        ) {
+
+            button.textContent =
+                "⭐ お気に入り表示中";
+
+        } else {
+
+            button.textContent =
+                "⭐ お気に入りだけ表示";
+
+        }
+
+        const input =
+            card.querySelector(
+                ".customer-search"
+            );
+
+        if (input) {
+            searchCustomer(input);
+        }
+
+    }
+);
