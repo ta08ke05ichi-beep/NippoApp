@@ -484,3 +484,35 @@ button:active{
     font-size:13px;
 
 }
+
+.favorite-button {
+    width: 45px !important;
+    min-width: 45px !important;
+    height: 45px !important;
+
+    padding: 0 !important;
+    margin: 0 8px 0 0 !important;
+
+    background: transparent !important;
+    border: none !important;
+
+    font-size: 24px !important;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+.favorite-button:hover {
+    background: #f1f1f1 !important;
+}
+
+.customer-item {
+    display: flex;
+    align-items: center;
+}
+
+.customer-info {
+    flex: 1;
+    cursor: pointer;
+}
