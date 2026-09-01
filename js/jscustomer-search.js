@@ -160,19 +160,20 @@ function showCustomers(data){
             );
 
 
-        favoriteButton.onclick =
-            async (event) => {
+        favoriteButton.addEventListener(
+    "click",
+    async (event) => {
 
-                // 顧客クリックを発生させない
-                event.stopPropagation();
+        event.preventDefault();
+        event.stopPropagation();
 
+        await toggleFavorite(
+            customer,
+            favoriteButton
+        );
 
-                await toggleFavorite(
-                    customer,
-                    favoriteButton
-                );
-
-            };
+    }
+);
 
 
         // ======================================
