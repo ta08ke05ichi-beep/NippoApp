@@ -1,4 +1,12 @@
-/* ===== 共通設定 ===== */
+/* =========================================================
+   共通CSS
+   ホーム / 日報入力 / 日報一覧 / 顧客一覧
+========================================================= */
+
+
+/* =========================================================
+   リセット
+========================================================= */
 
 *{
     margin:0;
@@ -7,36 +15,44 @@
 }
 
 
+/* =========================================================
+   全体
+========================================================= */
+
 body{
 
-    font-family:"Yu Gothic",sans-serif;
+    font-family:
+        "Yu Gothic",
+        "メイリオ",
+        sans-serif;
 
-    background:#f4f6f9;
+    background:#111;
 
-    color:#333;
+    color:#fff;
 
     padding-bottom:85px;
 
 }
 
 
-/* ==============================
+/* =========================================================
    ヘッダー
-============================== */
+========================================================= */
 
 header{
 
+    width:100%;
+
     background:#1f3a5f;
 
-    color:white;
+    color:#fff;
 
     padding:18px;
 
     text-align:center;
 
     box-shadow:
-        0 2px 6px
-        rgba(0,0,0,.15);
+        0 2px 6px rgba(0,0,0,.35);
 
 }
 
@@ -45,47 +61,50 @@ header h1{
 
     margin:0;
 
+    color:#fff;
+
     font-size:24px;
 
     font-weight:bold;
 
-    color:white;
+    line-height:1.4;
 
 }
 
 
-/* ==============================
+/* =========================================================
    メイン
-============================== */
+========================================================= */
 
 main{
 
-    max-width:900px;
+    max-width:1000px;
 
-    margin:auto;
+    margin:0 auto;
 
     padding:20px;
 
 }
 
 
-/* ==============================
-   カード
-============================== */
+/* =========================================================
+   共通カード
+========================================================= */
 
 .card{
 
-    background:white;
+    background:#222;
 
-    border-radius:12px;
+    color:#fff;
+
+    border-radius:15px;
 
     padding:20px;
 
     margin-bottom:20px;
 
     box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.08);
+        0 3px 10px rgba(0,0,0,.4);
 
 }
 
@@ -94,14 +113,14 @@ main{
 
     margin-bottom:15px;
 
-    font-size:20px;
+    color:#fff;
 
 }
 
 
-/* ==============================
-   入力
-============================== */
+/* =========================================================
+   共通入力
+========================================================= */
 
 input,
 select,
@@ -111,275 +130,68 @@ textarea{
 
     padding:12px;
 
-    border:1px solid #ccc;
+    background:#111;
 
-    border-radius:8px;
+    color:#fff;
+
+    border:1px solid #555;
+
+    border-radius:9px;
 
     font-size:16px;
 
-    margin-top:8px;
+}
 
-    margin-bottom:15px;
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#999;
 
 }
 
 
-textarea{
+input:focus,
+select:focus,
+textarea:focus{
 
-    min-height:120px;
+    outline:none;
 
-    resize:vertical;
+    border-color:#1976d2;
+
+    box-shadow:
+        0 0 0 2px rgba(25,118,210,.2);
 
 }
 
 
-/* ==============================
-   ボタン
-============================== */
+/* =========================================================
+   共通ボタン
+========================================================= */
 
 button{
 
-    width:100%;
-
-    padding:14px;
-
-    background:#1f3a5f;
-
-    color:white;
-
     border:none;
 
-    border-radius:8px;
-
-    font-size:17px;
+    border-radius:10px;
 
     cursor:pointer;
 
-    transition:.2s;
-
-}
-
-
-button:hover{
-
-    background:#294d7a;
+    transition:.15s;
 
 }
 
 
 button:active{
 
-    transform:scale(.98);
+    transform:scale(.97);
 
 }
 
 
-/* ==============================
-   履歴カード
-============================== */
-
-.history-card{
-
-    background:white;
-
-    padding:15px;
-
-    margin-bottom:15px;
-
-    border-radius:12px;
-
-    box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.08);
-
-}
-
-
-/* ========================================
-   共通下部ナビ
-   PC・スマホ完全統一
-======================================== */
-
-.bottom-nav{
-
-    position:fixed;
-
-    left:0;
-    right:0;
-    bottom:0;
-
-    width:100%;
-
-    height:70px;
-
-    display:flex;
-
-    flex-direction:row;
-
-    margin:0;
-
-    padding:0;
-
-    background:#fff;
-
-    border-top:1px solid #e5e7eb;
-
-    border-radius:0;
-
-    box-shadow:
-        0 -3px 12px
-        rgba(0,0,0,.08);
-
-    z-index:9999;
-
-}
-
-
-/* ==============================
-   ナビ項目
-============================== */
-
-.bottom-nav a{
-
-    flex:1;
-
-    width:25%;
-
-    max-width:none;
-
-    height:70px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:4px;
-
-    margin:0;
-
-    padding:0;
-
-    background:transparent;
-
-    border:none;
-
-    border-radius:0;
-
-    box-shadow:none;
-
-    color:#555;
-
-    text-decoration:none;
-
-    font-size:12px;
-
-    font-weight:600;
-
-}
-
-
-/* ==============================
-   アイコン
-============================== */
-
-.bottom-nav .nav-icon{
-
-    display:block;
-
-    margin:0;
-
-    padding:0;
-
-    background:transparent;
-
-    border:none;
-
-    font-size:22px;
-
-    line-height:1;
-
-}
-
-
-/* ==============================
-   文字
-============================== */
-
-.bottom-nav .nav-text{
-
-    display:block;
-
-    margin:0;
-
-    padding:0;
-
-    background:transparent;
-
-    border:none;
-
-    color:#555;
-
-    font-size:11px;
-
-    font-weight:600;
-
-    line-height:1;
-
-    white-space:nowrap;
-
-}
-
-
-/* ==============================
-   ホバー
-============================== */
-
-.bottom-nav a:hover{
-
-    background:#f4f6f9;
-
-    color:#1f3a5f;
-
-}
-
-
-.bottom-nav a:hover .nav-text{
-
-    color:#1f3a5f;
-
-}
-
-
-/* ==============================
-   タップ
-============================== */
-
-.bottom-nav a:active{
-
-    background:#f3f4f6;
-
-}
-
-
-/* ==============================
-   ナビの余計な装飾を消す
-============================== */
-
-.bottom-nav a::before,
-.bottom-nav a::after{
-
-    display:none;
-
-}
-
-
-/* ========================================
-   ⭐ 顧客検索 お気に入りボタン
-======================================== */
+/* =========================================================
+   ⭐ 顧客検索お気に入り
+========================================================= */
 
 .favorite-button{
 
@@ -387,38 +199,42 @@ button:active{
 
     min-width:45px !important;
 
+    max-width:45px !important;
+
     height:45px !important;
 
-    padding:0 !important;
+    min-height:45px !important;
 
     margin:0 !important;
 
-    background:transparent !important;
-
-    color:#333 !important;
-
-    border:none !important;
-
-    border-radius:8px !important;
-
-    font-size:26px !important;
-
-    cursor:pointer;
+    padding:0 !important;
 
     display:flex !important;
 
-    justify-content:center !important;
-
     align-items:center !important;
 
-    flex-shrink:0;
+    justify-content:center !important;
+
+    flex-shrink:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#fff !important;
+
+    font-size:26px !important;
+
+    line-height:1 !important;
 
 }
 
 
 .favorite-button:hover{
 
-    background:#f4f4f4 !important;
+    background:#333 !important;
+
+    transform:scale(1.1);
 
 }
 
@@ -430,15 +246,291 @@ button:active{
 }
 
 
-/* ==============================
+/* =========================================================
+   ⭐ 顧客一覧お気に入り
+========================================================= */
+
+.favorite-btn{
+
+    flex-shrink:0;
+
+    width:40px !important;
+
+    min-width:40px !important;
+
+    max-width:40px !important;
+
+    height:40px !important;
+
+    min-height:40px !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    display:flex !important;
+
+    align-items:center !important;
+
+    justify-content:center !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#fff !important;
+
+    font-size:24px !important;
+
+    line-height:1 !important;
+
+}
+
+
+.favorite-btn:hover{
+
+    background:transparent !important;
+
+    transform:scale(1.15);
+
+}
+
+
+.favorite-btn:active{
+
+    transform:scale(.9);
+
+}
+
+
+/* =========================================================
+   共通下部ナビ
+   ★ 4ページ完全統一
+========================================================= */
+
+.bottom-nav{
+
+    position:fixed !important;
+
+    left:0 !important;
+
+    right:0 !important;
+
+    bottom:0 !important;
+
+    width:100% !important;
+
+    height:70px !important;
+
+    display:flex !important;
+
+    flex-direction:row !important;
+
+    justify-content:space-around !important;
+
+    align-items:stretch !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:#fff !important;
+
+    border-top:1px solid #ddd !important;
+
+    border-radius:0 !important;
+
+    box-shadow:
+        0 -3px 12px rgba(0,0,0,.15) !important;
+
+    z-index:99999 !important;
+
+}
+
+
+/* =========================================================
+   ナビ項目
+========================================================= */
+
+.bottom-nav a,
+.bottom-nav .nav-item{
+
+    flex:1 !important;
+
+    width:25% !important;
+
+    max-width:none !important;
+
+    height:70px !important;
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+    justify-content:center !important;
+
+    align-items:center !important;
+
+    gap:4px !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    border-radius:0 !important;
+
+    box-shadow:none !important;
+
+    color:#333 !important;
+
+    text-decoration:none !important;
+
+    font-size:12px !important;
+
+    font-weight:600 !important;
+
+    line-height:1 !important;
+
+}
+
+
+/* =========================================================
+   ナビ アイコン
+========================================================= */
+
+.bottom-nav .nav-icon{
+
+    display:block !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#333 !important;
+
+    font-size:22px !important;
+
+    line-height:1 !important;
+
+}
+
+
+/* =========================================================
+   ナビ文字
+========================================================= */
+
+.bottom-nav .nav-text{
+
+    display:block !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#333 !important;
+
+    font-size:11px !important;
+
+    font-weight:600 !important;
+
+    line-height:1.2 !important;
+
+    white-space:nowrap !important;
+
+}
+
+
+/* =========================================================
+   ナビ ホバー
+========================================================= */
+
+.bottom-nav a:hover,
+.bottom-nav .nav-item:hover{
+
+    background:#f4f6f9 !important;
+
+    color:#1f3a5f !important;
+
+}
+
+
+.bottom-nav a:hover .nav-icon,
+.bottom-nav .nav-item:hover .nav-icon{
+
+    color:#1f3a5f !important;
+
+}
+
+
+.bottom-nav a:hover .nav-text,
+.bottom-nav .nav-item:hover .nav-text{
+
+    color:#1f3a5f !important;
+
+}
+
+
+/* =========================================================
+   ナビ タップ
+========================================================= */
+
+.bottom-nav a:active,
+.bottom-nav .nav-item:active{
+
+    background:#eef0f3 !important;
+
+}
+
+
+/* =========================================================
+   余計な疑似要素を無効
+========================================================= */
+
+.bottom-nav a::before,
+.bottom-nav a::after,
+.bottom-nav .nav-item::before,
+.bottom-nav .nav-item::after{
+
+    display:none !important;
+
+}
+
+
+/* =========================================================
    スマホ
-============================== */
+========================================================= */
 
 @media(max-width:600px){
 
+    body{
+
+        padding-bottom:82px;
+
+    }
+
+
+    header{
+
+        padding:15px 12px;
+
+    }
+
+
     header h1{
 
-        font-size:21px;
+        font-size:20px;
 
     }
 
@@ -452,32 +544,57 @@ button:active{
 
     .bottom-nav{
 
-        height:70px;
+        height:68px !important;
 
     }
 
 
-    .bottom-nav a{
+    .bottom-nav a,
+    .bottom-nav .nav-item{
 
-        width:25%;
+        width:25% !important;
 
-        height:70px;
+        height:68px !important;
 
-        font-size:12px;
+        gap:3px !important;
+
+        font-size:11px !important;
 
     }
 
 
     .bottom-nav .nav-icon{
 
-        font-size:22px;
+        font-size:21px !important;
 
     }
 
 
     .bottom-nav .nav-text{
 
-        font-size:11px;
+        font-size:11px !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   小さいスマホ
+========================================================= */
+
+@media(max-width:380px){
+
+    .bottom-nav .nav-icon{
+
+        font-size:20px !important;
+
+    }
+
+
+    .bottom-nav .nav-text{
+
+        font-size:10px !important;
 
     }
 

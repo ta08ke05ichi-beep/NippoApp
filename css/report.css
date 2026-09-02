@@ -1,7 +1,6 @@
 /* =========================================================
    日報入力
    ブラックテーマ
-   PC・スマホ対応
 ========================================================= */
 
 
@@ -9,31 +8,20 @@
    全体
 ========================================================= */
 
-*{
-
-    box-sizing:border-box;
-
-}
-
-
 body{
 
-    background:#111 !important;
+    background:#111;
 
-    color:#fff !important;
-
-    padding-bottom:85px;
+    color:#fff;
 
 }
 
 
 /* =========================================================
-   日報入力コンテナ
+   コンテナ
 ========================================================= */
 
 .report-container{
-
-    width:100%;
 
     max-width:900px;
 
@@ -41,7 +29,7 @@ body{
 
     padding:15px;
 
-    padding-bottom:20px;
+    padding-bottom:90px;
 
 }
 
@@ -52,28 +40,13 @@ body{
 
 .app-header{
 
-    width:100%;
+    background:#1f3a5f;
 
-    background:#1f3a5f !important;
-
-    color:#fff !important;
+    color:#fff;
 
     padding:18px;
 
     text-align:center;
-
-}
-
-
-.app-header h1{
-
-    margin:0;
-
-    color:#fff !important;
-
-    font-size:24px;
-
-    font-weight:bold;
 
 }
 
@@ -137,7 +110,7 @@ label{
 
 
 /* =========================================================
-   入力欄
+   入力
 ========================================================= */
 
 input,
@@ -167,20 +140,6 @@ input::placeholder,
 textarea::placeholder{
 
     color:#999;
-
-}
-
-
-input:focus,
-select:focus,
-textarea:focus{
-
-    outline:none;
-
-    border-color:#1976d2;
-
-    box-shadow:
-        0 0 0 2px rgba(25,118,210,.2);
 
 }
 
@@ -230,8 +189,6 @@ textarea{
     box-sizing:border-box;
 
     cursor:pointer;
-
-    transition:.15s;
 
 }
 
@@ -289,74 +246,6 @@ textarea{
 
 
 /* =========================================================
-   ⭐ お気に入りボタン
-========================================================= */
-
-.favorite-button{
-
-    width:55px !important;
-
-    min-width:55px !important;
-
-    max-width:55px !important;
-
-    height:55px !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    display:flex !important;
-
-    align-items:center !important;
-
-    justify-content:center !important;
-
-    flex-shrink:0 !important;
-
-    box-sizing:border-box !important;
-
-    background:#fff !important;
-
-    border:2px solid #fff !important;
-
-    border-radius:10px !important;
-
-    color:#222 !important;
-
-    font-size:28px !important;
-
-    line-height:1 !important;
-
-    cursor:pointer !important;
-
-    transition:transform .15s;
-
-}
-
-
-.favorite-button.active{
-
-    color:#ffd600 !important;
-
-}
-
-
-.favorite-button:hover{
-
-    background:#f5f5f5 !important;
-
-}
-
-
-.favorite-button:active{
-
-    transform:scale(.92) !important;
-
-}
-
-
-/* =========================================================
    ⭐ お気に入りフィルター
 ========================================================= */
 
@@ -366,7 +255,7 @@ textarea{
 
     min-width:0 !important;
 
-    margin:10px 0 15px 0 !important;
+    margin:10px 0 15px !important;
 
     padding:9px 12px !important;
 
@@ -388,8 +277,6 @@ textarea{
 
     line-height:1.2 !important;
 
-    cursor:pointer !important;
-
 }
 
 
@@ -410,7 +297,7 @@ textarea{
 
 
 /* =========================================================
-   ⭐ 最近使った顧客
+   最近使った顧客
 ========================================================= */
 
 .recent-customers{
@@ -468,8 +355,6 @@ textarea{
 
     font-size:14px !important;
 
-    cursor:pointer;
-
 }
 
 
@@ -499,7 +384,7 @@ textarea{
 
 
 /* =========================================================
-   ボタン共通
+   ボタン
 ========================================================= */
 
 button{
@@ -521,15 +406,8 @@ button{
 }
 
 
-button:active{
-
-    transform:scale(.98);
-
-}
-
-
 /* =========================================================
-   訪問追加ボタン
+   訪問追加
 ========================================================= */
 
 .add-btn{
@@ -549,7 +427,7 @@ button:active{
 
 
 /* =========================================================
-   保存ボタン
+   保存
 ========================================================= */
 
 .save-btn{
@@ -566,6 +444,28 @@ button:active{
 .save-btn:hover{
 
     background:#1565c0;
+
+}
+
+
+/* =========================================================
+   下書き
+========================================================= */
+
+.draft-btn{
+
+    background:#555;
+
+    color:#fff;
+
+    font-weight:bold;
+
+}
+
+
+.draft-btn:hover{
+
+    background:#666;
 
 }
 
@@ -594,160 +494,6 @@ button:active{
 
 
 /* =========================================================
-   共通下部ナビ
-========================================================= */
-
-.bottom-nav{
-
-    position:fixed !important;
-
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-
-    width:100% !important;
-
-    height:70px !important;
-
-    display:flex !important;
-
-    flex-direction:row !important;
-
-    justify-content:space-around !important;
-
-    align-items:stretch !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    background:#fff !important;
-
-    border-top:1px solid #e5e7eb !important;
-
-    border-radius:0 !important;
-
-    box-shadow:
-        0 -3px 12px rgba(0,0,0,.08) !important;
-
-    z-index:99999 !important;
-
-}
-
-
-.bottom-nav .nav-item{
-
-    flex:1 1 25% !important;
-
-    width:25% !important;
-
-    max-width:none !important;
-
-    height:70px !important;
-
-    display:flex !important;
-
-    flex-direction:column !important;
-
-    justify-content:center !important;
-
-    align-items:center !important;
-
-    gap:4px !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    border-radius:0 !important;
-
-    box-shadow:none !important;
-
-    color:#333 !important;
-
-    text-decoration:none !important;
-
-    font-size:12px !important;
-
-    font-weight:600 !important;
-
-    line-height:1 !important;
-
-}
-
-
-.bottom-nav .nav-icon{
-
-    display:block !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    color:#333 !important;
-
-    font-size:22px !important;
-
-    line-height:1 !important;
-
-}
-
-
-.bottom-nav .nav-text{
-
-    display:block !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    color:#333 !important;
-
-    font-size:11px !important;
-
-    font-weight:600 !important;
-
-    line-height:1 !important;
-
-    white-space:nowrap !important;
-
-}
-
-
-.bottom-nav .nav-item:hover{
-
-    background:#f4f6f9 !important;
-
-}
-
-
-.bottom-nav .nav-item:active{
-
-    background:#eef0f3 !important;
-
-}
-
-
-.bottom-nav a::before,
-.bottom-nav a::after{
-
-    display:none !important;
-
-}
-
-
-/* =========================================================
    スマホ
 ========================================================= */
 
@@ -755,11 +501,9 @@ button:active{
 
     .report-container{
 
-        margin:15px auto;
-
         padding:10px;
 
-        padding-bottom:20px;
+        padding-bottom:85px;
 
     }
 
@@ -771,63 +515,9 @@ button:active{
     }
 
 
-    .customer-item{
-
-        gap:10px;
-
-    }
-
-
-    .favorite-button{
-
-        width:50px !important;
-
-        min-width:50px !important;
-
-        max-width:50px !important;
-
-        height:50px !important;
-
-        font-size:25px !important;
-
-    }
-
-
     button{
 
         font-size:16px;
-
-    }
-
-
-    /* ナビはPCと完全同じ */
-
-    .bottom-nav{
-
-        height:70px !important;
-
-    }
-
-
-    .bottom-nav .nav-item{
-
-        height:70px !important;
-
-        width:25% !important;
-
-    }
-
-
-    .bottom-nav .nav-icon{
-
-        font-size:22px !important;
-
-    }
-
-
-    .bottom-nav .nav-text{
-
-        font-size:11px !important;
 
     }
 

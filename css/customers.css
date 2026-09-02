@@ -1,7 +1,6 @@
 /* =========================================================
    顧客一覧
-   ブラックテーマ
-   PC・スマホ対応
+   PC・スマホ対応 / ブラックテーマ
 ========================================================= */
 
 
@@ -9,29 +8,11 @@
    全体
 ========================================================= */
 
-*{
-
-    box-sizing:border-box;
-
-    margin:0;
-
-    padding:0;
-
-}
-
-
 body{
 
-    font-family:
-        "Yu Gothic",
-        "メイリオ",
-        sans-serif;
+    background:#111;
 
-    background:#111 !important;
-
-    color:#fff !important;
-
-    padding-bottom:85px;
+    color:#fff;
 
 }
 
@@ -46,14 +27,11 @@ header{
 
     padding:18px;
 
-    background:#1f3a5f !important;
+    background:#1f3a5f;
 
-    color:#fff !important;
+    color:#fff;
 
     text-align:center;
-
-    box-shadow:
-        0 2px 6px rgba(0,0,0,.4);
 
 }
 
@@ -62,13 +40,11 @@ header h1{
 
     margin:0;
 
-    color:#fff !important;
+    color:#fff;
 
     font-size:24px;
 
     font-weight:bold;
-
-    line-height:1.4;
 
 }
 
@@ -98,18 +74,15 @@ header h1{
 
     width:100%;
 
-    background:#222 !important;
+    background:#222;
 
-    color:#fff !important;
+    color:#fff;
 
     border-radius:15px;
 
     padding:20px;
 
     margin-bottom:20px;
-
-    box-shadow:
-        0 3px 10px rgba(0,0,0,.4);
 
 }
 
@@ -118,11 +91,9 @@ header h1{
 
     margin:0 0 18px;
 
-    color:#fff !important;
+    color:#fff;
 
     font-size:20px;
-
-    font-weight:bold;
 
 }
 
@@ -139,7 +110,7 @@ label{
 
     margin-bottom:6px;
 
-    color:#fff !important;
+    color:#fff;
 
     font-size:15px;
 
@@ -149,7 +120,7 @@ label{
 
 
 /* =========================================================
-   入力欄
+   入力
 ========================================================= */
 
 input{
@@ -162,15 +133,13 @@ input{
 
     padding:11px 12px;
 
-    background:#111 !important;
+    background:#111;
 
-    color:#fff !important;
+    color:#fff;
 
     border:1px solid #555;
 
     border-radius:9px;
-
-    outline:none;
 
     font-size:16px;
 
@@ -179,30 +148,20 @@ input{
 
 input::placeholder{
 
-    color:#999 !important;
-
-}
-
-
-input:focus{
-
-    border-color:#1976d2;
-
-    box-shadow:
-        0 0 0 2px rgba(25,118,210,.2);
+    color:#999;
 
 }
 
 
 /* =========================================================
-   ファイル選択
+   ファイル
 ========================================================= */
 
 input[type="file"]{
 
-    background:#111 !important;
+    background:#111;
 
-    color:#fff !important;
+    color:#fff;
 
     padding:10px;
 
@@ -223,9 +182,9 @@ button{
 
     padding:12px 15px;
 
-    background:#1976d2 !important;
+    background:#1976d2;
 
-    color:#fff !important;
+    color:#fff;
 
     border:none;
 
@@ -235,36 +194,25 @@ button{
 
     font-weight:bold;
 
-    cursor:pointer;
-
-    transition:.2s;
-
 }
 
 
 button:hover{
 
-    background:#1565c0 !important;
-
-}
-
-
-button:active{
-
-    transform:scale(.98);
+    background:#1565c0;
 
 }
 
 
 /* =========================================================
-   CSV読み込み状態
+   CSV状態
 ========================================================= */
 
 #importStatus{
 
     margin-top:10px;
 
-    color:#ccc !important;
+    color:#ccc;
 
     font-size:14px;
 
@@ -296,9 +244,9 @@ button:active{
 
     width:100%;
 
-    background:#222 !important;
+    background:#222;
 
-    color:#fff !important;
+    color:#fff;
 
     border-left:5px solid #1976d2;
 
@@ -318,9 +266,6 @@ button:active{
 
     transform:translateY(-2px);
 
-    box-shadow:
-        0 6px 15px rgba(0,0,0,.5);
-
 }
 
 
@@ -328,7 +273,7 @@ button:active{
 
     margin:0 0 10px;
 
-    color:#fff !important;
+    color:#fff;
 
     font-size:18px;
 
@@ -341,7 +286,7 @@ button:active{
 
     margin:7px 0;
 
-    color:#ddd !important;
+    color:#ddd;
 
     font-size:14px;
 
@@ -350,15 +295,8 @@ button:active{
 }
 
 
-.customer-card *{
-
-    color:#fff !important;
-
-}
-
-
 /* =========================================================
-   顧客カード ヘッダー
+   顧客ヘッダー
 ========================================================= */
 
 .customer-header{
@@ -370,8 +308,6 @@ button:active{
     justify-content:space-between;
 
     gap:10px;
-
-    position:relative;
 
 }
 
@@ -386,82 +322,6 @@ button:active{
 
 
 /* =========================================================
-   ⭐ お気に入りボタン
-========================================================= */
-
-.favorite-btn{
-
-    flex-shrink:0;
-
-    width:38px !important;
-
-    min-width:38px !important;
-
-    max-width:38px !important;
-
-    height:38px !important;
-
-    min-height:38px !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    display:flex !important;
-
-    align-items:center !important;
-
-    justify-content:center !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    color:#fff !important;
-
-    font-size:24px !important;
-
-    line-height:1 !important;
-
-    cursor:pointer !important;
-
-    pointer-events:auto !important;
-
-    position:relative;
-
-    z-index:9999;
-
-    touch-action:manipulation;
-
-    -webkit-tap-highlight-color:transparent;
-
-}
-
-
-.favorite-btn:focus{
-
-    outline:none;
-
-}
-
-
-.favorite-btn:active{
-
-    transform:scale(.92);
-
-}
-
-
-.favorite-btn:hover{
-
-    background:transparent !important;
-
-    transform:scale(1.15);
-
-}
-
-
-/* =========================================================
    履歴ボタン
 ========================================================= */
 
@@ -471,186 +331,16 @@ button:active{
 
     margin-top:12px;
 
-    background:#444 !important;
+    background:#444;
 
-    color:#fff !important;
+    color:#fff;
 
 }
 
 
 .history-btn:hover{
 
-    background:#555 !important;
-
-}
-
-
-/* =========================================================
-   共通下部ナビ
-========================================================= */
-
-.bottom-nav{
-
-    position:fixed !important;
-
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-
-    width:100% !important;
-
-    height:70px !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    display:flex !important;
-
-    flex-direction:row !important;
-
-    justify-content:space-around !important;
-
-    align-items:stretch !important;
-
-    background:#fff !important;
-
-    border-top:1px solid #e5e7eb !important;
-
-    border-radius:0 !important;
-
-    box-shadow:
-        0 -3px 12px rgba(0,0,0,.08) !important;
-
-    z-index:99999 !important;
-
-}
-
-
-/* =========================================================
-   ナビ項目
-========================================================= */
-
-.bottom-nav .nav-item{
-
-    flex:1 1 25% !important;
-
-    width:25% !important;
-
-    max-width:none !important;
-
-    height:70px !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    display:flex !important;
-
-    flex-direction:column !important;
-
-    justify-content:center !important;
-
-    align-items:center !important;
-
-    gap:4px !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    border-radius:0 !important;
-
-    box-shadow:none !important;
-
-    color:#333 !important;
-
-    text-decoration:none !important;
-
-    font-size:12px !important;
-
-    font-weight:600 !important;
-
-    line-height:1 !important;
-
-}
-
-
-/* =========================================================
-   ナビアイコン
-========================================================= */
-
-.bottom-nav .nav-icon{
-
-    display:block !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    color:#333 !important;
-
-    font-size:22px !important;
-
-    line-height:1 !important;
-
-}
-
-
-/* =========================================================
-   ナビ文字
-========================================================= */
-
-.bottom-nav .nav-text{
-
-    display:block !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    color:#333 !important;
-
-    font-size:11px !important;
-
-    font-weight:600 !important;
-
-    line-height:1 !important;
-
-    white-space:nowrap !important;
-
-}
-
-
-/* =========================================================
-   ナビ ホバー・タップ
-========================================================= */
-
-.bottom-nav .nav-item:hover{
-
-    background:#f4f6f9 !important;
-
-}
-
-
-.bottom-nav .nav-item:active{
-
-    background:#eef0f3 !important;
-
-}
-
-
-.bottom-nav a::before,
-.bottom-nav a::after{
-
-    display:none !important;
+    background:#555;
 
 }
 
@@ -660,13 +350,6 @@ button:active{
 ========================================================= */
 
 @media(max-width:600px){
-
-    body{
-
-        padding-bottom:85px;
-
-    }
-
 
     header{
 
@@ -697,8 +380,6 @@ button:active{
 
         margin-bottom:15px;
 
-        border-radius:13px;
-
     }
 
 
@@ -706,16 +387,12 @@ button:active{
 
         font-size:18px;
 
-        margin-bottom:15px;
-
     }
 
 
     label{
 
         font-size:14px;
-
-        margin-top:13px;
 
     }
 
@@ -741,8 +418,6 @@ button:active{
     .customer-card{
 
         padding:14px;
-
-        border-radius:13px;
 
     }
 
@@ -771,160 +446,10 @@ button:active{
 
         height:36px !important;
 
-        font-size:22px !important;
-
-    }
-
-
-    /* ナビはPCと完全同じ */
-
-    .bottom-nav{
-
-        height:70px !important;
-
-    }
-
-
-    .bottom-nav .nav-item{
-
-        width:25% !important;
-
-        height:70px !important;
-
-    }
-
-
-    .bottom-nav .nav-icon{
+        min-height:36px !important;
 
         font-size:22px !important;
 
     }
-
-
-    .bottom-nav .nav-text{
-
-        font-size:11px !important;
-
-    }
-
-}
-
-
-/* =========================================================
-   小さいスマホ
-========================================================= */
-
-@media(max-width:380px){
-
-    .customer-container{
-
-        padding-left:8px;
-
-        padding-right:8px;
-
-    }
-
-
-    .card{
-
-        padding:13px;
-
-    }
-
-
-    /* ナビサイズは変更しない */
-
-    .bottom-nav{
-
-        height:70px !important;
-
-    }
-
-
-    .bottom-nav .nav-item{
-
-        height:70px !important;
-
-    }
-
-
-    .bottom-nav .nav-icon{
-
-        font-size:22px !important;
-
-    }
-
-
-    .bottom-nav .nav-text{
-
-        font-size:11px !important;
-
-    }
-
-}
-
-
-/* =========================================================
-   日報入力側で使うお気に入りボタンが
-   顧客一覧CSSの影響を受けないようにする
-========================================================= */
-
-.favorite-button{
-
-    width:45px !important;
-
-    height:40px !important;
-
-    min-width:45px !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    color:#fff !important;
-
-    font-size:24px !important;
-
-    cursor:pointer;
-
-    flex-shrink:0;
-
-}
-
-
-.favorite-button:hover{
-
-    transform:scale(1.15);
-
-}
-
-
-.favorite-button:active{
-
-    transform:scale(.9);
-
-}
-
-
-.customer-item{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    cursor:pointer;
-
-}
-
-
-.customer-item.is-favorite{
-
-    background:#fff8d6;
 
 }

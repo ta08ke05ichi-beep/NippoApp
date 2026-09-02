@@ -1,69 +1,7 @@
 /* =========================================================
    ホーム画面
    ブラックテーマ
-   PC・スマホ対応
 ========================================================= */
-
-
-/* =========================================================
-   全体
-========================================================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-
-    font-family:
-        "Yu Gothic",
-        "メイリオ",
-        sans-serif;
-
-    background:#111 !important;
-
-    color:#fff !important;
-
-    padding-bottom:85px;
-}
-
-
-/* =========================================================
-   ヘッダー
-========================================================= */
-
-header{
-
-    width:100%;
-
-    padding:18px;
-
-    background:#1f3a5f !important;
-
-    color:#fff !important;
-
-    text-align:center;
-
-    box-shadow:
-        0 2px 6px rgba(0,0,0,.4);
-
-}
-
-header h1{
-
-    margin:0;
-
-    color:#fff !important;
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    line-height:1.4;
-
-}
 
 
 /* =========================================================
@@ -71,8 +9,6 @@ header h1{
 ========================================================= */
 
 main{
-
-    width:100%;
 
     max-width:1000px;
 
@@ -145,7 +81,7 @@ main{
 
 
 /* =========================================================
-   メニューアイコン
+   アイコン
 ========================================================= */
 
 .icon{
@@ -158,7 +94,7 @@ main{
 
 
 /* =========================================================
-   メニュー見出し
+   見出し
 ========================================================= */
 
 .menu-card h2{
@@ -173,7 +109,7 @@ main{
 
 
 /* =========================================================
-   メニュー説明
+   説明
 ========================================================= */
 
 .menu-card p{
@@ -188,7 +124,7 @@ main{
 
 
 /* =========================================================
-   メニュー飾り
+   飾り
 ========================================================= */
 
 .menu-card::after{
@@ -311,9 +247,6 @@ main{
 
     transform:translateY(-3px);
 
-    box-shadow:
-        0 6px 15px rgba(0,0,0,.5);
-
 }
 
 
@@ -330,9 +263,9 @@ main{
 
 .report-card{
 
-    background:#222 !important;
+    background:#222;
 
-    color:#fff !important;
+    color:#fff;
 
     border-radius:12px;
 
@@ -356,9 +289,6 @@ main{
 
     transform:translateY(-3px);
 
-    box-shadow:
-        0 6px 15px rgba(0,0,0,.5);
-
 }
 
 
@@ -377,9 +307,9 @@ main{
 
 .card{
 
-    background:#222 !important;
+    background:#222;
 
-    color:#fff !important;
+    color:#fff;
 
     border-radius:16px;
 
@@ -392,155 +322,14 @@ main{
 
 
 /* =========================================================
-   共通下部ナビ
-========================================================= */
-
-.bottom-nav{
-
-    position:fixed !important;
-
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-
-    width:100% !important;
-
-    height:70px !important;
-
-    display:flex !important;
-
-    flex-direction:row !important;
-
-    justify-content:space-around !important;
-
-    align-items:stretch !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    background:#fff !important;
-
-    border-top:1px solid #e5e7eb !important;
-
-    border-radius:0 !important;
-
-    box-shadow:
-        0 -3px 12px rgba(0,0,0,.08) !important;
-
-    z-index:99999 !important;
-
-}
-
-
-.bottom-nav .nav-item{
-
-    flex:1 1 25% !important;
-
-    width:25% !important;
-
-    max-width:none !important;
-
-    height:70px !important;
-
-    display:flex !important;
-
-    flex-direction:column !important;
-
-    justify-content:center !important;
-
-    align-items:center !important;
-
-    gap:4px !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    background:transparent !important;
-
-    border:none !important;
-
-    border-radius:0 !important;
-
-    box-shadow:none !important;
-
-    color:#333 !important;
-
-    text-decoration:none !important;
-
-    font-size:12px !important;
-
-    font-weight:600 !important;
-
-    line-height:1 !important;
-
-}
-
-
-.bottom-nav .nav-icon{
-
-    display:block !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    font-size:22px !important;
-
-    line-height:1 !important;
-
-    color:#333 !important;
-
-}
-
-
-.bottom-nav .nav-text{
-
-    display:block !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    font-size:11px !important;
-
-    font-weight:600 !important;
-
-    line-height:1 !important;
-
-    color:#333 !important;
-
-    white-space:nowrap !important;
-
-}
-
-
-.bottom-nav .nav-item:hover{
-
-    background:#f4f6f9 !important;
-
-}
-
-
-.bottom-nav .nav-item:active{
-
-    background:#eef0f3 !important;
-
-}
-
-
-.bottom-nav a::before,
-.bottom-nav a::after{
-
-    display:none !important;
-
-}
-
-
-/* =========================================================
    スマホ
 ========================================================= */
 
 @media(max-width:600px){
 
     main{
+
+        display:block;
 
         margin:15px auto;
 
@@ -591,52 +380,6 @@ main{
         grid-template-columns:1fr;
 
         margin:15px;
-
-    }
-
-
-    header{
-
-        padding:15px 12px;
-
-    }
-
-
-    header h1{
-
-        font-size:20px;
-
-    }
-
-
-    /* ナビはPCと完全同じ */
-
-    .bottom-nav{
-
-        height:70px !important;
-
-    }
-
-
-    .bottom-nav .nav-item{
-
-        width:25% !important;
-
-        height:70px !important;
-
-    }
-
-
-    .bottom-nav .nav-icon{
-
-        font-size:22px !important;
-
-    }
-
-
-    .bottom-nav .nav-text{
-
-        font-size:11px !important;
 
     }
 
