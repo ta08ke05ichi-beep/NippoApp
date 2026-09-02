@@ -1,6 +1,7 @@
 /* =========================================================
    顧客一覧
-   PC・スマホ対応 / ブラックテーマ
+   ブラックテーマ
+   PC・スマホ対応
 ========================================================= */
 
 
@@ -9,10 +10,15 @@
 ========================================================= */
 
 *{
+
     box-sizing:border-box;
+
     margin:0;
+
     padding:0;
+
 }
+
 
 body{
 
@@ -50,6 +56,7 @@ header{
         0 2px 6px rgba(0,0,0,.4);
 
 }
+
 
 header h1{
 
@@ -105,6 +112,7 @@ header h1{
         0 3px 10px rgba(0,0,0,.4);
 
 }
+
 
 .card h2{
 
@@ -168,11 +176,13 @@ input{
 
 }
 
+
 input::placeholder{
 
     color:#999 !important;
 
 }
+
 
 input:focus{
 
@@ -231,11 +241,13 @@ button{
 
 }
 
+
 button:hover{
 
     background:#1565c0 !important;
 
 }
+
 
 button:active{
 
@@ -301,6 +313,7 @@ button:active{
 
 }
 
+
 .customer-card:hover{
 
     transform:translateY(-2px);
@@ -309,6 +322,7 @@ button:active{
         0 6px 15px rgba(0,0,0,.5);
 
 }
+
 
 .customer-card h3{
 
@@ -322,6 +336,7 @@ button:active{
 
 }
 
+
 .customer-card p{
 
     margin:7px 0;
@@ -333,6 +348,7 @@ button:active{
     line-height:1.6;
 
 }
+
 
 .customer-card *{
 
@@ -355,7 +371,10 @@ button:active{
 
     gap:10px;
 
+    position:relative;
+
 }
+
 
 .customer-header h3{
 
@@ -367,7 +386,7 @@ button:active{
 
 
 /* =========================================================
-   お気に入りボタン
+   ⭐ お気に入りボタン
 ========================================================= */
 
 .favorite-btn{
@@ -375,32 +394,42 @@ button:active{
     flex-shrink:0;
 
     width:38px !important;
+
     min-width:38px !important;
+
     max-width:38px !important;
 
     height:38px !important;
+
     min-height:38px !important;
 
     margin:0 !important;
+
     padding:0 !important;
 
     display:flex !important;
+
     align-items:center !important;
+
     justify-content:center !important;
 
     background:transparent !important;
+
     border:none !important;
 
     color:#fff !important;
 
     font-size:24px !important;
+
     line-height:1 !important;
 
     cursor:pointer !important;
+
     pointer-events:auto !important;
 
     position:relative;
-    z-index:10;
+
+    z-index:9999;
 
     touch-action:manipulation;
 
@@ -408,23 +437,20 @@ button:active{
 
 }
 
-.favorite-btn{
-    position:relative !important;
-    z-index:9999 !important;
-    pointer-events:auto !important;
-}
-
-.customer-header{
-    position:relative;
-}
 
 .favorite-btn:focus{
+
     outline:none;
+
 }
 
+
 .favorite-btn:active{
+
     transform:scale(.92);
+
 }
+
 
 .favorite-btn:hover{
 
@@ -451,6 +477,7 @@ button:active{
 
 }
 
+
 .history-btn:hover{
 
     background:#555 !important;
@@ -459,8 +486,7 @@ button:active{
 
 
 /* =========================================================
-   下部ナビ
-   全ページ共通サイズ
+   共通下部ナビ
 ========================================================= */
 
 .bottom-nav{
@@ -468,9 +494,7 @@ button:active{
     position:fixed !important;
 
     left:0 !important;
-
     right:0 !important;
-
     bottom:0 !important;
 
     width:100% !important;
@@ -478,7 +502,6 @@ button:active{
     height:70px !important;
 
     margin:0 !important;
-
     padding:0 !important;
 
     display:flex !important;
@@ -504,14 +527,16 @@ button:active{
 
 
 /* =========================================================
-   ナビリンク
+   ナビ項目
 ========================================================= */
 
 .bottom-nav .nav-item{
 
-    flex:1 !important;
+    flex:1 1 25% !important;
 
-    width:auto !important;
+    width:25% !important;
+
+    max-width:none !important;
 
     height:70px !important;
 
@@ -527,7 +552,7 @@ button:active{
 
     align-items:center !important;
 
-    gap:3px !important;
+    gap:4px !important;
 
     background:transparent !important;
 
@@ -551,7 +576,7 @@ button:active{
 
 
 /* =========================================================
-   ナビ アイコン
+   ナビアイコン
 ========================================================= */
 
 .bottom-nav .nav-icon{
@@ -583,7 +608,7 @@ button:active{
 
     display:block !important;
 
-    margin:3px 0 0 !important;
+    margin:0 !important;
 
     padding:0 !important;
 
@@ -597,7 +622,7 @@ button:active{
 
     font-weight:600 !important;
 
-    line-height:1.2 !important;
+    line-height:1 !important;
 
     white-space:nowrap !important;
 
@@ -605,7 +630,7 @@ button:active{
 
 
 /* =========================================================
-   ナビ タップ
+   ナビ ホバー・タップ
 ========================================================= */
 
 .bottom-nav .nav-item:hover{
@@ -614,16 +639,13 @@ button:active{
 
 }
 
+
 .bottom-nav .nav-item:active{
 
     background:#eef0f3 !important;
 
 }
 
-
-/* =========================================================
-   ナビの疑似要素を無効化
-========================================================= */
 
 .bottom-nav a::before,
 .bottom-nav a::after{
@@ -641,7 +663,7 @@ button:active{
 
     body{
 
-        padding-bottom:82px;
+        padding-bottom:85px;
 
     }
 
@@ -741,38 +763,40 @@ button:active{
 
     .favorite-btn{
 
-        width:36px;
+        width:36px !important;
 
-        height:36px;
+        min-width:36px !important;
 
-        font-size:22px;
+        max-width:36px !important;
+
+        height:36px !important;
+
+        font-size:22px !important;
 
     }
 
 
-    /* スマホ下部ナビ */
+    /* ナビはPCと完全同じ */
 
     .bottom-nav{
 
-        height:68px !important;
+        height:70px !important;
 
     }
 
 
     .bottom-nav .nav-item{
 
-        height:68px !important;
+        width:25% !important;
 
-        font-size:11px !important;
-
-        gap:3px !important;
+        height:70px !important;
 
     }
 
 
     .bottom-nav .nav-icon{
 
-        font-size:21px !important;
+        font-size:22px !important;
 
     }
 
@@ -808,47 +832,99 @@ button:active{
     }
 
 
+    /* ナビサイズは変更しない */
+
+    .bottom-nav{
+
+        height:70px !important;
+
+    }
+
+
+    .bottom-nav .nav-item{
+
+        height:70px !important;
+
+    }
+
+
     .bottom-nav .nav-icon{
 
-        font-size:20px !important;
+        font-size:22px !important;
 
     }
 
 
     .bottom-nav .nav-text{
 
-        font-size:10px !important;
+        font-size:11px !important;
 
     }
 
 }
 
-.favorite-button {
-    border: none;
-    background: transparent;
-    font-size: 24px;
-    cursor: pointer;
-    width: 45px;
-    height: 40px;
-    padding: 0;
-    flex-shrink: 0;
+
+/* =========================================================
+   日報入力側で使うお気に入りボタンが
+   顧客一覧CSSの影響を受けないようにする
+========================================================= */
+
+.favorite-button{
+
+    width:45px !important;
+
+    height:40px !important;
+
+    min-width:45px !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+
+    color:#fff !important;
+
+    font-size:24px !important;
+
+    cursor:pointer;
+
+    flex-shrink:0;
+
 }
 
-.favorite-button:hover {
-    transform: scale(1.15);
+
+.favorite-button:hover{
+
+    transform:scale(1.15);
+
 }
 
-.favorite-button:active {
-    transform: scale(0.9);
+
+.favorite-button:active{
+
+    transform:scale(.9);
+
 }
 
-.customer-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
+
+.customer-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
 }
 
-.customer-item.is-favorite {
-    background: #fff8d6;
+
+.customer-item.is-favorite{
+
+    background:#fff8d6;
+
 }

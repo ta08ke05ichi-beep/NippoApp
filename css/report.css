@@ -1,18 +1,28 @@
 /* =========================================================
    日報入力
    ブラックテーマ
-   ========================================================= */
+   PC・スマホ対応
+========================================================= */
 
 
 /* =========================================================
    全体
 ========================================================= */
 
+*{
+
+    box-sizing:border-box;
+
+}
+
+
 body{
 
-    background:#111;
+    background:#111 !important;
 
-    color:white;
+    color:#fff !important;
+
+    padding-bottom:85px;
 
 }
 
@@ -23,13 +33,15 @@ body{
 
 .report-container{
 
+    width:100%;
+
     max-width:900px;
 
     margin:20px auto;
 
     padding:15px;
 
-    padding-bottom:90px;
+    padding-bottom:20px;
 
 }
 
@@ -40,13 +52,28 @@ body{
 
 .app-header{
 
-    background:#1f3a5f;
+    width:100%;
 
-    color:white;
+    background:#1f3a5f !important;
+
+    color:#fff !important;
 
     padding:18px;
 
     text-align:center;
+
+}
+
+
+.app-header h1{
+
+    margin:0;
+
+    color:#fff !important;
+
+    font-size:24px;
+
+    font-weight:bold;
 
 }
 
@@ -59,7 +86,7 @@ body{
 
     background:#222;
 
-    color:white;
+    color:#fff;
 
     padding:20px;
 
@@ -81,7 +108,7 @@ body{
 
     font-size:20px;
 
-    color:white;
+    color:#fff;
 
     border-bottom:2px solid #444;
 
@@ -104,7 +131,7 @@ label{
 
     margin-bottom:6px;
 
-    color:white;
+    color:#fff;
 
 }
 
@@ -131,7 +158,7 @@ textarea{
 
     background:#111;
 
-    color:white;
+    color:#fff;
 
 }
 
@@ -194,7 +221,7 @@ textarea{
 
     background:#333;
 
-    color:white;
+    color:#fff;
 
     border:1px solid #444;
 
@@ -230,7 +257,7 @@ textarea{
 
     cursor:pointer;
 
-    color:white;
+    color:#fff;
 
 }
 
@@ -239,7 +266,7 @@ textarea{
 
     display:block;
 
-    color:white;
+    color:#fff;
 
     font-size:16px;
 
@@ -303,23 +330,10 @@ textarea{
 
     cursor:pointer !important;
 
-    transition:
-        transform .15s,
-        background .15s;
+    transition:transform .15s;
 
 }
 
-
-/* 未お気に入り */
-
-.favorite-button:not(.active){
-
-    color:#222 !important;
-
-}
-
-
-/* お気に入り */
 
 .favorite-button.active{
 
@@ -328,16 +342,12 @@ textarea{
 }
 
 
-/* ホバー */
-
 .favorite-button:hover{
 
     background:#f5f5f5 !important;
 
 }
 
-
-/* 押した瞬間 */
 
 .favorite-button:active{
 
@@ -380,12 +390,8 @@ textarea{
 
     cursor:pointer !important;
 
-    transition:.15s;
-
 }
 
-
-/* ホバー */
 
 .favorite-filter-btn:hover{
 
@@ -394,21 +400,17 @@ textarea{
 }
 
 
-/* お気に入り表示中 */
-
 .favorite-filter-btn.active{
 
     background:#333 !important;
 
     border-color:#777 !important;
 
-    color:#fff !important;
-
 }
 
 
 /* =========================================================
-   最近使った顧客
+   ⭐ 最近使った顧客
 ========================================================= */
 
 .recent-customers{
@@ -534,7 +536,7 @@ button:active{
 
     background:#444;
 
-    color:white;
+    color:#fff;
 
 }
 
@@ -554,7 +556,7 @@ button:active{
 
     background:#1976d2;
 
-    color:white;
+    color:#fff;
 
     font-weight:bold;
 
@@ -580,7 +582,7 @@ button:active{
 
     background:#1b2735;
 
-    color:white;
+    color:#fff;
 
     border-left:5px solid #1976d2;
 
@@ -592,18 +594,53 @@ button:active{
 
 
 /* =========================================================
-   ナビリンク
+   共通下部ナビ
 ========================================================= */
 
-.bottom-nav a,
-.bottom-nav a:link,
-.bottom-nav a:visited,
-.bottom-nav a:hover,
-.bottom-nav a:active{
+.bottom-nav{
 
-    flex:1 !important;
+    position:fixed !important;
 
-    width:auto !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+
+    width:100% !important;
+
+    height:70px !important;
+
+    display:flex !important;
+
+    flex-direction:row !important;
+
+    justify-content:space-around !important;
+
+    align-items:stretch !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    background:#fff !important;
+
+    border-top:1px solid #e5e7eb !important;
+
+    border-radius:0 !important;
+
+    box-shadow:
+        0 -3px 12px rgba(0,0,0,.08) !important;
+
+    z-index:99999 !important;
+
+}
+
+
+.bottom-nav .nav-item{
+
+    flex:1 1 25% !important;
+
+    width:25% !important;
+
+    max-width:none !important;
 
     height:70px !important;
 
@@ -614,6 +651,8 @@ button:active{
     justify-content:center !important;
 
     align-items:center !important;
+
+    gap:4px !important;
 
     margin:0 !important;
 
@@ -627,20 +666,18 @@ button:active{
 
     box-shadow:none !important;
 
-    color:#555 !important;
+    color:#333 !important;
 
     text-decoration:none !important;
 
     font-size:12px !important;
 
-    font-weight:bold !important;
+    font-weight:600 !important;
+
+    line-height:1 !important;
 
 }
 
-
-/* =========================================================
-   ナビアイコン
-========================================================= */
 
 .bottom-nav .nav-icon{
 
@@ -654,6 +691,8 @@ button:active{
 
     border:none !important;
 
+    color:#333 !important;
+
     font-size:22px !important;
 
     line-height:1 !important;
@@ -661,15 +700,11 @@ button:active{
 }
 
 
-/* =========================================================
-   ナビ文字
-========================================================= */
-
 .bottom-nav .nav-text{
 
     display:block !important;
 
-    margin-top:4px !important;
+    margin:0 !important;
 
     padding:0 !important;
 
@@ -677,7 +712,7 @@ button:active{
 
     border:none !important;
 
-    color:#555 !important;
+    color:#333 !important;
 
     font-size:11px !important;
 
@@ -690,34 +725,24 @@ button:active{
 }
 
 
-/* =========================================================
-   ナビタップ
-========================================================= */
+.bottom-nav .nav-item:hover{
 
-.bottom-nav a:active{
-
-    background:#f3f4f6 !important;
+    background:#f4f6f9 !important;
 
 }
 
 
-/* 不要な疑似要素を無効化 */
+.bottom-nav .nav-item:active{
+
+    background:#eef0f3 !important;
+
+}
+
 
 .bottom-nav a::before,
 .bottom-nav a::after{
 
     display:none !important;
-
-}
-
-
-/* =========================================================
-   ページ内容がナビに隠れないようにする
-========================================================= */
-
-body{
-
-    padding-bottom:85px;
 
 }
 
@@ -730,9 +755,11 @@ body{
 
     .report-container{
 
+        margin:15px auto;
+
         padding:10px;
 
-        padding-bottom:85px;
+        padding-bottom:20px;
 
     }
 
@@ -773,6 +800,8 @@ body{
     }
 
 
+    /* ナビはPCと完全同じ */
+
     .bottom-nav{
 
         height:70px !important;
@@ -780,9 +809,11 @@ body{
     }
 
 
-    .bottom-nav a{
+    .bottom-nav .nav-item{
 
         height:70px !important;
+
+        width:25% !important;
 
     }
 
@@ -801,4 +832,3 @@ body{
     }
 
 }
-
